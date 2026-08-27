@@ -1,0 +1,108 @@
+name: 🚀 Production CI/CD & AWS EC2 Deployment
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazamjad' }}
+
+jobs:
+  # ============================================================================
+  # Stage 1: Continuous Integration & Validation
+  # ============================================================================
+  test-and-build:
+    name: 🧪 Test & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build Frontend SPA
+        run: |
+          cd client
+          npm ci
+          npm run build
+
+      - name: Validate Server
+        run: |
+          cd server
+          npm ci
+          node --check src/server.js
+
+  # ============================================================================
+  # Stage 2: Docker Multi-Stage Image Builds & Registry Push
+  # ============================================================================
+  docker-build-push:
+    name: 🐳 Docker Multi-Stage Build & Push
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub (if secrets provided)
+        if: env.DOCKER_USER != '' && secrets.DOCKER_HUB_TOKEN != ''
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Build & Push Server Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          file: ./server/Dockerfile
+          push: ${{ secrets.DOCKER_HUB_TOKEN != '' }}
+          tags: |
+            ${{ env.DOCKER_USER }}/portfolio-server:latest
+            ${{ env.DOCKER_USER }}/portfolio-server:${{ github.sha }}
+
+      - name: Build & Push Client Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          file: ./client/Dockerfile
+          push: ${{ secrets.DOCKER_HUB_TOKEN != '' }}
+          tags: |
+            ${{ env.DOCKER_USER }}/portfolio-client:latest
+            ${{ env.DOCKER_USER }}/portfolio-client:${{ github.sha }}
+
+  # ============================================================================
+  # Stage 3: Automated Continuous Deployment to AWS EC2
+  # ============================================================================
+  deploy-ec2:
+    name: 🌐 Zero-Downtime Deployment to AWS EC2
+    needs: [test-and-build, docker-build-push]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && secrets.EC2_HOST != ''
+    steps:
+      - name: Deploy to AWS EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER || 'ubuntu' }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "🚀 Starting remote deployment on EC2..."
+            cd /home/ubuntu/portfolio || git clone https://github.com/${{ github.repository }} /home/ubuntu/portfolio && cd /home/ubuntu/portfolio
+            git fetch --all
+            git reset --hard origin/main
+            
+            # Execute automated deployment script
+            chmod +x deploy.sh
+            ./deploy.sh
+            
+            echo "✅ Deployment completed on AWS EC2!"

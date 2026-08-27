@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: #050811;
+    color: #e2e8f0;
+    overflow-x: hidden;
+  }
+
+  /* Custom Neon Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050811;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00f0ff88;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(10, 16, 31, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card-hover:hover {
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.12), inset 0 0 15px rgba(0, 240, 255, 0.03);
+    transform: translateY(-3px);
+  }
+
+  .glass-nav {
+    background: rgba(5, 8, 17, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.12);
+  }
+
+  .neon-text-cyan {
+    color: #00f0ff;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.2);
+  }
+
+  .neon-text-green {
+    color: #10b981;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.2);
+  }
+
+  .neon-border-cyan {
+    border-color: #00f0ff;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+  }
+
+  .neon-border-green {
+    border-color: #10b981;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  }
+
+  .cyber-gradient-text {
+    background: linear-gradient(135deg, #ffffff 0%, #00f0ff 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .terminal-window {
+    background: #080d1a;
+    border: 1px solid #1e293b;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Background Cyber Grid */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+}
+
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.08) 0%, rgba(16, 185, 129, 0.04) 35%, transparent 70%);
+}

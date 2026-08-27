@@ -1,0 +1,31 @@
+{
+  "name": "syed-sheraz-amjad-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "3D-Interactive MERN Stack Portfolio for Syed Sheraz Amjad (DevOps Engineer & Flutter Mobile Developer)",
+  "scripts": {
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"cyan,magenta\" \"npm run server:dev\" \"npm run client:dev\"",
+    "client:dev": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "server:dev": "npm --prefix server run dev",
+    "server:start": "npm --prefix server start",
+    "seed": "npm --prefix server run seed",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "build": "npm --prefix client run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "keywords": [
+    "portfolio",
+    "mern",
+    "devops",
+    "flutter",
+    "threejs",
+    "react",
+    "docker",
+    "aws"
+  ],
+  "author": "Syed Sheraz Amjad <sherazamjad933@gmail.com>",
+  "license": "MIT"
+}

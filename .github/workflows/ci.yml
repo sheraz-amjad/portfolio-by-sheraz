@@ -1,0 +1,57 @@
+name: CI Validation Pipeline
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate-client:
+    name: ⚛️ Validate Frontend Client
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install Client Dependencies
+        run: |
+          cd client
+          npm ci
+
+      - name: TypeScript & Vite Build Check
+        run: |
+          cd client
+          npm run build
+
+  validate-server:
+    name: ⚡ Validate Backend Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install Server Dependencies
+        run: |
+          cd server
+          npm ci
+
+      - name: Syntax Check Server Files
+        run: |
+          node --check server/src/server.js
+          node --check server/src/seed/seedData.js
+          node --check server/src/controllers/apiControllers.js
