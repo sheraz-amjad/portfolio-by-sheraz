@@ -1,82 +1,92 @@
-#!/usr/bin/env bash
-# ==============================================================================
-# AWS EC2 Automated Deployment Script for Syed Sheraz Amjad Portfolio
-# Target: Ubuntu 22.04 / 24.04 LTS (Plain HTTP via Public IP)
-# ==============================================================================
+#!/bin/bash
+set -e
 
-set -e # Exit immediately if a command exits with a non-zero status
+# ============================================================================
+# deploy.sh — Pulls latest Docker images and restarts containers with a
+# basic health check + automatic rollback if the new deployment fails.
+# ============================================================================
 
-APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WEB_ROOT="/var/www/portfolio"
-NGINX_CONF_SRC="$APP_DIR/nginx/portfolio.conf"
-NGINX_CONF_DEST="/etc/nginx/sites-available/portfolio"
+DOCKER_USER="sherazamjad"
+SERVER_IMAGE="${DOCKER_USER}/portfolio-server:latest"
+CLIENT_IMAGE="${DOCKER_USER}/portfolio-client:latest"
+HEALTH_URL="http://localhost:5000/api/health"
+MAX_RETRIES=10
+RETRY_DELAY=3
+APP_DIR="/home/ubuntu/portfolio"
 
-echo "======================================================"
-echo "🚀 Starting Deployment: Syed Sheraz Amjad MERN Portfolio"
-echo "📂 Working Directory: $APP_DIR"
-echo "======================================================"
+# Ensure app directory and network exist
+cd "$APP_DIR" 2>/dev/null || true
+docker network create portfolio-network 2>/dev/null || true
 
-# 1. Ensure required system utilities and web root directory
-echo "📦 Step 1: Checking system directories and permissions..."
-sudo mkdir -p "$WEB_ROOT"
-sudo chown -R $USER:$USER "$WEB_ROOT"
+echo "📥 Pulling latest images from Docker Hub..."
+docker pull "$SERVER_IMAGE" || true
+docker pull "$CLIENT_IMAGE" || true
 
-# 2. Install Server Dependencies
-echo "📦 Step 2: Installing backend dependencies..."
-cd "$APP_DIR/server"
-npm ci --production=false
+echo "📦 Remembering currently running image IDs (for rollback)..."
+OLD_SERVER_ID=$(docker inspect --format='{{.Image}}' portfolio-server 2>/dev/null || echo "")
+OLD_CLIENT_ID=$(docker inspect --format='{{.Image}}' portfolio-client 2>/dev/null || echo "")
 
-# Check if .env exists, if not copy .env.example
-if [ ! -f "$APP_DIR/server/.env" ]; then
-    echo "⚠️  server/.env not found, copying from .env.example..."
-    cp "$APP_DIR/server/.env.example" "$APP_DIR/server/.env"
-fi
+echo "🛑 Stopping old containers (if running)..."
+docker stop portfolio-server portfolio-client 2>/dev/null || true
+docker rm portfolio-server portfolio-client 2>/dev/null || true
 
-# 3. Seed Database if required
-echo "🌱 Step 3: Seeding database if initial run..."
-npm run seed || echo "⚠️  Seeding completed or skipped."
-
-# 4. Install Frontend Dependencies & Build
-echo "⚛️  Step 4: Building client SPA..."
-cd "$APP_DIR/client"
-npm ci
-npm run build
-
-# 5. Copy Built Frontend Assets to Nginx Web Root
-echo "🚚 Step 5: Syncing static build to $WEB_ROOT..."
-sudo rm -rf "$WEB_ROOT"/*
-sudo cp -r "$APP_DIR/client/dist/"* "$WEB_ROOT/"
-sudo chown -R www-data:www-data "$WEB_ROOT"
-
-# 6. Configure Nginx
-echo "🌐 Step 6: Configuring Nginx reverse proxy..."
-if [ -f "$NGINX_CONF_SRC" ]; then
-    sudo cp "$NGINX_CONF_SRC" "$NGINX_CONF_DEST"
-    sudo rm -f /etc/nginx/sites-enabled/default
-    sudo ln -sf "$NGINX_CONF_DEST" /etc/nginx/sites-enabled/portfolio
-    sudo nginx -t
-    sudo systemctl reload nginx
-    echo "✅ Nginx configured and reloaded."
-fi
-
-# 7. Start / Restart Backend with PM2
-echo "⚡ Step 7: Starting / Reloading backend with PM2..."
-cd "$APP_DIR"
-if command -v pm2 &> /dev/null; then
-    pm2 startOrReload ecosystem.config.cjs --env production
-    pm2 save
+echo "🚀 Starting new containers..."
+if [ -f "$APP_DIR/server/.env" ]; then
+  ENV_FLAG="--env-file $APP_DIR/server/.env"
+elif [ -f "$APP_DIR/.env" ]; then
+  ENV_FLAG="--env-file $APP_DIR/.env"
 else
-    echo "⚠️  PM2 not found globally, installing pm2..."
-    sudo npm install -g pm2
-    pm2 startOrReload ecosystem.config.cjs --env production
-    pm2 save
+  ENV_FLAG="-e PORT=5000 -e NODE_ENV=production -e MONGO_URI=mongodb://127.0.0.1:27017/portfolio"
 fi
 
-# 8. Success Output
-PUBLIC_IP=$(curl -s http://checkip.amazonaws.com || curl -s https://api.ipify.org || echo "YOUR_EC2_PUBLIC_IP")
+docker run -d --name portfolio-server \
+  --restart unless-stopped \
+  --network portfolio-network \
+  -p 5000:5000 \
+  $ENV_FLAG \
+  "$SERVER_IMAGE"
+
+docker run -d --name portfolio-client \
+  --restart unless-stopped \
+  --network portfolio-network \
+  -p 80:80 \
+  "$CLIENT_IMAGE"
+
+echo "🩺 Running health check on $HEALTH_URL ..."
+SUCCESS=false
+for i in $(seq 1 $MAX_RETRIES); do
+  if curl -sf "$HEALTH_URL" > /dev/null; then
+    echo "✅ Health check passed on attempt $i."
+    SUCCESS=true
+    break
+  fi
+  echo "⏳ Attempt $i/$MAX_RETRIES failed, retrying in ${RETRY_DELAY}s..."
+  sleep $RETRY_DELAY
+done
+
+if [ "$SUCCESS" = false ]; then
+  echo "❌ Health check failed after $MAX_RETRIES attempts. Rolling back..."
+
+  docker stop portfolio-server portfolio-client 2>/dev/null || true
+  docker rm portfolio-server portfolio-client 2>/dev/null || true
+
+  if [ -n "$OLD_SERVER_ID" ]; then
+    docker run -d --name portfolio-server --restart unless-stopped --network portfolio-network -p 5000:5000 \
+      $ENV_FLAG "$OLD_SERVER_ID"
+  fi
+  if [ -n "$OLD_CLIENT_ID" ]; then
+    docker run -d --name portfolio-client --restart unless-stopped --network portfolio-network -p 80:80 "$OLD_CLIENT_ID"
+  fi
+
+  echo "🔙 Rolled back to previous working images."
+  exit 1
+fi
+
+echo "🧹 Cleaning up unused images..."
+docker image prune -f
 
 echo "======================================================"
-echo "🎉 DEPLOYMENT SUCCESSFUL!"
-echo "🌐 Portfolio is live at: http://$PUBLIC_IP/"
-echo "🔌 API is available at:  http://$PUBLIC_IP/api/health"
+echo "✅ Deployment successful!"
+PUBLIC_IP=$(curl -s http://checkip.amazonaws.com || curl -s https://api.ipify.org || echo "YOUR_EC2_PUBLIC_IP")
+echo "🌐 Live at: http://$PUBLIC_IP/"
 echo "======================================================"

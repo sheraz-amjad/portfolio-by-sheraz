@@ -7,7 +7,7 @@
 # Stage 1: Builder
 FROM node:22-alpine AS builder
 
-WORKDIR /
+WORKDIR /app
 
 # Copy package manifests first to leverage Docker layer caching
 COPY package.json package-lock.json* ./

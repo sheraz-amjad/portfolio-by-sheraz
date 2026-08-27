@@ -115,7 +115,7 @@ jobs:
             git fetch --all
             git reset --hard origin/main
 
-            # Execute automated deployment script
+            # Execute automated deployment script with health check & rollback
             chmod +x deploy.sh
             ./deploy.sh
 
