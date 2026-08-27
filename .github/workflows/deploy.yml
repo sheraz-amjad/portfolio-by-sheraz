@@ -82,12 +82,13 @@ jobs:
 
   # ============================================================================
   # Stage 3: Automated Continuous Deployment to AWS EC2
-  # ============================================================================
+  # ====================================================================
   deploy-ec2:
     name: 🌐 Zero-Downtime Deployment to AWS EC2
     needs: [test-and-build, docker-build-push]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && secrets.EC2_HOST != ''
+
     steps:
       - name: Deploy to AWS EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -100,9 +101,9 @@ jobs:
             cd /home/ubuntu/portfolio || git clone https://github.com/${{ github.repository }} /home/ubuntu/portfolio && cd /home/ubuntu/portfolio
             git fetch --all
             git reset --hard origin/main
-            
+
             # Execute automated deployment script
             chmod +x deploy.sh
             ./deploy.sh
-            
+
             echo "✅ Deployment completed on AWS EC2!"
