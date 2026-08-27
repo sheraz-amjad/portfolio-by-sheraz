@@ -9,18 +9,16 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-
-
 # Copy package manifests first to leverage Docker layer caching
 COPY package.json package-lock.json* ./
 
 RUN npm ci
 
-# Copy source code
+# Copy source code (excluding node_modules via .dockerignore)
 COPY . .
 
-# Build production bundle
-RUN npm run build
+# Ensure executable permissions on build binaries and compile bundle
+RUN chmod -R +x node_modules/.bin && npm run build
 
 # ==============================================================================
 # Stage 2: Production Nginx Runner
