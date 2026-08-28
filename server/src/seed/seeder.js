@@ -14,6 +14,11 @@ import {
 dotenv.config();
 
 export const seedDatabase = async (force = false) => {
+  if (mongoose.connection.readyState !== 1) {
+    console.log('ℹ️ MongoDB is not connected. Skipping database seeding.');
+    return;
+  }
+
   try {
     const expCount = await Experience.countDocuments();
     const projCount = await Project.countDocuments();

@@ -12,6 +12,8 @@ export const connectDB = async () => {
     return;
   }
 
+  mongoose.set('bufferCommands', false);
+
   try {
     const conn = await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 5000,
