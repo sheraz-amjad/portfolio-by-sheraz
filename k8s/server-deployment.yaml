@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: backend-api
-          image: sherazamjad/portfolio-server:latest
+          image: sherazdevops/portfolio-server:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000

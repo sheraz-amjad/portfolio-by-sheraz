@@ -62,13 +62,13 @@ jobs:
         if: env.DOCKER_TOKEN != ''
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazamjad' }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazdevops' }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build & Push Server Docker Image
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazamjad' }}
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazdevops' }}
         uses: docker/build-push-action@v5
         with:
           context: ./server
@@ -81,7 +81,7 @@ jobs:
       - name: Build & Push Client Docker Image
         env:
           DOCKER_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazamjad' }}
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazdevops' }}
         uses: docker/build-push-action@v5
         with:
           context: ./client

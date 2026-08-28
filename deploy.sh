@@ -6,7 +6,7 @@ set -e
 # basic health check + automatic rollback if the new deployment fails.
 # ============================================================================
 
-DOCKER_USER="sherazamjad"
+DOCKER_USER="sherazdevops"
 SERVER_IMAGE="${DOCKER_USER}/portfolio-server:latest"
 CLIENT_IMAGE="${DOCKER_USER}/portfolio-client:latest"
 HEALTH_URL="http://localhost:5000/api/health"
