@@ -111,7 +111,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "🚀 Starting remote deployment on EC2..."
-            cd /home/ubuntu/portfolio || git clone https://github.com/${{ github.repository }} /home/ubuntu/portfolio && cd /home/ubuntu/portfolio
+            cd /var/www/portfolio || git clone https://github.com/${{ github.repository }} /var/www/portfolio && cd /var/www/portfolio
             git fetch --all
             git reset --hard origin/main
 
