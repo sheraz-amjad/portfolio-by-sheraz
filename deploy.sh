@@ -12,7 +12,7 @@ CLIENT_IMAGE="${DOCKER_USER}/portfolio-client:latest"
 HEALTH_URL="http://localhost:5000/api/health"
 MAX_RETRIES=10
 RETRY_DELAY=3
-APP_DIR="/home/ubuntu/portfolio"
+APP_DIR="/var/www/portfolio"
 
 # Ensure app directory and network exist
 cd "$APP_DIR" 2>/dev/null || true
