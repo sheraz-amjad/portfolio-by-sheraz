@@ -111,9 +111,21 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "🚀 Starting remote deployment on EC2..."
-            cd /var/www/portfolio || git clone https://github.com/${{ github.repository }} /var/www/portfolio && cd /var/www/portfolio
-            git fetch --all
-            git reset --hard origin/main
+
+            sudo mkdir -p /var/www/portfolio
+            sudo chown -R $USER:$USER /var/www/portfolio
+
+            if [ -d /var/www/portfolio/.git ]; then
+              echo "Repo exists — pulling latest"
+              cd /var/www/portfolio
+              git fetch --all
+              git reset --hard origin/main
+            else
+              echo "No repo found — cloning fresh"
+              rm -rf /var/www/portfolio/* /var/www/portfolio/.[!.]* 2>/dev/null || true
+              git clone https://github.com/${{ github.repository }} /var/www/portfolio
+              cd /var/www/portfolio
+            fi
 
             # Execute automated deployment script with health check & rollback
             chmod +x deploy.sh
