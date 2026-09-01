@@ -67,16 +67,22 @@ const startServer = async () => {
   await seedDatabase(false);
 
   const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`\n====================================================`);
+    console.log(`🚀 Portfolio Express Backend Started`);
     console.log(`====================================================`);
-    console.log(`🚀 Portfolio Express Backend listening on port ${PORT}`);
-    console.log(`🔌 Local API: http://localhost:${PORT}/api/health`);
+    console.log(`📍 Port: ${PORT}`);
     console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`====================================================`);
+    console.log(`🔌 Health Check: http://localhost:${PORT}/api/health`);
+    console.log(`📧 Email Configured: ${process.env.EMAIL_USER ? '✅ Yes' : '❌ No'}`);
+    console.log(`💾 MongoDB: ${process.env.MONGO_URI || 'Default (localhost:27017)'}`);
+    console.log(`====================================================\n`);
   });
 
   // Handle termination gracefully
   const shutdown = () => {
-    console.log('Shutting down gracefully...');
+    console.log('\n\n====================================================');
+    console.log('🛑 Shutting down gracefully...');
+    console.log('====================================================\n');
     server.close(() => {
       console.log('HTTP server closed.');
       process.exit(0);

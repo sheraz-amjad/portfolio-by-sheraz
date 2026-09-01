@@ -9,20 +9,32 @@ export const connectDB = async () => {
   const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/portfolio';
   
   if (isConnected) {
+    console.log('ℹ️  MongoDB already connected');
     return;
   }
 
   mongoose.set('bufferCommands', false);
 
   try {
+    console.log('\n🔌 Connecting to MongoDB...');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`📍 URI: ${uri}`);
+    
     const conn = await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 5000,
     });
     isConnected = true;
-    console.log(`✅ MongoDB Connected successfully: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Connected successfully`);
+    console.log(`🏠 Host: ${conn.connection.host}`);
+    console.log(`📦 Database: ${conn.connection.name}`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
   } catch (error) {
-    console.warn(`⚠️ MongoDB connection warning: ${error.message}`);
-    console.warn('ℹ️ Server will continue running. API endpoints will serve structured data gracefully.');
+    console.warn('\n❌ MongoDB Connection Error');
+    console.warn('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.warn(`⚠️  ${error.message}`);
+    console.warn('ℹ️  Server will continue running. API endpoints will serve fallback data.');
+    console.warn('💡 Fix: Ensure MongoDB is running with: sudo systemctl start mongod');
+    console.warn('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
   }
 };
 

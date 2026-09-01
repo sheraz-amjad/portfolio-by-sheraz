@@ -118,9 +118,11 @@ Configure your EC2 Security Group with:
 ### 2. Connect to EC2 & Clone
 ```bash
 ssh -i "your-key.pem" ubuntu@<YOUR_EC2_PUBLIC_IP>
-sudo apt update && sudo apt install -y nodejs npm nginx git
-git clone https://github.com/sherazamjad/portfolio.git /home/ubuntu/portfolio
-cd /home/ubuntu/portfolio
+sudo apt update && sudo apt install -y nodejs npm nginx git mongodb
+sudo mkdir -p /var/www/portfolio
+sudo chown ubuntu:ubuntu /var/www/portfolio
+git clone https://github.com/sherazamjad/portfolio.git /var/www/portfolio
+cd /var/www/portfolio
 ```
 
 ### 3. Run One-Click Deployment Script

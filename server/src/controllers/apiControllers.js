@@ -170,8 +170,16 @@ export const getCertifications = async (req, res) => {
 export const submitContact = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
+    
+    console.log('\n🔔 NEW CONTACT FORM SUBMISSION');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`📝 Name: ${name}`);
+    console.log(`📧 Email: ${email}`);
+    console.log(`📌 Subject: ${subject || 'N/A'}`);
+    console.log(`💬 Message: ${message.substring(0, 50)}...`);
 
     if (!name || !email || !message) {
+      console.log('❌ Validation failed: Missing required fields');
       return res.status(400).json({
         success: false,
         error: 'Please provide name, email, and message.'
@@ -181,6 +189,7 @@ export const submitContact = async (req, res) => {
     // Basic email format check
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
+      console.log(`❌ Email validation failed: ${email}`);
       return res.status(400).json({
         success: false,
         error: 'Please provide a valid email address.'
@@ -190,6 +199,7 @@ export const submitContact = async (req, res) => {
     let savedMessage = null;
 
     if (isDBReady()) {
+      console.log('💾 Saving to MongoDB...');
       savedMessage = await ContactMessage.create({
         name,
         email,
@@ -198,8 +208,10 @@ export const submitContact = async (req, res) => {
         ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
         userAgent: req.headers['user-agent'] || ''
       });
+      console.log(`✅ Message saved to DB with ID: ${savedMessage._id}`);
     } else {
-      console.log('📝 Received Contact Form (DB offline, logged to server console):', {
+      console.log('⚠️  MongoDB offline - Message logged to console only');
+      console.log('📝 Received Contact Form (DB offline):', {
         name,
         email,
         subject,
@@ -210,6 +222,11 @@ export const submitContact = async (req, res) => {
 
     // Optional Nodemailer notification if configured
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      console.log('\n📧 EMAIL CONFIGURATION DETECTED');
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      console.log(`✅ EMAIL_USER: ${process.env.EMAIL_USER}`);
+      console.log(`✅ EMAIL_SERVICE: ${process.env.EMAIL_SERVICE || 'gmail'}`);
+      
       try {
         const transporter = nodemailer.createTransport({
           service: process.env.EMAIL_SERVICE || 'gmail',
@@ -220,6 +237,7 @@ export const submitContact = async (req, res) => {
         });
 
         // Email to portfolio owner (Sheraz)
+        console.log('\n📬 Sending notification email to owner...');
         await transporter.sendMail({
           from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
           to: process.env.EMAIL_RECEIVER || 'sherazamjad933@gmail.com',
@@ -238,9 +256,10 @@ export const submitContact = async (req, res) => {
             </div>
           `
         });
-        console.log(`📧 Notification email sent to ${process.env.EMAIL_RECEIVER || 'sherazamjad933@gmail.com'}`);
+        console.log(`✅ Notification email sent to ${process.env.EMAIL_RECEIVER || 'sherazamjad933@gmail.com'}`);
 
         // Confirmation email to the visitor
+        console.log('📬 Sending confirmation email to visitor...');
         await transporter.sendMail({
           from: `"Syed Sheraz Amjad" <${process.env.EMAIL_USER}>`,
           to: email,
@@ -255,10 +274,20 @@ export const submitContact = async (req, res) => {
             </div>
           `
         });
-        console.log(`📧 Confirmation email sent to ${email}`);
+        console.log(`✅ Confirmation email sent to ${email}`);
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
       } catch (mailError) {
-        console.warn('⚠️ Nodemailer dispatch warning:', mailError.message);
+        console.error('❌ EMAIL ERROR:', mailError.message);
+        console.warn('⚠️  Nodemailer dispatch warning:', mailError.message);
+        console.log('💡 Check Gmail app password and 2FA enabled');
+        console.log('💡 See: https://myaccount.google.com/apppasswords\n');
       }
+    } else {
+      console.log('\n⚠️  EMAIL NOT CONFIGURED');
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      console.log('❌ EMAIL_USER or EMAIL_PASS missing in .env');
+      console.log('💡 Contact form will save to database but emails won\'t send');
+      console.log('💡 See GMAIL_SETUP.md for configuration\n');
     }
 
     return res.status(201).json({
@@ -271,7 +300,11 @@ export const submitContact = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error in submitContact:', error.message);
+    console.error('\n❌ ERROR IN CONTACT SUBMISSION');
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.error('Error message:', error.message);
+    console.error('Stack:', error.stack);
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
     return res.status(500).json({
       success: false,
       error: 'An internal error occurred while processing your message. Please reach out directly at sherazamjad933@gmail.com.'
