@@ -13,31 +13,59 @@ Deploy your portfolio to your custom domain **`syedsheraz.me`** with automatic H
 
 ---
 
-## 🔧 Step-by-Step Deployment
+## � Quick Checklist to Deploy to syedsheraz.me
+
+### **Phase 1: DNS Setup** (5 minutes)
+1. Your EC2 **Elastic IP**: `54.158.18.13` (us-east-1)
+2. Update your domain registrar (Namecheap, GoDaddy, etc.):
+   - Add `A` record: `syedsheraz.me` → `54.158.18.13`
+   - Add `A` record: `www` → `54.158.18.13`
+3. Wait 5-10 minutes for DNS to propagate
+
+### **Phase 2: SSL Certificate** (2 minutes)
+SSH into your EC2 (`54.158.18.13`) and run:
+```bash
+ssh -i "your-key.pem" ubuntu@54.158.18.13
+
+sudo apt update && sudo apt install -y certbot python3-certbot-nginx
+sudo certbot certonly --nginx \
+  -d syedsheraz.me \
+  -d www.syedsheraz.me \
+  --agree-tos -m sherazamjad933@gmail.com
+```
+
+### **Phase 3: Update Nginx Config** (5 minutes)
+Update `/etc/nginx/sites-available/portfolio` with the **HTTPS config** from the detailed guide below.
+
+Then:
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+### **Phase 4: Verify** (1 minute)
+Visit: `https://syedsheraz.me` ✅
+
+---
+
+## 📝 Detailed Step-by-Step Deployment
 
 ### Step 1: Point Your Domain to EC2 IP
 
-1. **Get Your EC2 Public IP**:
-   ```bash
-   ssh -i "your-key.pem" ubuntu@<EC2_IP>
-   curl http://checkip.amazonaws.com
-   ```
-   Write this down — e.g., `54.123.45.67`
+**Your EC2 Elastic IP**: `54.158.18.13` (us-east-1)
 
-2. **Configure DNS Records**:
-   
-   Log into your domain registrar (Namecheap, GoDaddy, Route53, etc.) and set:
+Log into your domain registrar (Namecheap, GoDaddy, Route53, etc.) and set:
 
    | Type | Name | Value | TTL |
    |------|------|-------|-----|
-   | `A` | `syedsheraz.me` | `54.123.45.67` | 3600 |
-   | `A` | `www` | `54.123.45.67` | 3600 |
+   | `A` | `syedsheraz.me` | `54.158.18.13` | 3600 |
+   | `A` | `www` | `54.158.18.13` | 3600 |
    | `CNAME` | `www.syedsheraz.me` | `syedsheraz.me` | 3600 |
 
    **Example (Namecheap)**:
    - Go to Domain → Advanced DNS
-   - Add A record: Host `@`, Value `54.123.45.67`
-   - Add A record: Host `www`, Value `54.123.45.67`
+   - Add A record: Host `@`, Value `54.158.18.13`
+   - Add A record: Host `www`, Value `54.158.18.13`
 
    **Wait 5-10 minutes** for DNS to propagate (check with: `nslookup syedsheraz.me`)
 
@@ -48,7 +76,7 @@ Deploy your portfolio to your custom domain **`syedsheraz.me`** with automatic H
 Connect to your EC2 instance and install Certbot:
 
 ```bash
-ssh -i "your-key.pem" ubuntu@54.123.45.67
+ssh -i "your-key.pem" ubuntu@54.158.18.13
 ```
 
 Then run:
