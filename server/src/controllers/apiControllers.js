@@ -219,6 +219,7 @@ export const submitContact = async (req, res) => {
           }
         });
 
+        // Email to portfolio owner (Sheraz)
         await transporter.sendMail({
           from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
           to: process.env.EMAIL_RECEIVER || 'sherazamjad933@gmail.com',
@@ -238,6 +239,23 @@ export const submitContact = async (req, res) => {
           `
         });
         console.log(`📧 Notification email sent to ${process.env.EMAIL_RECEIVER || 'sherazamjad933@gmail.com'}`);
+
+        // Confirmation email to the visitor
+        await transporter.sendMail({
+          from: `"Syed Sheraz Amjad" <${process.env.EMAIL_USER}>`,
+          to: email,
+          subject: `✅ Message Received - ${name}, Thanks for reaching out!`,
+          text: `Hi ${name},\n\nThank you for getting in touch! I have received your message and will get back to you as soon as possible.\n\nBest regards,\nSyed Sheraz Amjad`,
+          html: `
+            <div style="font-family: sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f0fdf4;">
+              <h2 style="color: #15803d;">✅ Message Received!</h2>
+              <p>Hi <strong>${name}</strong>,</p>
+              <p>Thank you for reaching out! I have received your message and will respond to you as soon as possible.</p>
+              <p style="margin-top: 20px; color: #666;">Best regards,<br><strong>Syed Sheraz Amjad</strong><br>DevOps Engineer & Full Stack Developer</p>
+            </div>
+          `
+        });
+        console.log(`📧 Confirmation email sent to ${email}`);
       } catch (mailError) {
         console.warn('⚠️ Nodemailer dispatch warning:', mailError.message);
       }
