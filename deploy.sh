@@ -49,7 +49,7 @@ docker run -d --name portfolio-server \
 docker run -d --name portfolio-client \
   --restart unless-stopped \
   --network portfolio-network \
-  -p 80:80 \
+  -p 8080:80 \
   "$CLIENT_IMAGE"
 
 echo "🩺 Running health check on $HEALTH_URL ..."
