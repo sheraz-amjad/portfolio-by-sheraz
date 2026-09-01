@@ -108,12 +108,12 @@ You should receive **2 emails**:
    const transporter = nodemailer.createTransport({
      service: 'gmail',
      auth: {
-       user: 'your_email@gmail.com',
-       pass: 'abcd efgh ijkl mnop'
+       user: 'sherazamjad933l@gmail.com',
+       pass: 'vvug lueu rodh xwsu'
      }
    });
    transporter.sendMail({
-     from: 'your_email@gmail.com',
+     from: 'sherazamjad933@gmail.com',
      to: 'test@example.com',
      subject: 'Test Email',
      text: 'If you see this, Gmail is working!'
@@ -131,7 +131,7 @@ You should receive **2 emails**:
 |----------|---------|-------------|
 | `EMAIL_SERVICE` | `gmail` | Email service provider (default: gmail) |
 | `EMAIL_USER` | `sherazamjad933@gmail.com` | Your Gmail address (sender) |
-| `EMAIL_PASS` | `abcd efgh ijkl mnop` | 16-char App Password from Google |
+| `EMAIL_PASS` | `vvug lueu rodh xwsu` | 16-char App Password from Google |
 | `EMAIL_RECEIVER` | `sherazamjad933@gmail.com` | Where notifications are sent (can be different) |
 
 ---
