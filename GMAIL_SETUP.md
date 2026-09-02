@@ -29,7 +29,7 @@ Edit your `.env` file in the `server/` directory and add:
 # Email Notification Settings
 EMAIL_SERVICE=gmail
 EMAIL_USER=sherazamjad933@gmail.com
-EMAIL_PASS=vvug lueu rodh xwsu
+EMAIL_PASS=szzhgyyweyifztjh
 EMAIL_RECEIVER=sherazamjad933@gmail.com
 ```
 
