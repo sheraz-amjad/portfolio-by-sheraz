@@ -1,0 +1,7 @@
+syedsheraz.me {
+    reverse_proxy client:80
+}
+
+www.syedsheraz.me {
+    redir https://syedsheraz.me{uri} permanent
+}
