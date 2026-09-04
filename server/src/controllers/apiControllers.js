@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import nodemailer from 'nodemailer';
 import Experience from '../models/Experience.js';
 import Project from '../models/Project.js';
@@ -12,10 +11,7 @@ import {
   certificationsData,
   personalInfoData
 } from '../seed/seedData.js';
-import { getDBStatus } from '../config/db.js';
-
-// Helper to verify if DB is queryable
-const isDBReady = () => mongoose.connection.readyState === 1;
+import { getDBStatus, isDBReady } from '../config/db.js';
 
 // @desc Get Personal Profile Info
 // @route GET /api/profile
@@ -35,7 +31,7 @@ export const getProfile = async (req, res) => {
 export const getExperience = async (req, res) => {
   try {
     if (isDBReady()) {
-      const experiences = await Experience.find().sort({ order: 1 });
+      const experiences = await Experience.findAll({ order: [['order', 'ASC']] });
       if (experiences && experiences.length > 0) {
         return res.status(200).json({ success: true, count: experiences.length, data: experiences });
       }
@@ -71,7 +67,7 @@ export const getProjects = async (req, res) => {
       if (featured === 'true') {
         query.featured = true;
       }
-      const projects = await Project.find(query).sort({ order: 1 });
+      const projects = await Project.findAll({ where: query, order: [['order', 'ASC']] });
       if (projects && projects.length > 0) {
         return res.status(200).json({ success: true, count: projects.length, data: projects });
       }
@@ -111,7 +107,7 @@ export const getSkills = async (req, res) => {
       if (category && category !== 'All') {
         query.category = category;
       }
-      const skills = await Skill.find(query).sort({ order: 1 });
+      const skills = await Skill.findAll({ where: query, order: [['order', 'ASC']] });
       if (skills && skills.length > 0) {
         return res.status(200).json({ success: true, count: skills.length, data: skills });
       }
@@ -143,7 +139,7 @@ export const getSkills = async (req, res) => {
 export const getCertifications = async (req, res) => {
   try {
     if (isDBReady()) {
-      const certs = await Certification.find().sort({ order: 1 });
+      const certs = await Certification.findAll({ order: [['order', 'ASC']] });
       if (certs && certs.length > 0) {
         return res.status(200).json({ success: true, count: certs.length, data: certs });
       }
@@ -199,7 +195,7 @@ export const submitContact = async (req, res) => {
     let savedMessage = null;
 
     if (isDBReady()) {
-      console.log('💾 Saving to MongoDB...');
+      console.log('💾 Saving to PostgreSQL...');
       savedMessage = await ContactMessage.create({
         name,
         email,
@@ -208,9 +204,9 @@ export const submitContact = async (req, res) => {
         ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
         userAgent: req.headers['user-agent'] || ''
       });
-      console.log(`✅ Message saved to DB with ID: ${savedMessage._id}`);
+      console.log(`✅ Message saved to DB with ID: ${savedMessage.id}`);
     } else {
-      console.log('⚠️  MongoDB offline - Message logged to console only');
+      console.log('⚠️  PostgreSQL offline - Message logged to console only');
       console.log('📝 Received Contact Form (DB offline):', {
         name,
         email,
@@ -321,6 +317,6 @@ export const getHealth = async (req, res) => {
     uptimeSeconds: Math.floor(process.uptime()),
     database: getDBStatus(),
     environment: process.env.NODE_ENV || 'development',
-    server: 'Syed Sheraz Amjad Portfolio MERN Core'
+    server: 'Syed Sheraz Amjad Portfolio SQL Core'
   });
 };

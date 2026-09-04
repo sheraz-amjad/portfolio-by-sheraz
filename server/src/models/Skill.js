@@ -1,20 +1,19 @@
-import mongoose from 'mongoose';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../config/db.js';
 
-const skillSchema = new mongoose.Schema(
+class Skill extends Model {}
+
+Skill.init(
   {
-    name: { type: String, required: true },
-    category: {
-      type: String,
-      enum: ['DevOps & Cloud', 'Full Stack (MERN)', 'Mobile Dev', 'Firebase', 'Tools & Practices'],
-      required: true
-    },
-    level: { type: Number, default: 85, min: 1, max: 100 },
-    iconName: { type: String, default: 'Code' },
-    tags: [{ type: String }],
-    featuredIn3D: { type: Boolean, default: false },
-    order: { type: Number, default: 0 },
+    name: { type: DataTypes.STRING, allowNull: false },
+    category: { type: DataTypes.ENUM('DevOps & Cloud', 'Full Stack (MERN)', 'Mobile Dev', 'Firebase', 'Tools & Practices'), allowNull: false },
+    level: { type: DataTypes.INTEGER, defaultValue: 85, validate: { min: 1, max: 100 } },
+    iconName: { type: DataTypes.STRING, defaultValue: 'Code' },
+    tags: { type: DataTypes.JSONB, defaultValue: [] },
+    featuredIn3D: { type: DataTypes.BOOLEAN, defaultValue: false },
+    order: { type: DataTypes.INTEGER, defaultValue: 0 }
   },
-  { timestamps: true }
+  { sequelize, modelName: 'Skill', tableName: 'skills', timestamps: true }
 );
 
-export default mongoose.model('Skill', skillSchema);
+export default Skill;

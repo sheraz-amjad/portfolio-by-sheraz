@@ -74,7 +74,7 @@ const startServer = async () => {
     console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
     console.log(`🔌 Health Check: http://localhost:${PORT}/api/health`);
     console.log(`📧 Email Configured: ${process.env.EMAIL_USER ? '✅ Yes' : '❌ No'}`);
-    console.log(`💾 MongoDB: ${process.env.MONGO_URI || 'Default (localhost:27017)'}`);
+    console.log(`💾 PostgreSQL: ${process.env.DATABASE_URL || 'Default (localhost:5432)'}`);
     console.log(`====================================================\n`);
   });
 

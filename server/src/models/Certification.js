@@ -1,18 +1,21 @@
-import mongoose from 'mongoose';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../config/db.js';
 
-const certificationSchema = new mongoose.Schema(
+class Certification extends Model {}
+
+Certification.init(
   {
-    title: { type: String, required: true },
-    issuer: { type: String, required: true },
-    instructor: { type: String, default: '' },
-    period: { type: String, default: '' },
-    type: { type: String, enum: ['Certification', 'Training', 'Self-Directed', 'Education'], default: 'Certification' },
-    description: { type: String, required: true },
-    topics: [{ type: String }],
-    credentialUrl: { type: String, default: '' },
-    order: { type: Number, default: 0 },
+    title: { type: DataTypes.STRING, allowNull: false },
+    issuer: { type: DataTypes.STRING, allowNull: false },
+    instructor: { type: DataTypes.STRING, defaultValue: '' },
+    period: { type: DataTypes.STRING, defaultValue: '' },
+    type: { type: DataTypes.ENUM('Certification', 'Training', 'Self-Directed', 'Education'), defaultValue: 'Certification' },
+    description: { type: DataTypes.TEXT, allowNull: false },
+    topics: { type: DataTypes.JSONB, defaultValue: [] },
+    credentialUrl: { type: DataTypes.STRING, defaultValue: '' },
+    order: { type: DataTypes.INTEGER, defaultValue: 0 }
   },
-  { timestamps: true }
+  { sequelize, modelName: 'Certification', tableName: 'certifications', timestamps: true }
 );
 
-export default mongoose.model('Certification', certificationSchema);
+export default Certification;

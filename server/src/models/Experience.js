@@ -1,17 +1,20 @@
-import mongoose from 'mongoose';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../config/db.js';
 
-const experienceSchema = new mongoose.Schema(
+class Experience extends Model {}
+
+Experience.init(
   {
-    title: { type: String, required: true },
-    company: { type: String, required: true },
-    period: { type: String, required: true },
-    location: { type: String, default: 'Pakistan' },
-    roleType: { type: String, enum: ['DevOps', 'Full Stack', 'Mobile', 'Cloud'], default: 'DevOps' },
-    description: [{ type: String, required: true }],
-    technologies: [{ type: String }],
-    order: { type: Number, default: 0 },
+    title: { type: DataTypes.STRING, allowNull: false },
+    company: { type: DataTypes.STRING, allowNull: false },
+    period: { type: DataTypes.STRING, allowNull: false },
+    location: { type: DataTypes.STRING, defaultValue: 'Pakistan' },
+    roleType: { type: DataTypes.ENUM('DevOps', 'Full Stack', 'Mobile', 'Cloud'), defaultValue: 'DevOps' },
+    description: { type: DataTypes.JSONB, allowNull: false },
+    technologies: { type: DataTypes.JSONB, defaultValue: [] },
+    order: { type: DataTypes.INTEGER, defaultValue: 0 }
   },
-  { timestamps: true }
+  { sequelize, modelName: 'Experience', tableName: 'experiences', timestamps: true }
 );
 
-export default mongoose.model('Experience', experienceSchema);
+export default Experience;

@@ -10,12 +10,14 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         PORT: 5000,
-        MONGO_URI: "mongodb://127.0.0.1:27017/portfolio",
+        DATABASE_URL: "postgres://portfolio:<password>@127.0.0.1:5432/portfolio",
+        DATABASE_SSL: "false",
       },
       env_production: {
         NODE_ENV: "production",
         PORT: 5000,
-        MONGO_URI: "mongodb://127.0.0.1:27017/portfolio",
+        DATABASE_URL: "postgres://portfolio:<password>@127.0.0.1:5432/portfolio",
+        DATABASE_SSL: "false",
       }
     }
   ]

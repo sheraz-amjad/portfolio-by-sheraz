@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Experience from '../models/Experience.js';
 import Project from '../models/Project.js';
@@ -10,20 +9,21 @@ import {
   skillsData,
   certificationsData
 } from './seedData.js';
+import { connectDB, sequelize, isDBReady } from '../config/db.js';
 
 dotenv.config();
 
 export const seedDatabase = async (force = false) => {
-  if (mongoose.connection.readyState !== 1) {
-    console.log('ℹ️ MongoDB is not connected. Skipping database seeding.');
+  if (!isDBReady()) {
+    console.log('ℹ️ PostgreSQL is not connected. Skipping database seeding.');
     return;
   }
 
   try {
-    const expCount = await Experience.countDocuments();
-    const projCount = await Project.countDocuments();
-    const skillCount = await Skill.countDocuments();
-    const certCount = await Certification.countDocuments();
+    const expCount = await Experience.count();
+    const projCount = await Project.count();
+    const skillCount = await Skill.count();
+    const certCount = await Certification.count();
 
     const isEmpty = expCount === 0 && projCount === 0 && skillCount === 0 && certCount === 0;
 
@@ -35,16 +35,16 @@ export const seedDatabase = async (force = false) => {
     console.log('🌱 Seeding database with Syed Sheraz Amjad CV data...');
 
     if (force || isEmpty) {
-      await Experience.deleteMany({});
-      await Project.deleteMany({});
-      await Skill.deleteMany({});
-      await Certification.deleteMany({});
+      await Experience.destroy({ where: {} });
+      await Project.destroy({ where: {} });
+      await Skill.destroy({ where: {} });
+      await Certification.destroy({ where: {} });
     }
 
-    await Experience.insertMany(experiencesData);
-    await Project.insertMany(projectsData);
-    await Skill.insertMany(skillsData);
-    await Certification.insertMany(certificationsData);
+    await Experience.bulkCreate(experiencesData);
+    await Project.bulkCreate(projectsData);
+    await Skill.bulkCreate(skillsData);
+    await Certification.bulkCreate(certificationsData);
 
     console.log('✅ Database seeded successfully!');
     console.log(`   - ${experiencesData.length} Experiences`);
@@ -59,12 +59,10 @@ export const seedDatabase = async (force = false) => {
 // If run directly via CLI
 if (process.argv[1]?.endsWith('seeder.js')) {
   const runDirectSeed = async () => {
-    const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/portfolio';
     try {
-      console.log(`Connecting to ${uri}...`);
-      await mongoose.connect(uri);
+      await connectDB();
       await seedDatabase(true);
-      await mongoose.disconnect();
+      await sequelize.close();
       console.log('Done!');
       process.exit(0);
     } catch (err) {

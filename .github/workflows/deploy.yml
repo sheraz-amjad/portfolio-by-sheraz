@@ -1,4 +1,4 @@
-name: 🚀 Production CI/CD & AWS EC2 Deployment
+name: Deploy portfolio
 
 on:
   push:
@@ -9,126 +9,64 @@ permissions:
   contents: read
 
 jobs:
-  # ============================================================================
-  # Stage 1: Continuous Integration & Validation
-  # ============================================================================
-  test-and-build:
-    name: 🧪 Test & Lint
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 22
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Build Frontend SPA
+      - name: Build frontend
         run: |
-          cd client
-          npm ci
-          npm run build
+          npm ci --prefix client
+          npm run build --prefix client
 
-      - name: Validate Server
+      - name: Validate backend
         run: |
-          cd server
-          npm ci
-          node --check src/server.js
-          node --check src/seed/seedData.js
-          node --check src/controllers/apiControllers.js
+          npm ci --prefix server
+          node --check server/src/server.js
 
-  # ============================================================================
-  # Stage 2: Docker Multi-Stage Image Builds & Registry Push
-  # ============================================================================
-  docker-build-push:
-    name: 🐳 Docker Multi-Stage Build & Push
-    needs: test-and-build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Prepare release
+        run: |
+          rm -rf release
+          mkdir -p release
+          rsync -a --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude='client/dist' --exclude='server/.env' ./ release/
+          rm -rf release/client
+          cp -a client/dist/. release/
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
+      - name: Configure SSH
         env:
-          DOCKER_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
-        if: env.DOCKER_TOKEN != ''
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazdevops' }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
-      - name: Build & Push Server Docker Image
+      - name: Deploy release
         env:
-          DOCKER_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazdevops' }}
-        uses: docker/build-push-action@v5
-        with:
-          context: ./server
-          file: ./server/Dockerfile
-          push: ${{ env.DOCKER_TOKEN != '' }}
-          tags: |
-            ${{ env.DOCKER_USER }}/portfolio-server:latest
-            ${{ env.DOCKER_USER }}/portfolio-server:${{ github.sha }}
-
-      - name: Build & Push Client Docker Image
-        env:
-          DOCKER_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME || 'sherazdevops' }}
-        uses: docker/build-push-action@v5
-        with:
-          context: ./client
-          file: ./client/Dockerfile
-          push: ${{ env.DOCKER_TOKEN != '' }}
-          tags: |
-            ${{ env.DOCKER_USER }}/portfolio-client:latest
-            ${{ env.DOCKER_USER }}/portfolio-client:${{ github.sha }}
-
-  # ============================================================================
-  # Stage 3: Automated Continuous Deployment to AWS EC2
-  # ============================================================================
-  deploy-ec2:
-    name: 🌐 Zero-Downtime Deployment to AWS EC2
-    needs: [test-and-build, docker-build-push]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Deploy to AWS EC2 via SSH
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-        if: env.EC2_HOST != ''
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER || 'ubuntu' }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            echo "🚀 Starting remote deployment on EC2..."
-
-            sudo mkdir -p /var/www/portfolio
-            sudo chown -R $USER:$USER /var/www/portfolio
-
-            if [ -d /var/www/portfolio/.git ]; then
-              echo "Repo exists — pulling latest"
-              cd /var/www/portfolio
-              git fetch --all
-              git reset --hard origin/main
-            else
-              echo "No repo found — cloning fresh"
-              rm -rf /var/www/portfolio/* /var/www/portfolio/.[!.]* 2>/dev/null || true
-              git clone https://github.com/${{ github.repository }} /var/www/portfolio
-              cd /var/www/portfolio
-            fi
-
-            # Execute automated deployment script with health check & rollback
-            chmod +x deploy.sh
-            ./deploy.sh
-
-            echo "✅ Deployment completed on AWS EC2!"
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" \
+            'sudo mkdir -p /var/www/portfolio && sudo chown -R "$USER":"$USER" /var/www/portfolio'
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='server/.env' \
+            -e "ssh -i ~/.ssh/deploy_key -p ${SSH_PORT:-22}" \
+            release/ "$SSH_USERNAME@$SSH_HOST:/var/www/portfolio/"
+          ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" <<'REMOTE'
+          set -e
+          cd /var/www/portfolio
+          npm ci --omit=dev --prefix server
+          pm2 startOrReload ecosystem.config.cjs --env production
+          curl --fail --silent --show-error http://127.0.0.1:5000/api/health
+          REMOTE

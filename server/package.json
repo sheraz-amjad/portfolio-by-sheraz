@@ -13,15 +13,17 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.9.5",
-    "nodemailer": "^6.9.16"
+    "nodemailer": "^6.9.16",
+    "pg": "^8.23.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.8"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
   },
   "keywords": [
     "express",
-    "mongoose",
+    "postgresql",
     "portfolio-api"
   ],
   "author": "Syed Sheraz Amjad",
