@@ -40,8 +40,8 @@ jobs:
 
       - name: Configure SSH
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          SSH_HOST: ${{ secrets.EC2_HOST }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
           if [ -z "$SSH_PRIVATE_KEY" ] || [ -z "$SSH_HOST" ]; then
@@ -61,8 +61,8 @@ jobs:
 
       - name: Deploy release
         env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SSH_HOST: ${{ secrets.EC2_HOST }}
+          SSH_USERNAME: ${{ secrets.EC2_USER }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
           ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" \
