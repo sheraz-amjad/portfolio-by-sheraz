@@ -44,11 +44,20 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
-          mkdir -p "$HOME/.ssh"
-          chmod 700 "$HOME/.ssh"
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts
+          if [ -z "$SSH_PRIVATE_KEY" ] || [ -z "$SSH_HOST" ]; then
+            echo "::error::SSH_PRIVATE_KEY and SSH_HOST secrets must be configured"
+            exit 1
+          fi
+          SSH_DIR="$RUNNER_TEMP/portfolio-ssh"
+          mkdir -p "$SSH_DIR"
+          chmod 700 "$SSH_DIR"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$SSH_DIR/deploy_key"
+          chmod 600 "$SSH_DIR/deploy_key"
+          if ! ssh-keyscan -T 10 -p "${SSH_PORT:-22}" -H "$SSH_HOST" > "$SSH_DIR/known_hosts"; then
+            echo "::error::Unable to retrieve an SSH host key from $SSH_HOST"
+            exit 1
+          fi
+          printf 'SSH_DIR=%s\n' "$SSH_DIR" >> "$GITHUB_ENV"
 
       - name: Deploy release
         env:
@@ -56,15 +65,15 @@ jobs:
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
-          ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" \
+          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" \
             'sudo mkdir -p /var/www/portfolio && sudo chown -R "$USER":"$USER" /var/www/portfolio'
           rsync -avz --delete \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='server/.env' \
-            -e "ssh -i ~/.ssh/deploy_key -p ${SSH_PORT:-22}" \
+            -e "ssh -i $SSH_DIR/deploy_key -o UserKnownHostsFile=$SSH_DIR/known_hosts -p ${SSH_PORT:-22}" \
             release/ "$SSH_USERNAME@$SSH_HOST:/var/www/portfolio/"
-          ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" <<'REMOTE'
+          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" <<'REMOTE'
           set -e
           cd /var/www/portfolio
           npm ci --omit=dev --prefix server
