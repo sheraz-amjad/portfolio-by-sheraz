@@ -75,6 +75,13 @@ jobs:
             release/ "$SSH_USERNAME@$SSH_HOST:/var/www/portfolio/"
           ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" <<'REMOTE'
           set -e
+          if ! command -v npm >/dev/null 2>&1; then
+            curl --fail --silent --show-error https://deb.nodesource.com/setup_22.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+          fi
+          if ! command -v pm2 >/dev/null 2>&1; then
+            sudo npm install --global pm2
+          fi
           cd /var/www/portfolio
           npm ci --omit=dev --prefix server
           pm2 startOrReload ecosystem.config.cjs --env production
