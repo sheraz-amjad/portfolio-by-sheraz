@@ -59,7 +59,7 @@ jobs:
           fi
           printf 'SSH_DIR=%s\n' "$SSH_DIR" >> "$GITHUB_ENV"
 
-        - name: Deploy release
+      - name: Deploy release
         env:
           SSH_HOST: ${{ secrets.EC2_HOST }}
           SSH_USERNAME: ${{ secrets.EC2_USER }}
