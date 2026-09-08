@@ -15,7 +15,7 @@ dotenv.config();
 
 export const seedDatabase = async (force = false) => {
   if (!isDBReady()) {
-    console.log('ℹ️ PostgreSQL is not connected. Skipping database seeding.');
+    console.log('ℹ️ SQL is not connected. Skipping database seeding.');
     return;
   }
 

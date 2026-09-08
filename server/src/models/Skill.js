@@ -9,7 +9,7 @@ Skill.init(
     category: { type: DataTypes.ENUM('DevOps & Cloud', 'Full Stack (MERN)', 'Mobile Dev', 'Firebase', 'Tools & Practices'), allowNull: false },
     level: { type: DataTypes.INTEGER, defaultValue: 85, validate: { min: 1, max: 100 } },
     iconName: { type: DataTypes.STRING, defaultValue: 'Code' },
-    tags: { type: DataTypes.JSONB, defaultValue: [] },
+    tags: { type: DataTypes.JSON, defaultValue: [] },
     featuredIn3D: { type: DataTypes.BOOLEAN, defaultValue: false },
     order: { type: DataTypes.INTEGER, defaultValue: 0 }
   },

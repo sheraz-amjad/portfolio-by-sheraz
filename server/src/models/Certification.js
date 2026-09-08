@@ -11,7 +11,7 @@ Certification.init(
     period: { type: DataTypes.STRING, defaultValue: '' },
     type: { type: DataTypes.ENUM('Certification', 'Training', 'Self-Directed', 'Education'), defaultValue: 'Certification' },
     description: { type: DataTypes.TEXT, allowNull: false },
-    topics: { type: DataTypes.JSONB, defaultValue: [] },
+    topics: { type: DataTypes.JSON, defaultValue: [] },
     credentialUrl: { type: DataTypes.STRING, defaultValue: '' },
     order: { type: DataTypes.INTEGER, defaultValue: 0 }
   },

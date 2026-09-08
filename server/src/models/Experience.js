@@ -10,8 +10,8 @@ Experience.init(
     period: { type: DataTypes.STRING, allowNull: false },
     location: { type: DataTypes.STRING, defaultValue: 'Pakistan' },
     roleType: { type: DataTypes.ENUM('DevOps', 'Full Stack', 'Mobile', 'Cloud'), defaultValue: 'DevOps' },
-    description: { type: DataTypes.JSONB, allowNull: false },
-    technologies: { type: DataTypes.JSONB, defaultValue: [] },
+    description: { type: DataTypes.JSON, allowNull: false },
+    technologies: { type: DataTypes.JSON, defaultValue: [] },
     order: { type: DataTypes.INTEGER, defaultValue: 0 }
   },
   { sequelize, modelName: 'Experience', tableName: 'experiences', timestamps: true }
