@@ -59,7 +59,7 @@ jobs:
           fi
           printf 'SSH_DIR=%s\n' "$SSH_DIR" >> "$GITHUB_ENV"
 
-      - name: Deploy release
+        - name: Deploy release
         env:
           SSH_HOST: ${{ secrets.EC2_HOST }}
           SSH_USERNAME: ${{ secrets.EC2_USER }}
@@ -72,7 +72,7 @@ jobs:
             --exclude='server/.env' \
             -e "ssh -i $SSH_DIR/deploy_key -o UserKnownHostsFile=$SSH_DIR/known_hosts -p ${SSH_PORT:-22}" \
             release/ "$SSH_USERNAME@$SSH_HOST:/var/www/portfolio/"
-          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" <<'REMOTE'
+          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" 'bash -s' <<'REMOTE'
           set -e
           if ! command -v npm >/dev/null 2>&1; then
             curl --fail --silent --show-error https://deb.nodesource.com/setup_22.x | sudo -E bash -
