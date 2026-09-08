@@ -10,13 +10,13 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         PORT: 5000,
-        DATABASE_URL: "postgres://portfolio:<password>@127.0.0.1:5432/portfolio",
+        DATABASE_URL: "mysql://portfolio:sheraz@127.0.0.1:3306/portfolio",
         DATABASE_SSL: "false",
       },
       env_production: {
         NODE_ENV: "production",
         PORT: 5000,
-        DATABASE_URL: "postgres://portfolio:<password>@127.0.0.1:5432/portfolio",
+        DATABASE_URL: "mysql://portfolio:sheraz@127.0.0.1:3306/portfolio",
         DATABASE_SSL: "false",
       }
     }
