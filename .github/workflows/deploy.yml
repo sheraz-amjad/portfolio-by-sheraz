@@ -63,7 +63,6 @@ jobs:
         env:
           SSH_HOST: ${{ secrets.EC2_HOST }}
           SSH_USERNAME: ${{ secrets.EC2_USER }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
           ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" \
             'sudo mkdir -p /var/www/portfolio && sudo chown -R "$USER":"$USER" /var/www/portfolio'
