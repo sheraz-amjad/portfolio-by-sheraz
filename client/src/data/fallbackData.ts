@@ -85,7 +85,7 @@ export const fallbackProjects: ProjectItem[] = [
       'Nginx reverse proxy with caching and gzip compression configured on EC2.',
       'Full authentication and responsive media player UI.'
     ],
-    githubUrl: 'https://github.com/sherazamjad',
+    githubUrl: 'https://github.com/sheraz-amjad',
     liveUrl: '',
     featured: true,
     order: 1,
@@ -103,7 +103,7 @@ export const fallbackProjects: ProjectItem[] = [
       'Database sanitization pipelines isolating malicious payloads.',
       'Smooth server cutover with near-zero downtime.'
     ],
-    githubUrl: 'https://github.com/sherazamjad',
+    githubUrl: 'https://github.com/sheraz-amjad',
     liveUrl: '',
     featured: true,
     order: 2,
@@ -121,7 +121,7 @@ export const fallbackProjects: ProjectItem[] = [
       'Real-time Firestore listeners ensuring synced room availability.',
       'Optimized 60fps animations and responsive UI across tablet and phone screens.'
     ],
-    githubUrl: 'https://github.com/sherazamjad',
+    githubUrl: 'https://github.com/sheraz-amjad',
     liveUrl: '',
     featured: true,
     order: 3,
@@ -139,7 +139,7 @@ export const fallbackProjects: ProjectItem[] = [
       'Push notification alerts via Firebase Cloud Messaging (FCM).',
       'Offline-first caching mechanism for festival timetables.'
     ],
-    githubUrl: 'https://github.com/sherazamjad',
+    githubUrl: 'https://github.com/sheraz-amjad',
     liveUrl: '',
     featured: true,
     order: 4,
