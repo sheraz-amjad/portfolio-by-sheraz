@@ -137,9 +137,6 @@ export const Footer: React.FC<FooterProps> = ({ profile, onNavigate }) => {
           </div>
 
           <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1 text-slate-400">
-              Crafted with <Heart size={13} className="text-red-500 fill-red-500 inline" /> & Antigravity IDE
-            </span>
             <button
               onClick={scrollToTop}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyber-card border border-cyber-border text-slate-300 hover:text-cyber-cyan hover:border-cyber-cyan transition-all"
