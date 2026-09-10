@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onNavigate }) => {
     { id: 'skills', label: 'Skills' },
     { id: 'pipeline', label: 'CI/CD Sim' },
     { id: 'certifications', label: 'Certifications' },
-    { id: 'contact', label: 'contact' },
+    { id: 'contact', label: 'Contact' },
   ];
 
   const handleLinkClick = (id: string) => {
@@ -65,8 +65,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onNavigate }) => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? 'glass-nav py-3 shadow-xl shadow-black/50'
-          : 'bg-transparent py-5'
+        ? 'glass-nav py-3 shadow-xl shadow-black/50'
+        : 'bg-transparent py-5'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,8 +103,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onNavigate }) => {
                   key={link.id}
                   onClick={() => handleLinkClick(link.id)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${isActive
-                      ? 'bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/40 shadow-[0_0_10px_rgba(0,240,255,0.2)] font-semibold'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                    ? 'bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/40 shadow-[0_0_10px_rgba(0,240,255,0.2)] font-semibold'
+                    : 'text-slate-300 hover:text-white hover:bg-white/5'
                     }`}
                 >
                   {link.label}
@@ -154,8 +154,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onNavigate }) => {
                 key={link.id}
                 onClick={() => handleLinkClick(link.id)}
                 className={`text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${activeSection === link.id
-                    ? 'bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/30'
-                    : 'text-slate-300 hover:bg-white/5'
+                  ? 'bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/30'
+                  : 'text-slate-300 hover:bg-white/5'
                   }`}
               >
                 {link.label}
