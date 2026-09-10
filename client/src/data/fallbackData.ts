@@ -15,7 +15,7 @@ export const fallbackProfile: PersonalInfo = {
   tagline: 'Building, containerizing, and deploying scalable full-stack (MERN) applications end-to-end',
   shortBio: 'BSCS graduate transitioning into DevOps and Full Stack Engineering, with hands-on Flutter mobile development experience. Skilled in AWS, Docker, CI/CD (GitHub Actions), Linux administration, networking, and shell scripting for automated security/malware scanning.',
   links: {
-    github: 'https://github.com/sherazamjad',
+    github: 'https://github.com/sheraz-amjad',
     linkedin: 'https://www.linkedin.com/in/syed-sheraz-amjad',
     email: 'mailto:sherazamjad933@gmail.com',
     phone: 'tel:+923069275494'
