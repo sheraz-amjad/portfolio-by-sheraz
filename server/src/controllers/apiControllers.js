@@ -166,7 +166,7 @@ export const getCertifications = async (req, res) => {
 export const submitContact = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
-    
+
     console.log('\n🔔 NEW CONTACT FORM SUBMISSION');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log(`📝 Name: ${name}`);
@@ -222,7 +222,7 @@ export const submitContact = async (req, res) => {
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       console.log(`✅ EMAIL_USER: ${process.env.EMAIL_USER}`);
       console.log(`✅ EMAIL_SERVICE: ${process.env.EMAIL_SERVICE || 'gmail'}`);
-      
+
       try {
         const transporter = nodemailer.createTransport({
           service: process.env.EMAIL_SERVICE || 'gmail',
@@ -238,19 +238,37 @@ export const submitContact = async (req, res) => {
           from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
           to: process.env.EMAIL_RECEIVER || 'sherazamjad933@gmail.com',
           replyTo: email,
-          subject: `⚡ [Portfolio Message] from ${name}: ${subject || 'Inquiry'}`,
-          text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+          subject: `New message from ${name}${subject ? ` — ${subject}` : ''}`,
+          text: `You've got a new message from your portfolio site.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}\n\nReply directly to this email to respond to ${name}.`,
           html: `
-            <div style="font-family: sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-              <h2 style="color: #0f172a;">New Message from Portfolio Website</h2>
-              <p><strong>Name:</strong> ${name}</p>
-              <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-              <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
-              <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin-top: 15px;">
-                <p style="white-space: pre-wrap; margin: 0; color: #334155;">${message}</p>
-              </div>
-            </div>
-          `
+    <div style="font-family: -apple-system, Segoe UI, sans-serif; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 10px; color: #1e293b;">
+      <p style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin: 0 0 8px;">Portfolio Contact Form</p>
+      <h2 style="margin: 0 0 16px; color: #0f172a;">New message from ${name}</h2>
+
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+        <tr>
+          <td style="padding: 4px 0; color: #64748b; width: 90px;">From</td>
+          <td style="padding: 4px 0;"><strong>${name}</strong></td>
+        </tr>
+        <tr>
+          <td style="padding: 4px 0; color: #64748b;">Email</td>
+          <td style="padding: 4px 0;"><a href="mailto:${email}" style="color: #2563eb;">${email}</a></td>
+        </tr>
+        <tr>
+          <td style="padding: 4px 0; color: #64748b;">Subject</td>
+          <td style="padding: 4px 0;">${subject || 'N/A'}</td>
+        </tr>
+      </table>
+
+      <div style="background: #f8fafc; padding: 16px; border-radius: 8px; border-left: 3px solid #2563eb;">
+        <p style="white-space: pre-wrap; margin: 0; line-height: 1.6; color: #334155;">${message}</p>
+      </div>
+
+      <p style="margin-top: 20px; font-size: 13px; color: #94a3b8;">
+        💡 Just hit reply — it'll go straight to ${name} at ${email}.
+      </p>
+    </div>
+  `
         });
         console.log(`✅ Notification email sent to ${process.env.EMAIL_RECEIVER || 'sherazamjad933@gmail.com'}`);
 
@@ -259,16 +277,32 @@ export const submitContact = async (req, res) => {
         await transporter.sendMail({
           from: `"Syed Sheraz Amjad" <${process.env.EMAIL_USER}>`,
           to: email,
-          subject: `✅ Message Received - ${name}, Thanks for reaching out!`,
-          text: `Hi ${name},\n\nThank you for getting in touch! I have received your message and will get back to you as soon as possible.\n\nBest regards,\nSyed Sheraz Amjad`,
+          subject: `Thanks for reaching out, ${name}!`,
+          text: `Hi ${name},\n\nThanks for getting in touch through my portfolio! I've received your message and will get back to you as soon as I can — usually within a day or two.\n\nIn the meantime, feel free to check out more of my work or connect with me on LinkedIn.\n\nBest,\nSyed Sheraz Amjad\nDevOps Engineer & Full Stack Developer`,
           html: `
-            <div style="font-family: sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f0fdf4;">
-              <h2 style="color: #15803d;">✅ Message Received!</h2>
-              <p>Hi <strong>${name}</strong>,</p>
-              <p>Thank you for reaching out! I have received your message and will respond to you as soon as possible.</p>
-              <p style="margin-top: 20px; color: #666;">Best regards,<br><strong>Syed Sheraz Amjad</strong><br>DevOps Engineer & Full Stack Developer</p>
-            </div>
-          `
+    <div style="font-family: -apple-system, Segoe UI, sans-serif; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 10px; color: #1e293b;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="display: inline-block; width: 48px; height: 48px; line-height: 48px; background: #dcfce7; border-radius: 50%; font-size: 22px;">✅</div>
+      </div>
+
+      <h2 style="text-align: center; color: #15803d; margin: 0 0 8px;">Message received!</h2>
+      <p style="text-align: center; color: #64748b; margin: 0 0 24px;">Thanks for reaching out, ${name}.</p>
+
+      <p style="line-height: 1.6; color: #334155;">
+        I've got your message and will get back to you as soon as I can — usually within a day or two.
+      </p>
+
+      <p style="line-height: 1.6; color: #334155;">
+        In the meantime, feel free to browse more of my work or connect with me on LinkedIn.
+      </p>
+
+      <div style="margin-top: 28px; padding-top: 16px; border-top: 1px solid #e2e8f0; color: #64748b;">
+        <p style="margin: 0;">Best regards,</p>
+        <p style="margin: 2px 0 0; font-weight: 600; color: #0f172a;">Syed Sheraz Amjad</p>
+        <p style="margin: 2px 0 0; font-size: 13px;">DevOps Engineer & Full Stack Developer</p>
+      </div>
+    </div>
+  `
         });
         console.log(`✅ Confirmation email sent to ${email}`);
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
