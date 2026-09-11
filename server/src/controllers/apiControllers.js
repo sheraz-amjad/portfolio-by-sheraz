@@ -277,29 +277,67 @@ export const submitContact = async (req, res) => {
         await transporter.sendMail({
           from: `"Syed Sheraz Amjad" <${process.env.EMAIL_USER}>`,
           to: email,
-          subject: `Thanks for reaching out, ${name}!`,
-          text: `Hi ${name},\n\nThanks for getting in touch through my portfolio! I've received your message and will get back to you as soon as I can — usually within a day or two.\n\nIn the meantime, feel free to check out more of my work or connect with me on LinkedIn.\n\nBest,\nSyed Sheraz Amjad\nDevOps Engineer & Full Stack Developer`,
+          subject: `Thanks for reaching out, ${name}! 👋`,
+          text: `Hi ${name},
+
+Thanks for getting in touch through my portfolio! I've received your message and will get back to you as soon as I can — usually within a day or two.
+
+In the meantime, let's connect:
+LinkedIn: ${process.env.LINKEDIN_URL || 'https://linkedin.com/in/sherazamjad'}
+Portfolio: ${process.env.PORTFOLIO_URL || 'https://sherazamjad.dev'}
+
+I'd love to have you follow along on LinkedIn — I regularly share DevOps tips, project breakdowns, and things I'm learning.
+
+Best,
+Syed Sheraz Amjad
+DevOps Engineer & Full Stack Developer`,
           html: `
-    <div style="font-family: -apple-system, Segoe UI, sans-serif; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 10px; color: #1e293b;">
-      <div style="text-align: center; margin-bottom: 20px;">
-        <div style="display: inline-block; width: 48px; height: 48px; line-height: 48px; background: #dcfce7; border-radius: 50%; font-size: 22px;">✅</div>
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: auto; background: #ffffff;">
+
+      <!-- Header banner -->
+      <div style="background: linear-gradient(135deg, #15803d, #22c55e); padding: 32px 24px; border-radius: 10px 10px 0 0; text-align: center;">
+        <div style="display: inline-block; width: 56px; height: 56px; line-height: 56px; background: rgba(255,255,255,0.2); border-radius: 50%; font-size: 26px;">✅</div>
+        <h2 style="color: #ffffff; margin: 12px 0 4px; font-size: 22px;">Message Received!</h2>
+        <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 14px;">Thanks for reaching out, ${name}</p>
       </div>
 
-      <h2 style="text-align: center; color: #15803d; margin: 0 0 8px;">Message received!</h2>
-      <p style="text-align: center; color: #64748b; margin: 0 0 24px;">Thanks for reaching out, ${name}.</p>
+      <!-- Body -->
+      <div style="padding: 28px 24px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 10px 10px;">
+        <p style="line-height: 1.6; color: #334155; margin: 0 0 16px;">
+          Hi <strong>${name}</strong>,
+        </p>
+        <p style="line-height: 1.6; color: #334155; margin: 0 0 16px;">
+          I've got your message and will get back to you as soon as I can — usually within <strong>a day or two</strong>.
+        </p>
 
-      <p style="line-height: 1.6; color: #334155;">
-        I've got your message and will get back to you as soon as I can — usually within a day or two.
-      </p>
+        <!-- LinkedIn CTA card -->
+        <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; padding: 20px; margin: 24px 0; text-align: center;">
+          <p style="margin: 0 0 4px; font-size: 14px; color: #0369a1; font-weight: 600;">
+            Let's stay connected
+          </p>
+          <p style="margin: 0 0 16px; font-size: 13px; color: #64748b;">
+            I share DevOps tips, project breakdowns, and lessons learned on LinkedIn.
+          </p>
+          <a href="${process.env.LINKEDIN_URL || 'https://linkedin.com/in/sherazamjad'}"
+             style="display: inline-block; background: #0a66c2; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px; padding: 10px 24px; border-radius: 6px;">
+            🔗 Follow me on LinkedIn
+          </a>
+        </div>
 
-      <p style="line-height: 1.6; color: #334155;">
-        In the meantime, feel free to browse more of my work or connect with me on LinkedIn.
-      </p>
+        <p style="line-height: 1.6; color: #334155; margin: 0 0 4px;">
+          You can also check out more of my work here:
+        </p>
+        <p style="margin: 0 0 20px;">
+          <a href="${process.env.PORTFOLIO_URL || 'https://sherazamjad.dev'}" style="color: #2563eb; font-weight: 500; text-decoration: none;">
+            → View my portfolio
+          </a>
+        </p>
 
-      <div style="margin-top: 28px; padding-top: 16px; border-top: 1px solid #e2e8f0; color: #64748b;">
-        <p style="margin: 0;">Best regards,</p>
-        <p style="margin: 2px 0 0; font-weight: 600; color: #0f172a;">Syed Sheraz Amjad</p>
-        <p style="margin: 2px 0 0; font-size: 13px;">DevOps Engineer & Full Stack Developer</p>
+        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; color: #64748b;">
+          <p style="margin: 0;">Best regards,</p>
+          <p style="margin: 2px 0 0; font-weight: 600; color: #0f172a;">Syed Sheraz Amjad</p>
+          <p style="margin: 2px 0 0; font-size: 13px;">DevOps Engineer & Full Stack Developer</p>
+        </div>
       </div>
     </div>
   `
