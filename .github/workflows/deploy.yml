@@ -58,21 +58,24 @@ jobs:
             exit 1
           fi
           printf 'SSH_DIR=%s\n' "$SSH_DIR" >> "$GITHUB_ENV"
+          printf 'SSH_PORT=%s\n' "${SSH_PORT:-22}" >> "$GITHUB_ENV"
 
       - name: Deploy release
         env:
           SSH_HOST: ${{ secrets.EC2_HOST }}
           SSH_USERNAME: ${{ secrets.EC2_USER }}
         run: |
-          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" \
+          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" \
             'sudo mkdir -p /var/www/portfolio && sudo chown -R "$USER":"$USER" /var/www/portfolio'
+
           rsync -avz --delete \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='server/.env' \
-            -e "ssh -i $SSH_DIR/deploy_key -o UserKnownHostsFile=$SSH_DIR/known_hosts -p ${SSH_PORT:-22}" \
+            -e "ssh -i $SSH_DIR/deploy_key -o UserKnownHostsFile=$SSH_DIR/known_hosts -p $SSH_PORT" \
             release/ "$SSH_USERNAME@$SSH_HOST:/var/www/portfolio/"
-          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "${SSH_PORT:-22}" "$SSH_USERNAME@$SSH_HOST" 'bash -s' <<'REMOTE'
+
+          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" 'bash -s' <<'REMOTE'
           set -e
           if ! command -v npm >/dev/null 2>&1; then
             curl --fail --silent --show-error https://deb.nodesource.com/setup_22.x | sudo -E bash -
