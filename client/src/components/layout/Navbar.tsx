@@ -13,11 +13,10 @@ import {
 } from 'lucide-react';
 
 interface NavbarProps {
-  onOpenResume: () => void;
   onNavigate: (sectionId: string) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onNavigate }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -52,7 +51,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onNavigate }) => {
     { id: 'experience', label: 'Experience' },
     { id: 'projects', label: 'Projects' },
     { id: 'skills', label: 'Skills' },
-    { id: 'pipeline', label: 'CI/CD Sim' },
     { id: 'certifications', label: 'Certifications' },
     { id: 'contact', label: 'Contact' },
   ];
@@ -115,13 +113,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onNavigate }) => {
 
           {/* Action CTAs */}
           <div className="hidden sm:flex items-center gap-2.5">
-            <button
-              onClick={onOpenResume}
+            <a
+              href="/resume.pdf"
+              download="Syed_Sheraz_Amjad_Resume.pdf"
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono text-slate-200 bg-cyber-card/80 border border-cyber-border hover:border-cyber-cyan/50 hover:text-cyber-cyan transition-all duration-200"
             >
               <FileText size={14} className="text-cyber-cyan" />
               <span>Resume</span>
-            </button>
+            </a>
 
             <button
               onClick={() => handleLinkClick('contact')}
@@ -163,16 +162,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume, onNavigate }) => {
             ))}
 
             <div className="pt-4 border-t border-cyber-border flex flex-col gap-2.5">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenResume();
-                }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-mono text-slate-200 bg-cyber-card border border-cyber-border"
+              <a
+                href="/resume.pdf"
+                download="Syed_Sheraz_Amjad_Resume.pdf"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-mono text-slate-200 bg-cyber-card border border-cyber-border hover:bg-cyber-surface/50 transition-colors"
               >
                 <FileText size={16} className="text-cyber-cyan" />
                 <span>View CV / Resume</span>
-              </button>
+              </a>
               <button
                 onClick={() => handleLinkClick('contact')}
                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-semibold text-black bg-gradient-to-r from-cyber-cyan to-cyber-green"

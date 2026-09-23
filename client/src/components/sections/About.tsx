@@ -25,12 +25,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
       color: '#00f0ff',
       description: 'Architecting AWS EC2 & S3 environments, crafting multi-stage Docker builds, orchestrating zero-downtime GitHub Actions CI/CD pipelines, and managing production Nginx reverse proxies.'
     },
-    {
-      title: 'Full Stack MERN Engineering',
-      icon: Database,
-      color: '#10b981',
-      description: 'Developing high-throughput REST APIs with Node.js and Express, architecting MongoDB schemas with Mongoose ODM, and building modern React SPAs with TypeScript.'
-    },
+
     {
       title: 'Flutter Mobile Engineering',
       icon: Smartphone,
@@ -62,7 +57,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
             <span className="cyber-gradient-text">Containerized Solutions</span>
           </h2>
           <p className="text-sm sm:text-base text-slate-400 font-sans leading-relaxed">
-            BSCS graduate combining deep DevOps automation with hands-on MERN full-stack and Flutter mobile application engineering.
+            BSCS graduate combining deep DevOps automation with Flutter mobile application engineering.
           </p>
         </div>
 
@@ -119,7 +114,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
 
                 <div className="flex items-center gap-2 text-cyber-cyan pt-2">
                   <span>$</span>
-                  <span className="text-white">docker run -d --name mern-portfolio -p 80:80</span>
+                  <span className="text-white">docker run -d --name devops-portfolio -p 80:80</span>
                 </div>
                 <div className="pl-4 text-cyber-green text-[11px]">
                   [✓] Status: Container running · Health: healthy · Port: 80 -&gt; 5000 proxy

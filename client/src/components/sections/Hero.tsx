@@ -13,23 +13,20 @@ import {
   ExternalLink,
   ChevronDown
 } from 'lucide-react';
-import { TechNetworkScene } from '../3d/TechNetworkScene';
 import { PersonalInfo } from '../../types';
 
 interface HeroProps {
   profile: PersonalInfo;
   onNavigate: (sectionId: string) => void;
-  onOpenResume: () => void;
 }
 
 const ROLES = [
   'DevOps Engineer',
   'Flutter Mobile Developer',
-  'Full Stack MERN Engineer',
   'Linux Security & Cloud Specialist'
 ];
 
-export const Hero: React.FC<HeroProps> = ({ profile, onNavigate, onOpenResume }) => {
+export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
   const [roleIndex, setRoleIndex] = useState(0);
 
   useEffect(() => {
@@ -142,9 +139,48 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate, onOpenResume })
             </div>
           </div>
 
-          {/* Right Column: 3D Interactive Scene (6 cols) */}
-          <div className="lg:col-span-6 relative w-full">
-            <TechNetworkScene />
+          {/* Right Column: Stylized Terminal View (6 cols) */}
+          <div className="lg:col-span-6 relative w-full mt-10 lg:mt-0">
+            <div className="rounded-2xl terminal-window border border-cyber-border overflow-hidden transform rotate-2 hover:rotate-0 transition-transform duration-500 shadow-2xl shadow-cyber-cyan/10">
+              {/* Terminal Header */}
+              <div className="flex items-center justify-between px-4 py-2.5 bg-[#050811] border-b border-cyber-border text-xs font-mono text-slate-400">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
+                  <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
+                  <span className="ml-2 text-slate-300 font-mono">deploy.yml — GitHub Actions</span>
+                </div>
+                <span className="text-[10px] text-cyber-cyan">Running</span>
+              </div>
+              
+              {/* Terminal Body */}
+              <div className="p-4 sm:p-5 font-mono text-xs sm:text-sm text-slate-300 bg-[#080d1a] leading-relaxed">
+                <div className="text-slate-400">name: <span className="text-cyber-green">Production Deploy Pipeline</span></div>
+                <div className="text-slate-400">on:</div>
+                <div className="text-slate-400 pl-4">push:</div>
+                <div className="text-slate-400 pl-8">branches: <span className="text-cyber-cyan">["main"]</span></div>
+                <br/>
+                <div className="text-slate-400">jobs:</div>
+                <div className="text-slate-400 pl-4">build-and-deploy:</div>
+                <div className="text-slate-400 pl-8">runs-on: <span className="text-cyber-cyan">ubuntu-latest</span></div>
+                <div className="text-slate-400 pl-8">steps:</div>
+                <div className="pl-12 flex items-center gap-2">
+                  <span className="text-slate-400">- name: Checkout code</span>
+                  <CheckCircle2 size={12} className="text-cyber-green" />
+                </div>
+                <div className="pl-12 flex items-center gap-2">
+                  <span className="text-slate-400">- name: Build Docker image</span>
+                  <CheckCircle2 size={12} className="text-cyber-green" />
+                </div>
+                <div className="pl-12 flex items-center gap-2">
+                  <span className="text-slate-400">- name: Push to ECR</span>
+                  <CheckCircle2 size={12} className="text-cyber-green" />
+                </div>
+                <div className="pl-12 flex items-center gap-2 animate-pulse">
+                  <span className="text-cyber-cyan">- name: Deploy to Kubernetes...</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

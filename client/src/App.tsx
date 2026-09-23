@@ -18,13 +18,11 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { Hero } from './components/sections/Hero';
 import { About } from './components/sections/About';
-import { PipelineVisualizer } from './components/sections/PipelineVisualizer';
 import { Experience } from './components/sections/Experience';
 import { Projects } from './components/sections/Projects';
 import { Skills } from './components/sections/Skills';
 import { Certifications } from './components/sections/Certifications';
 import { Contact } from './components/sections/Contact';
-import { ResumeViewerModal } from './components/ui/ResumeViewerModal';
 import { CheckCircle2, AlertCircle, X } from 'lucide-react';
 
 interface ToastState {
@@ -39,7 +37,6 @@ export function App() {
   const [projects, setProjects] = useState<ProjectItem[]>(fallbackProjects);
   const [skills, setSkills] = useState<SkillItem[]>(fallbackSkills);
   const [certifications, setCertifications] = useState<CertificationItem[]>(fallbackCertifications);
-  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [toasts, setToasts] = useState<ToastState[]>([]);
 
   // Fetch from API (falls back gracefully to pre-seeded static data if offline)
@@ -97,7 +94,6 @@ export function App() {
 
       {/* Global Navigation */}
       <Navbar
-        onOpenResume={() => setIsResumeModalOpen(true)}
         onNavigate={scrollToSection}
       />
 
@@ -106,12 +102,9 @@ export function App() {
         <Hero
           profile={profile}
           onNavigate={scrollToSection}
-          onOpenResume={() => setIsResumeModalOpen(true)}
         />
 
         <About profile={profile} />
-
-        <PipelineVisualizer />
 
         <Experience experiences={experiences} />
 
@@ -131,17 +124,6 @@ export function App() {
       <Footer
         profile={profile}
         onNavigate={scrollToSection}
-      />
-
-      {/* Resume Modal */}
-      <ResumeViewerModal
-        isOpen={isResumeModalOpen}
-        onClose={() => setIsResumeModalOpen(false)}
-        profile={profile}
-        experiences={experiences}
-        projects={projects}
-        skills={skills}
-        certifications={certifications}
       />
 
       {/* Toast Notification Container */}

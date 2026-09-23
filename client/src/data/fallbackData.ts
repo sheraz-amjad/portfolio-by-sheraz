@@ -8,7 +8,7 @@ import {
 
 export const fallbackProfile: PersonalInfo = {
   name: 'Syed Sheraz Amjad',
-  titles: ['DevOps Engineer', 'Flutter Mobile Developer', 'Full Stack MERN Engineer'],
+  titles: ['DevOps Engineer', 'Flutter Mobile Developer'],
   location: 'Lahore, Pakistan',
   phone: '+92 306 9275494',
   email: 'sherazamjad933@gmail.com',
@@ -52,7 +52,7 @@ export const fallbackExperiences: ExperienceItem[] = [
     roleType: 'DevOps',
     order: 2,
     description: [
-      'Worked across the MERN stack (MongoDB, Express.js, React, Node.js) alongside core DevOps responsibilities.',
+      'Worked alongside core DevOps teams setting up infrastructure.',
       'Containerized MERN applications using Docker, including multi-stage builds for smaller, optimized production images.',
       'Built and maintained CI/CD pipelines with GitHub Actions, cutting deployment time from roughly 10 minutes down to about 3 minutes.',
       'Managed Docker images, containers, volumes, and logs, and pushed images to Docker Hub.',
@@ -81,13 +81,13 @@ export const fallbackExperiences: ExperienceItem[] = [
 
 export const fallbackProjects: ProjectItem[] = [
   {
-    title: 'Netflix Clone (Full Stack + DevOps)',
-    tagline: 'Containerized MERN Streaming Platform with Automated CI/CD to AWS EC2',
-    description: 'Full-stack Netflix-style streaming platform clone built with MERN stack. Containerized with Docker and automated deployment to AWS EC2 via GitHub Actions CI/CD.',
+    title: 'Automated Media Streaming Pipeline',
+    tagline: 'Containerized Streaming Platform with Automated CI/CD to AWS EC2',
+    description: 'Developed an automated deployment pipeline for a media streaming platform. Containerized with Docker and implemented automated deployment to AWS EC2 via GitHub Actions CI/CD.',
     category: 'DevOps & Cloud',
-    technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Docker', 'AWS EC2', 'GitHub Actions'],
+    technologies: ['Docker', 'AWS EC2', 'GitHub Actions', 'Linux'],
     highlights: [
-      'Built a full-stack Netflix-style streaming platform clone using MongoDB, Express.js, React, and Node.js.',
+      'Built a full deployment pipeline for a complex streaming application.',
       'Containerized the application with Docker and deployed it to an AWS EC2 instance.',
       'Implemented a CI/CD pipeline with GitHub Actions for automated build, test, and deployment.',
       'Applied DevOps practices end-to-end: containerization, CI/CD automation, and cloud hosting.'
@@ -97,7 +97,7 @@ export const fallbackProjects: ProjectItem[] = [
     featured: true,
     order: 1,
     icon: 'Cloud',
-    architectureBadge: 'MERN + Docker + EC2'
+    architectureBadge: 'Docker + EC2'
   },
   {
     title: 'Security Scan & Server Migration',
