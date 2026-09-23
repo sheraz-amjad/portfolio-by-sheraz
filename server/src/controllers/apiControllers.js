@@ -284,7 +284,6 @@ Thanks for getting in touch through my portfolio! I've received your message and
 
 In the meantime, let's connect:
 LinkedIn: ${process.env.LINKEDIN_URL || 'https://linkedin.com/in/sherazamjad'}
-Portfolio: ${process.env.PORTFOLIO_URL || 'https://sherazamjad.dev'}
 
 I'd love to have you follow along on LinkedIn — I regularly share DevOps tips, project breakdowns, and things I'm learning.
 

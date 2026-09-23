@@ -105,6 +105,19 @@ export const Certifications: React.FC<CertificationsProps> = ({ certifications }
                   <p className="text-xs text-slate-300 leading-relaxed font-sans">
                     {item.description}
                   </p>
+
+                  {/* Certificate Link */}
+                  {item.credentialUrl && (
+                    <a
+                      href={item.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold text-cyber-cyan hover:text-white transition-colors"
+                    >
+                      <span>View Certificate</span>
+                      <ExternalLink size={12} />
+                    </a>
+                  )}
                 </div>
 
                 {/* Topics Covered */}

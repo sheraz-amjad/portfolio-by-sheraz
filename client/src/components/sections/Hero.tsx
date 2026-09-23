@@ -49,15 +49,26 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate, onOpenResume })
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* Left Column: Text & CTAs (7 cols) */}
           <div className="lg:col-span-6 space-y-6 text-left">
-            {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyber-card/90 border border-cyber-cyan/30 backdrop-blur-md shadow-lg shadow-cyber-cyan/5">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-green opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyber-green" />
-              </span>
-              <span className="text-xs font-mono text-slate-200">
-                Available for DevOps & Mobile Projects
-              </span>
+            {/* Profile Picture & Status Pill */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+              <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 rounded-full p-1 bg-gradient-to-tr from-cyber-cyan to-cyber-green">
+                <img 
+                  src="/profile-pic.png" 
+                  alt="Syed Sheraz Amjad - DevOps Engineer"
+                  className="w-full h-full object-cover rounded-full border-2 border-[#050811]"
+                />
+              </div>
+
+              {/* Status Pill */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyber-card/90 border border-cyber-cyan/30 backdrop-blur-md shadow-lg shadow-cyber-cyan/5 h-fit">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-green opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyber-green" />
+                </span>
+                <span className="text-xs font-mono text-slate-200">
+                  Available for DevOps & Mobile Projects
+                </span>
+              </div>
             </div>
 
             {/* Name and Titles */}
@@ -101,14 +112,15 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate, onOpenResume })
                 <span>Contact Me</span>
               </button>
 
-              <button
-                onClick={onOpenResume}
-                className="flex items-center gap-2 px-4 py-3 rounded-xl glass-card border border-cyber-border text-slate-300 hover:text-white hover:border-slate-500 text-sm font-mono transition-all"
+              <a
+                href="/resume.pdf"
+                download="Syed_Sheraz_Amjad_Resume.pdf"
+                className="flex items-center gap-2 px-4 py-3 rounded-xl glass-card border border-cyber-border text-slate-300 hover:text-white hover:border-slate-500 text-sm font-mono transition-all hover:scale-105"
                 title="Download / View Resume"
               >
                 <FileDown size={15} className="text-cyber-cyan" />
                 <span>CV</span>
-              </button>
+              </a>
             </div>
 
             {/* Quick Metrics / Key Strengths Row */}

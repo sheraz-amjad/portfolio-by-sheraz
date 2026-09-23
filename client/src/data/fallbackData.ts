@@ -12,8 +12,8 @@ export const fallbackProfile: PersonalInfo = {
   location: 'Lahore, Pakistan',
   phone: '+92 306 9275494',
   email: 'sherazamjad933@gmail.com',
-  tagline: 'Building, containerizing, and deploying scalable full-stack (MERN) applications end-to-end',
-  shortBio: 'BSCS graduate transitioning into DevOps and Full Stack Engineering, with hands-on Flutter mobile development experience. Skilled in AWS, Docker, CI/CD (GitHub Actions), Linux administration, networking, and shell scripting for automated security/malware scanning.',
+  tagline: 'Results-driven BSCS graduate and Microsoft Certified DevOps Engineer Expert',
+  shortBio: 'Results-driven BSCS graduate and Microsoft Certified DevOps Engineer Expert, with hands-on experience across AWS (EC2, S3, Lambda, CLI), Microsoft Azure, Docker, Kubernetes, CI/CD automation (GitHub Actions/Workflows), Terraform (IaC), Linux administration, networking, monitoring tools, and shell scripting. Currently working as a DevOps Engineer at Zemotify, where I led a full server migration and security remediation effort. Also experienced in Flutter mobile development, with a track record of building, containerizing, and deploying scalable applications end-to-end.',
   links: {
     github: 'https://github.com/sheraz-amjad',
     linkedin: 'https://www.linkedin.com/in/syed-sheraz-amjad',
@@ -31,44 +31,51 @@ export const fallbackExperiences: ExperienceItem[] = [
     roleType: 'DevOps',
     order: 1,
     description: [
-      'Led migration of company websites from a compromised server to a new, secure server after an attack.',
-      'Performed security and malware scans across all hosted websites prior to migration.',
-      'Wrote custom shell scripts to automatically scan files/databases for malware and suspicious code.',
-      'Hardened server configuration and set up monitoring and continuous logs auditing.',
-      'Coordinated DNS and server reconfiguration for low-downtime cutover.'
+      'Led migration of company websites from a compromised server to a new, secure server after the previous server was attacked.',
+      'Designed and managed CI/CD pipelines using GitHub Actions/Workflows for automated build, test, and deployment.',
+      'Containerized and deployed applications using Docker; managed images, containers, volumes, and logs.',
+      'Provisioned and managed cloud infrastructure as code using Terraform (IaC).',
+      'Deployed and managed application workloads on Kubernetes, including pods, deployments, and services.',
+      'Performed day-to-day Linux server administration and management — user access, packages, services, and system hardening.',
+      'Wrote automated shell scripts for website and database backups (to remote storage) and for security scanning.',
+      'Set up monitoring tools and alerting to reduce the risk of future incidents and ensure server uptime.',
+      'Configured and managed a load balancer to distribute traffic across servers and improve availability.',
+      'Coordinated DNS and server reconfiguration to ensure a smooth, low-downtime cutover to the new infrastructure.'
     ],
-    technologies: ['Linux Administration', 'Shell Scripting', 'Server Hardening', 'Malware Scanning', 'DNS Management', 'Nginx']
+    technologies: ['GitHub Actions', 'Docker', 'Terraform', 'Kubernetes', 'Linux Admin', 'Shell Scripting', 'Monitoring Tools']
   },
   {
-    title: 'Full Stack Engineer (DevOps & MERN)',
-    company: 'Ebryx',
-    period: 'Mar 2026 – May 2026',
-    location: 'Pakistan (3 Months)',
-    roleType: 'Full Stack',
+    title: 'DevOps Intern',
+    company: 'Ebryx (Pvt.) Ltd',
+    period: 'Apr 27, 2026 – Jul 15, 2026',
+    location: 'Lahore, Pakistan',
+    roleType: 'DevOps',
     order: 2,
     description: [
-      'Worked across the MERN stack alongside core DevOps responsibilities.',
-      'Containerized MERN applications with Docker, including multi-stage builds for optimized production images.',
-      'Built and maintained CI/CD pipelines with GitHub Actions, cutting deployment time from ~10 minutes to ~3 minutes.',
-      'Managed Docker images, containers, volumes, and logs; pushed images to Docker Hub.',
-      'Tracked sprints in Jira, participated in Agile ceremonies and code reviews.'
+      'Worked across the MERN stack (MongoDB, Express.js, React, Node.js) alongside core DevOps responsibilities.',
+      'Containerized MERN applications using Docker, including multi-stage builds for smaller, optimized production images.',
+      'Built and maintained CI/CD pipelines with GitHub Actions, cutting deployment time from roughly 10 minutes down to about 3 minutes.',
+      'Managed Docker images, containers, volumes, and logs, and pushed images to Docker Hub.',
+      'Tracked sprints and tasks in Jira and participated in Agile ceremonies and code reviews.',
+      'Recognized by management as sincere, hardworking, technically sound, and result-oriented.'
     ],
-    technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Docker', 'GitHub Actions', 'Jira', 'Agile']
+    technologies: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Docker', 'GitHub Actions', 'Jira']
   },
   {
-    title: 'Flutter Developer',
-    company: 'Semicolon',
-    period: 'Sep 2025 – Feb 2026',
-    location: 'Pakistan (6 Months)',
+    title: 'Flutter Intern',
+    company: 'Semicolons Tech',
+    period: 'Sep 05, 2025 – Feb 05, 2026',
+    location: 'Lahore, Pakistan',
     roleType: 'Mobile',
     order: 3,
     description: [
-      'Developed and maintained the Joya Hotel App (full booking flow, UI enhancements, in-app navigation).',
-      'Built the Festival Rumours App (event-based data display, user interaction modules).',
-      'Improved UI/UX and performed debugging/performance optimization across devices.',
-      'Worked with Flutter, Dart, Firebase, Git/GitHub, Android Studio.'
+      'Developed and maintained the Joya Hotel App — implemented the full booking flow, UI enhancements, and smooth in-app navigation for hospitality users.',
+      'Built the Festival Rumours App, handling event-based data display and user interaction modules.',
+      'Improved UI/UX design across both applications and performed debugging and performance optimization.',
+      'Worked with Flutter, Dart, Firebase, Git/GitHub, and Android Studio throughout the development lifecycle.',
+      'Involved in UI development, state management, API integration, bug fixing, and testing; recognized for enthusiasm, dedication, and willingness to learn.'
     ],
-    technologies: ['Flutter', 'Dart', 'Firebase Auth', 'Firestore', 'MVVM', 'Android Studio', 'Git']
+    technologies: ['Flutter', 'Dart', 'Firebase', 'Git', 'Android Studio', 'API Integration']
   }
 ];
 
@@ -76,50 +83,48 @@ export const fallbackProjects: ProjectItem[] = [
   {
     title: 'Netflix Clone (Full Stack + DevOps)',
     tagline: 'Containerized MERN Streaming Platform with Automated CI/CD to AWS EC2',
-    description: 'Full-stack media streaming platform clone. Containerized with Docker multi-stage builds and automated deployment to AWS EC2 via GitHub Actions CI/CD.',
+    description: 'Full-stack Netflix-style streaming platform clone built with MERN stack. Containerized with Docker and automated deployment to AWS EC2 via GitHub Actions CI/CD.',
     category: 'DevOps & Cloud',
-    technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Docker', 'AWS EC2', 'GitHub Actions', 'Nginx'],
+    technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Docker', 'AWS EC2', 'GitHub Actions'],
     highlights: [
-      'Automated CI/CD with GitHub Actions cutting deployment cycle down to ~3 minutes.',
-      'Multi-stage Docker builds reducing production container size significantly.',
-      'Nginx reverse proxy with caching and gzip compression configured on EC2.',
-      'Full authentication and responsive media player UI.'
+      'Built a full-stack Netflix-style streaming platform clone using MongoDB, Express.js, React, and Node.js.',
+      'Containerized the application with Docker and deployed it to an AWS EC2 instance.',
+      'Implemented a CI/CD pipeline with GitHub Actions for automated build, test, and deployment.',
+      'Applied DevOps practices end-to-end: containerization, CI/CD automation, and cloud hosting.'
     ],
     githubUrl: 'https://github.com/sheraz-amjad',
     liveUrl: '',
     featured: true,
     order: 1,
     icon: 'Cloud',
-    architectureBadge: 'AWS EC2 + CI/CD'
+    architectureBadge: 'MERN + Docker + EC2'
   },
   {
-    title: 'Malware Scan & Server Migration',
-    tagline: 'Automated Shell Scripting Engine for Incident Response & Low-Downtime Migration',
-    description: 'Custom shell scripts to automatically scan files and databases for malware post-attack; hardened Linux configurations and migrated production sites with minimal downtime.',
+    title: 'Security Scan & Server Migration',
+    tagline: 'Automated Shell Scripting Engine for Incident Response',
+    description: 'Authored custom shell scripts to automatically scan files and databases for suspicious code post-attack, and migrated production sites with minimal downtime.',
     category: 'Security & Automation',
-    technologies: ['Shell Scripting', 'Linux Admin', 'Server Hardening', 'Regex Scanners', 'DNS Cutover'],
+    technologies: ['Shell Scripting', 'Linux Admin', 'Server Administration'],
     highlights: [
-      'Custom regex patterns detecting obfuscated eval(), webshells, and backdoors.',
-      'Database sanitization pipelines isolating malicious payloads.',
-      'Smooth server cutover with near-zero downtime.'
+      'Authored shell scripts to automatically scan website files and databases for suspicious code following a server attack.',
+      'Migrated multiple production websites to a new server with minimal downtime.'
     ],
     githubUrl: 'https://github.com/sheraz-amjad',
     liveUrl: '',
     featured: true,
     order: 2,
     icon: 'ShieldCheck',
-    architectureBadge: 'Shell & Security'
+    architectureBadge: 'Shell Scripting + Linux'
   },
   {
     title: 'Joya Hotel App',
-    tagline: 'Cross-Platform Hospitality Reservation App with Real-Time Booking',
-    description: 'Hospitality booking mobile app with real-time reservations via Firebase Firestore, guest authentication, and custom interactive UI navigation.',
+    tagline: 'Hospitality Booking App with Real-Time Reservations',
+    description: 'Full hospitality booking app enabling guests to browse rooms, make reservations, and manage bookings in real time using Firebase Firestore and Auth.',
     category: 'Mobile (Flutter)',
-    technologies: ['Flutter', 'Dart', 'Firebase Auth', 'Cloud Firestore', 'Provider', 'UI/UX'],
+    technologies: ['Flutter', 'Dart', 'Firebase Firestore', 'Firebase Auth', 'Git'],
     highlights: [
-      'Complete booking flow with interactive room calendars and amenity selectors.',
-      'Real-time Firestore listeners ensuring synced room availability.',
-      'Optimized 60fps animations and responsive UI across tablet and phone screens.'
+      'Full hospitality booking app enabling guests to browse rooms, make reservations, and manage bookings in real time.',
+      'Integrated Firebase Firestore and Auth for seamless backend services.'
     ],
     githubUrl: 'https://github.com/sheraz-amjad',
     liveUrl: '',
@@ -130,89 +135,99 @@ export const fallbackProjects: ProjectItem[] = [
   },
   {
     title: 'Festival Rumours App',
-    tagline: 'Event Discovery, Live Schedules & Interactive Social Feeds Platform',
-    description: 'Event-based discovery mobile application with feeds, user likes/comments, dynamic content loading, and real-time push notifications.',
+    tagline: 'Event Discovery and Interactive Social Feeds Platform',
+    description: 'Lifestyle and events discovery app with event feeds, likes/comments, and dynamic content powered by Firebase.',
     category: 'Mobile (Flutter)',
-    technologies: ['Flutter', 'Dart', 'Firebase FCM', 'Cloud Firestore', 'GetX', 'REST API'],
+    technologies: ['Flutter', 'Dart', 'Firebase'],
     highlights: [
-      'Dynamic festival event feed with pagination, caching, and instant interaction modules.',
-      'Push notification alerts via Firebase Cloud Messaging (FCM).',
-      'Offline-first caching mechanism for festival timetables.'
+      'Lifestyle and events discovery app with event feeds, likes/comments.',
+      'Dynamic content powered by Firebase backend.'
     ],
     githubUrl: 'https://github.com/sheraz-amjad',
     liveUrl: '',
     featured: true,
     order: 4,
     icon: 'Sparkles',
-    architectureBadge: 'Flutter + FCM'
+    architectureBadge: 'Flutter + Firebase'
   }
 ];
 
 export const fallbackSkills: SkillItem[] = [
   // DevOps & Cloud
-  { name: 'AWS (EC2, S3, Lambda, CLI)', category: 'DevOps & Cloud', level: 90, iconName: 'Cloud', tags: ['EC2', 'S3', 'Lambda', 'IAM'], featuredIn3D: true, order: 1 },
-  { name: 'Docker (Compose, Multi-Stage, Hub)', category: 'DevOps & Cloud', level: 95, iconName: 'Container', tags: ['Containers', 'Compose', 'Multi-stage'], featuredIn3D: true, order: 2 },
-  { name: 'CI/CD (GitHub Actions)', category: 'DevOps & Cloud', level: 92, iconName: 'Workflow', tags: ['Automation', 'Pipelines', 'YAML'], featuredIn3D: true, order: 3 },
-  { name: 'Linux Administration', category: 'DevOps & Cloud', level: 88, iconName: 'Terminal', tags: ['Ubuntu', 'Systemd', 'SSH'], featuredIn3D: true, order: 4 },
-  { name: 'Networking & Firewalls', category: 'DevOps & Cloud', level: 85, iconName: 'Shield', tags: ['DNS', 'Nginx', 'UFW', 'Ports'], featuredIn3D: false, order: 5 },
-  { name: 'Shell Scripting', category: 'DevOps & Cloud', level: 90, iconName: 'Code2', tags: ['Bash', 'Automation', 'Malware Scan'], featuredIn3D: false, order: 6 },
-
-  // Full Stack (MERN)
-  { name: 'MongoDB & Mongoose', category: 'Full Stack (MERN)', level: 88, iconName: 'Database', tags: ['NoSQL', 'Atlas', 'Schemas'], featuredIn3D: true, order: 7 },
-  { name: 'Express.js', category: 'Full Stack (MERN)', level: 90, iconName: 'Server', tags: ['REST API', 'Routing', 'Middleware'], featuredIn3D: true, order: 8 },
-  { name: 'React.js & TypeScript', category: 'Full Stack (MERN)', level: 92, iconName: 'Code', tags: ['Hooks', 'Vite', 'State'], featuredIn3D: true, order: 9 },
-  { name: 'Node.js', category: 'Full Stack (MERN)', level: 90, iconName: 'Cpu', tags: ['Event Loop', 'Async', 'NPM'], featuredIn3D: true, order: 10 },
-  { name: 'REST APIs', category: 'Full Stack (MERN)', level: 92, iconName: 'Network', tags: ['JSON', 'HTTP/2', 'CORS'], featuredIn3D: false, order: 11 },
-  { name: 'Containerized Deployment', category: 'Full Stack (MERN)', level: 94, iconName: 'Layers', tags: ['PM2', 'Nginx', 'EC2'], featuredIn3D: false, order: 12 },
+  { name: 'AWS (EC2, S3, Lambda, CLI)', category: 'DevOps & Cloud', level: 90, iconName: 'Cloud', tags: ['EC2', 'S3', 'Lambda', 'CLI'], featuredIn3D: true, order: 1 },
+  { name: 'Microsoft Azure Administration', category: 'DevOps & Cloud', level: 85, iconName: 'Cloud', tags: ['Azure Admin'], featuredIn3D: false, order: 2 },
+  { name: 'Docker (Compose, Multi-stage, Hub)', category: 'DevOps & Cloud', level: 95, iconName: 'Container', tags: ['Dockerize', 'Volumes', 'Logs'], featuredIn3D: true, order: 3 },
+  { name: 'Kubernetes (Pods, Deployments)', category: 'DevOps & Cloud', level: 85, iconName: 'Server', tags: ['Pods', 'Services'], featuredIn3D: true, order: 4 },
+  { name: 'CI/CD Automation (GitHub Actions)', category: 'DevOps & Cloud', level: 92, iconName: 'Workflow', tags: ['GitHub Workflows'], featuredIn3D: true, order: 5 },
+  { name: 'Terraform (IaC)', category: 'DevOps & Cloud', level: 85, iconName: 'Code2', tags: ['Infrastructure as Code'], featuredIn3D: false, order: 6 },
+  { name: 'Linux Admin & Networking', category: 'DevOps & Cloud', level: 88, iconName: 'Terminal', tags: ['Load Balancing', 'Monitoring Tools'], featuredIn3D: true, order: 7 },
+  { name: 'Shell Scripting', category: 'DevOps & Cloud', level: 90, iconName: 'Code', tags: ['Bash'], featuredIn3D: false, order: 8 },
 
   // Mobile Dev
-  { name: 'Flutter Framework', category: 'Mobile Dev', level: 92, iconName: 'Smartphone', tags: ['Cross-Platform', 'Widgets', 'Canvas'], featuredIn3D: true, order: 13 },
-  { name: 'Dart Language', category: 'Mobile Dev', level: 90, iconName: 'FileCode', tags: ['OOP', 'Async', 'Null Safety'], featuredIn3D: false, order: 14 },
-  { name: 'State Management (BLoC/Provider/GetX)', category: 'Mobile Dev', level: 88, iconName: 'Activity', tags: ['BLoC', 'Provider', 'GetX'], featuredIn3D: false, order: 15 },
-  { name: 'Mobile UI/UX Implementation', category: 'Mobile Dev', level: 90, iconName: 'Layout', tags: ['Responsive', 'Animations'], featuredIn3D: false, order: 16 },
+  { name: 'Flutter & Dart', category: 'Mobile Dev', level: 92, iconName: 'Smartphone', tags: ['Cross-Platform'], featuredIn3D: true, order: 9 },
+  { name: 'MVVM Architecture', category: 'Mobile Dev', level: 90, iconName: 'Layout', tags: ['Architecture'], featuredIn3D: false, order: 10 },
+  { name: 'State Management', category: 'Mobile Dev', level: 88, iconName: 'Activity', tags: ['BLoC', 'Provider', 'GetX'], featuredIn3D: false, order: 11 },
+  { name: 'UI/UX Implementation', category: 'Mobile Dev', level: 90, iconName: 'Monitor', tags: ['Design'], featuredIn3D: false, order: 12 },
 
   // Firebase
-  { name: 'Firebase Authentication', category: 'Firebase', level: 92, iconName: 'Key', tags: ['OAuth', 'Security Rules'], featuredIn3D: true, order: 17 },
-  { name: 'Cloud Firestore', category: 'Firebase', level: 90, iconName: 'Database', tags: ['Real-time', 'NoSQL'], featuredIn3D: false, order: 18 },
-  { name: 'Cloud Messaging (FCM)', category: 'Firebase', level: 86, iconName: 'Bell', tags: ['Push Notifications'], featuredIn3D: false, order: 19 },
-  { name: 'Firebase Storage', category: 'Firebase', level: 88, iconName: 'Folder', tags: ['Cloud Buckets', 'Uploads'], featuredIn3D: false, order: 20 },
+  { name: 'Firebase Authentication', category: 'Firebase', level: 92, iconName: 'Key', tags: ['Auth'], featuredIn3D: true, order: 13 },
+  { name: 'Firestore & Storage', category: 'Firebase', level: 90, iconName: 'Database', tags: ['Storage'], featuredIn3D: false, order: 14 },
+  { name: 'Cloud Messaging (FCM)', category: 'Firebase', level: 86, iconName: 'Bell', tags: ['Notifications'], featuredIn3D: false, order: 15 },
 
   // Tools & Practices
-  { name: 'Git & GitHub', category: 'Tools & Practices', level: 95, iconName: 'GitBranch', tags: ['PRs', 'Actions', 'Git Flow'], featuredIn3D: true, order: 21 },
-  { name: 'Jira & Agile / Scrum', category: 'Tools & Practices', level: 88, iconName: 'CheckSquare', tags: ['Sprints', 'Code Review'], featuredIn3D: false, order: 22 },
-  { name: 'SDLC & CI/CD Pipelines', category: 'Tools & Practices', level: 90, iconName: 'Sliders', tags: ['DevSecOps', 'Automation'], featuredIn3D: false, order: 23 },
-  { name: 'VS Code, Android Studio & Xcode', category: 'Tools & Practices', level: 90, iconName: 'Monitor', tags: ['IDE', 'Emulators'], featuredIn3D: false, order: 24 }
+  { name: 'Git & GitHub', category: 'Tools & Practices', level: 95, iconName: 'GitBranch', tags: ['Version Control'], featuredIn3D: true, order: 16 },
+  { name: 'Jira & Agile/Scrum', category: 'Tools & Practices', level: 88, iconName: 'CheckSquare', tags: ['SDLC'], featuredIn3D: false, order: 17 },
+  { name: 'VS Code, Android Studio, Xcode', category: 'Tools & Practices', level: 90, iconName: 'Monitor', tags: ['IDE'], featuredIn3D: false, order: 18 }
 ];
 
 export const fallbackCertifications: CertificationItem[] = [
   {
-    title: 'DevOps Training',
-    issuer: 'Udemy',
-    instructor: 'Imran Teli',
-    period: '2025 – 2026',
-    type: 'Training',
+    title: 'Microsoft Certified: DevOps Engineer Expert',
+    issuer: 'Microsoft',
+    period: 'Earned Sep 15, 2026',
+    type: 'Certification',
     order: 1,
-    description: 'Docker, Docker Compose, Linux Fundamentals, Networking, Git/GitHub, CI/CD, virtualization, deployment workflows.',
-    topics: ['Docker & Compose', 'Linux Fundamentals', 'Networking', 'Git & CI/CD', 'Deployment Workflows']
+    description: 'Credential ID 8410A366B8A7F000, Certification No. BCCAB4-H8D6D7 — Expires Sep 16, 2027.',
+    topics: ['Azure DevOps', 'CI/CD', 'Infrastructure as Code', 'Kubernetes'],
+    credentialUrl: '/devops-expert-cert.pdf'
   },
   {
-    title: 'Self-Directed DevOps & Cloud Engineering',
-    issuer: 'YouTube / Hands-on Lab',
-    instructor: 'Abhishek Veeramalla',
-    period: '2025 – 2026',
-    type: 'Self-Directed',
+    title: 'Microsoft Certified: Azure Administrator Associate',
+    issuer: 'Microsoft',
+    period: 'Earned Sep 15, 2026',
+    type: 'Certification',
     order: 2,
-    description: 'AWS, Kubernetes, CI/CD pipelines, Docker, real-world enterprise DevOps projects and zero-downtime releases.',
-    topics: ['AWS (EC2, S3, IAM)', 'Kubernetes', 'CI/CD Pipelines', 'Real-world Projects']
+    description: 'Credential ID 678FF686B7872ECA, Certification No. 3514C3-49E8D4 — Expires Sep 16, 2027.',
+    topics: ['Azure Compute', 'Azure Storage', 'Azure Networking', 'Azure Security'],
+    credentialUrl: '/azure-admin-cert.pdf'
   },
   {
     title: 'Bachelor of Science in Computer Science (BSCS)',
     issuer: 'National University of Modern Languages',
-    instructor: 'Faculty of Computer Science',
     period: 'Oct 2021 – Sep 2025',
     type: 'Education',
     order: 3,
-    description: 'BSCS graduate with comprehensive study in algorithms, data structures, network security, operating systems, full-stack architecture, and mobile systems.',
-    topics: ['Computer Science', 'Distributed Systems', 'Software Engineering', 'Algorithms']
+    description: 'BSCS graduate with comprehensive study in software engineering and computer science.',
+    topics: ['Computer Science', 'Data Structures', 'Algorithms', 'Software Engineering']
+  },
+  {
+    title: 'Flutter Internship Certificate',
+    issuer: 'Semicolons Tech',
+    period: 'Sep 2025 – Feb 2026',
+    type: 'Training',
+    order: 4,
+    description: 'Successfully completed 6-month internship in Flutter development.',
+    topics: ['Flutter', 'Dart', 'Mobile Dev'],
+    credentialUrl: '/semicolons-cert.pdf'
+  },
+  {
+    title: 'DevOps Internship Letter',
+    issuer: 'Ebryx (Pvt.) Ltd',
+    period: 'Apr 2026 – Jul 2026',
+    type: 'Training',
+    order: 5,
+    description: 'Experience letter confirming DevOps internship completion.',
+    topics: ['DevOps', 'MERN', 'Docker', 'GitHub Actions'],
+    credentialUrl: '/ebryx-letter.pdf'
   }
 ];
