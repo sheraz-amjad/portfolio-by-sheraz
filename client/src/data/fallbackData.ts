@@ -53,7 +53,7 @@ export const fallbackExperiences: ExperienceItem[] = [
     order: 2,
     description: [
       'Worked alongside core DevOps teams setting up infrastructure.',
-      'Containerized MERN applications using Docker, including multi-stage builds for smaller, optimized production images.',
+      'Containerized applications using Docker, including multi-stage builds for smaller, optimized production images.',
       'Built and maintained CI/CD pipelines with GitHub Actions, cutting deployment time from roughly 10 minutes down to about 3 minutes.',
       'Managed Docker images, containers, volumes, and logs, and pushed images to Docker Hub.',
       'Tracked sprints and tasks in Jira and participated in Agile ceremonies and code reviews.',
@@ -189,7 +189,7 @@ export const fallbackCertifications: CertificationItem[] = [
     order: 1,
     description: 'Credential ID 8410A366B8A7F000, Certification No. BCCAB4-H8D6D7 — Expires Sep 16, 2027.',
     topics: ['Azure DevOps', 'CI/CD', 'Infrastructure as Code', 'Kubernetes'],
-    credentialUrl: '/devops-expert-cert.pdf'
+    credentialUrl: 'https://learn.microsoft.com/en-us/users/syedsherazamjad/credentials'
   },
   {
     title: 'Microsoft Certified: Azure Administrator Associate',
@@ -199,7 +199,7 @@ export const fallbackCertifications: CertificationItem[] = [
     order: 2,
     description: 'Credential ID 678FF686B7872ECA, Certification No. 3514C3-49E8D4 — Expires Sep 16, 2027.',
     topics: ['Azure Compute', 'Azure Storage', 'Azure Networking', 'Azure Security'],
-    credentialUrl: '/azure-admin-cert.pdf'
+    credentialUrl: 'https://learn.microsoft.com/en-us/users/syedsherazamjad/credentials'
   },
   {
     title: 'Bachelor of Science in Computer Science (BSCS)',
@@ -227,7 +227,7 @@ export const fallbackCertifications: CertificationItem[] = [
     type: 'Training',
     order: 5,
     description: 'Experience letter confirming DevOps internship completion.',
-    topics: ['DevOps', 'MERN', 'Docker', 'GitHub Actions'],
+    topics: ['DevOps', 'Docker', 'GitHub Actions', 'CI/CD'],
     credentialUrl: '/ebryx-letter.pdf'
   }
 ];

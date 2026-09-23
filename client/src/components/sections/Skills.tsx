@@ -24,7 +24,6 @@ interface SkillsProps {
 const CATEGORY_TABS = [
   'All',
   'DevOps & Cloud',
-  'Full Stack (MERN)',
   'Mobile Dev',
   'Firebase',
   'Tools & Practices'
@@ -41,8 +40,6 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
     switch (cat) {
       case 'DevOps & Cloud':
         return '#00f0ff';
-      case 'Full Stack (MERN)':
-        return '#10b981';
       case 'Mobile Dev':
         return '#38bdf8';
       case 'Firebase':
@@ -71,7 +68,7 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
             <span className="cyber-gradient-text">Tooling Matrix</span>
           </h2>
           <p className="text-sm sm:text-base text-slate-400 font-sans">
-            Specialized toolsets refined across cloud infrastructure, container registries, mobile frameworks, and modern full-stack workflows.
+            Specialized toolsets refined across cloud infrastructure, container orchestration, and Flutter mobile development.
           </p>
         </div>
 
@@ -118,8 +115,8 @@ export const Skills: React.FC<SkillsProps> = ({ skills }) => {
 
                     {skill.featuredIn3D && (
                       <span className="flex items-center gap-1 text-[10px] font-mono text-cyber-cyan">
-                        <Sparkles size={11} className="animate-spin-slow" />
-                        3D Scene Node
+                        <Sparkles size={11} />
+                        Featured
                       </span>
                     )}
                   </div>

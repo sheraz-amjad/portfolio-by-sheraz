@@ -31,7 +31,7 @@ export interface ProjectItem {
   title: string;
   tagline: string;
   description: string;
-  category: 'DevOps & Cloud' | 'Full Stack (MERN)' | 'Mobile (Flutter)' | 'Security & Automation';
+  category: 'DevOps & Cloud' | 'Mobile (Flutter)' | 'Security & Automation';
   technologies: string[];
   highlights: string[];
   githubUrl: string;
@@ -45,7 +45,7 @@ export interface ProjectItem {
 export interface SkillItem {
   _id?: string;
   name: string;
-  category: 'DevOps & Cloud' | 'Full Stack (MERN)' | 'Mobile Dev' | 'Firebase' | 'Tools & Practices';
+  category: 'DevOps & Cloud' | 'Mobile Dev' | 'Firebase' | 'Tools & Practices';
   level: number;
   iconName: string;
   tags: string[];

@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ profile, onNavigate }) => {
               </span>
             </div>
             <p className="text-sm text-slate-400 max-w-md leading-relaxed">
-              DevOps Engineer & Flutter Mobile Developer specializing in AWS infrastructure, Docker containerization, automated GitHub Actions CI/CD pipelines, MERN full-stack development, and Linux incident response.
+              DevOps Engineer & Flutter Mobile Developer specializing in AWS infrastructure, Docker containerization, automated GitHub Actions CI/CD pipelines, and Linux incident response.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a

@@ -23,8 +23,7 @@ const CATEGORIES = [
   'All',
   'DevOps & Cloud',
   'Security & Automation',
-  'Mobile (Flutter)',
-  'Full Stack (MERN)'
+  'Mobile (Flutter)'
 ];
 
 export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
@@ -33,7 +32,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
 
   const filteredProjects = selectedCategory === 'All'
     ? projects
-    : projects.filter((p) => p.category === selectedCategory || (selectedCategory === 'Full Stack (MERN)' && p.technologies.includes('React.js')));
+    : projects.filter((p) => p.category === selectedCategory);
 
   const getProjectIcon = (cat: string) => {
     switch (cat) {

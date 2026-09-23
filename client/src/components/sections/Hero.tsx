@@ -133,8 +133,8 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
               </div>
 
               <div className="p-3 rounded-xl bg-cyber-card/60 border border-cyber-border/60">
-                <div className="text-xl sm:text-2xl font-bold font-mono text-cyber-purple">MERN + Flutter</div>
-                <div className="text-[11px] text-slate-400 font-sans leading-tight mt-0.5">End-to-End Stack Mastery</div>
+                <div className="text-xl sm:text-2xl font-bold font-mono text-cyber-purple">AZ-400</div>
+                <div className="text-[11px] text-slate-400 font-sans leading-tight mt-0.5">Microsoft DevOps Expert Certified</div>
               </div>
             </div>
           </div>
