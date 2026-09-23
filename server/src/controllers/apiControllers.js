@@ -289,7 +289,7 @@ I'd love to have you follow along on LinkedIn — I regularly share DevOps tips,
 
 Best,
 Syed Sheraz Amjad
-DevOps Engineer & Full Stack Developer`,
+DevOps Engineer & Flutter Mobile Developer`,
           html: `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: auto; background: #ffffff;">
 
@@ -335,7 +335,7 @@ DevOps Engineer & Full Stack Developer`,
         <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; color: #64748b;">
           <p style="margin: 0;">Best regards,</p>
           <p style="margin: 2px 0 0; font-weight: 600; color: #0f172a;">Syed Sheraz Amjad</p>
-          <p style="margin: 2px 0 0; font-size: 13px;">DevOps Engineer & Full Stack Developer</p>
+          <p style="margin: 2px 0 0; font-size: 13px;">DevOps Engineer & Flutter Mobile Developer</p>
         </div>
       </div>
     </div>

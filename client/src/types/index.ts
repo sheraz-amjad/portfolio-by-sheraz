@@ -20,7 +20,7 @@ export interface ExperienceItem {
   company: string;
   period: string;
   location: string;
-  roleType: 'DevOps' | 'Full Stack' | 'Mobile' | 'Cloud';
+  roleType: 'DevOps' | 'Mobile' | 'Cloud';
   description: string[];
   technologies: string[];
   order: number;
