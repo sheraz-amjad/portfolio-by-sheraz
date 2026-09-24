@@ -63,6 +63,7 @@ export interface CertificationItem {
   description: string;
   topics: string[];
   credentialUrl?: string;
+  downloadUrl?: string;
   order: number;
 }
 

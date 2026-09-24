@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { CertificationItem } from '../../types';
-import { ExternalLink, Award, GraduationCap, BookOpen } from 'lucide-react';
+import { ExternalLink, Award, GraduationCap, BookOpen, Download } from 'lucide-react';
 
 interface CertificationsProps {
   certifications: CertificationItem[];
@@ -103,17 +103,29 @@ export const Certifications: React.FC<CertificationsProps> = ({ certifications }
                   ))}
                 </div>
 
-                {cert.credentialUrl && (
-                  <a
-                    href={cert.credentialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-[0.7rem] mt-auto hover:gap-2 transition-all"
-                    style={{ color }}
-                  >
-                    VIEW CREDENTIAL <ExternalLink size={11} />
-                  </a>
-                )}
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {cert.credentialUrl && (
+                    <a
+                      href={cert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-mono text-[0.7rem] px-3 py-1.5 rounded-lg hover:gap-2 transition-all"
+                      style={{ color, background: `${color}12`, border: `1px solid ${color}30` }}
+                    >
+                      VIEW CREDENTIAL <ExternalLink size={11} />
+                    </a>
+                  )}
+                  {cert.downloadUrl && (
+                    <a
+                      href={cert.downloadUrl}
+                      download
+                      className="inline-flex items-center gap-1.5 font-mono text-[0.7rem] px-3 py-1.5 rounded-lg hover:gap-2 transition-all text-slate-400 hover:text-white"
+                      style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                    >
+                      DOWNLOAD <Download size={11} />
+                    </a>
+                  )}
+                </div>
               </div>
             );
           })}

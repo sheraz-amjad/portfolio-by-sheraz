@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { api } from './services/api';
+import React, { useState } from 'react';
 import {
   PersonalInfo,
   ExperienceItem,
@@ -8,12 +7,12 @@ import {
   CertificationItem
 } from './types';
 import {
-  fallbackProfile,
-  fallbackExperiences,
-  fallbackProjects,
-  fallbackSkills,
-  fallbackCertifications
-} from './data/fallbackData';
+  portfolioProfile,
+  portfolioExperiences,
+  portfolioProjects,
+  portfolioSkills,
+  portfolioCertifications
+} from './data/portfolioData';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { Hero } from './components/sections/Hero';
@@ -32,35 +31,12 @@ interface ToastState {
 }
 
 export function App() {
-  const [profile, setProfile] = useState<PersonalInfo>(fallbackProfile);
-  const [experiences, setExperiences] = useState<ExperienceItem[]>(fallbackExperiences);
-  const [projects, setProjects] = useState<ProjectItem[]>(fallbackProjects);
-  const [skills, setSkills] = useState<SkillItem[]>(fallbackSkills);
-  const [certifications, setCertifications] = useState<CertificationItem[]>(fallbackCertifications);
+  const profile = portfolioProfile;
+  const experiences = portfolioExperiences;
+  const projects = portfolioProjects;
+  const skills = portfolioSkills;
+  const certifications = portfolioCertifications;
   const [toasts, setToasts] = useState<ToastState[]>([]);
-
-  // Fetch from API
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [profData, expData, projData, skillData, certData] = await Promise.all([
-          api.getProfile(),
-          api.getExperience(),
-          api.getProjects(),
-          api.getSkills(),
-          api.getCertifications(),
-        ]);
-        if (profData) setProfile(profData);
-        if (expData && expData.length > 0) setExperiences(expData);
-        if (projData && projData.length > 0) setProjects(projData);
-        if (skillData && skillData.length > 0) setSkills(skillData);
-        if (certData && certData.length > 0) setCertifications(certData);
-      } catch (err) {
-        console.warn('Using fallback data store.');
-      }
-    };
-    fetchData();
-  }, []);
 
   const showToast = (message: string, type: 'success' | 'error' = 'success') => {
     const id = Date.now();

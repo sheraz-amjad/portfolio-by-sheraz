@@ -25,19 +25,6 @@ jobs:
           npm ci --prefix client
           npm run build --prefix client
 
-      - name: Validate backend
-        run: |
-          npm ci --prefix server
-          node --check server/src/server.js
-
-      - name: Prepare release
-        run: |
-          rm -rf release
-          mkdir -p release
-          rsync -a --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude='client/dist' --exclude='server/.env' ./ release/
-          rm -rf release/client
-          cp -a client/dist/. release/
-
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
@@ -60,7 +47,7 @@ jobs:
           printf 'SSH_DIR=%s\n' "$SSH_DIR" >> "$GITHUB_ENV"
           printf 'SSH_PORT=%s\n' "${SSH_PORT:-22}" >> "$GITHUB_ENV"
 
-      - name: Deploy release
+      - name: Deploy static release to EC2
         env:
           SSH_HOST: ${{ secrets.EC2_HOST }}
           SSH_USERNAME: ${{ secrets.EC2_USER }}
@@ -68,39 +55,15 @@ jobs:
           ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" \
             'sudo mkdir -p /var/www/portfolio && sudo chown -R "$USER":"$USER" /var/www/portfolio'
 
+          # Stop and remove legacy PM2 process if still running to free up memory
+          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" \
+            'pm2 delete portfolio-api || true'
+
+          # Synchronize static built files to web root
           rsync -avz --delete \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='server/.env' \
             -e "ssh -i $SSH_DIR/deploy_key -o UserKnownHostsFile=$SSH_DIR/known_hosts -p $SSH_PORT" \
-            release/ "$SSH_USERNAME@$SSH_HOST:/var/www/portfolio/"
+            client/dist/ "$SSH_USERNAME@$SSH_HOST:/var/www/portfolio/"
 
-          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" 'bash -s' <<'REMOTE'
-          set -e
-          if ! command -v npm >/dev/null 2>&1; then
-            curl --fail --silent --show-error https://deb.nodesource.com/setup_22.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-          fi
-          if ! command -v pm2 >/dev/null 2>&1; then
-            sudo npm install --global pm2
-          fi
-          cd /var/www/portfolio
-          npm ci --omit=dev --prefix server
-          DATABASE_URL="mysql://portfolio:sheraz@127.0.0.1:3306/portfolio" npm run seed --prefix server || true
-          pm2 startOrReload ecosystem.config.cjs --env production
-
-          echo "Waiting for app to become healthy..."
-          for i in $(seq 1 15); do
-            if curl --fail --silent --show-error http://127.0.0.1:5000/api/health; then
-              echo "Health check passed"
-              exit 0
-            fi
-            echo "Attempt $i/15 failed, retrying in 2s..."
-            sleep 2
-          done
-
-          echo "Health check failed after retries, dumping logs:"
-          pm2 logs portfolio-api --lines 50 --nostream
-          pm2 describe portfolio-api
-          exit 1
-          REMOTE
+          # Reload Nginx web server
+          ssh -i "$SSH_DIR/deploy_key" -o UserKnownHostsFile="$SSH_DIR/known_hosts" -p "$SSH_PORT" "$SSH_USERNAME@$SSH_HOST" \
+            'sudo systemctl reload nginx || sudo service nginx reload'

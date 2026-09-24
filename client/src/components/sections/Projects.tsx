@@ -9,7 +9,6 @@ interface ProjectsProps {
 const FILTERS = [
   { label: 'All Projects', value: 'all' },
   { label: 'DevOps & Cloud', value: 'DevOps & Cloud' },
-  { label: 'Security & Automation', value: 'Security & Automation' },
   { label: 'Mobile (Flutter)', value: 'Mobile (Flutter)' },
 ];
 
