@@ -1,18 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Terminal,
-  ArrowRight,
-  Send,
-  FileDown,
-  Cloud,
-  Container,
-  Workflow,
-  Sparkles,
-  ShieldCheck,
-  CheckCircle2,
-  ExternalLink,
-  ChevronDown
-} from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Terminal, ChevronDown, FileDown, Linkedin, CheckCircle2 } from 'lucide-react';
 import { PersonalInfo } from '../../types';
 
 interface HeroProps {
@@ -23,175 +10,156 @@ interface HeroProps {
 const ROLES = [
   'DevOps Engineer',
   'Flutter Mobile Developer',
-  'Linux Security & Cloud Specialist'
+  'Linux & Cloud Specialist',
 ];
 
 export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
   const [roleIndex, setRoleIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % ROLES.length);
-    }, 3200);
+      setRoleIndex((p) => (p + 1) % ROLES.length);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
+  // Scroll reveal for hero
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const targets = el.querySelectorAll('[data-scroll]');
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+      { threshold: 0.1 }
+    );
+    targets.forEach((t) => observer.observe(t));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="hero" className="relative min-h-screen pt-28 pb-16 lg:pt-36 flex flex-col justify-center overflow-hidden">
-      {/* Background glowing effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+    <section id="hero" ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16">
+      {/* Background glows */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full bg-[#f59e0b]/6 blur-[140px]" />
+        <div className="absolute bottom-10 right-10 w-[400px] h-[400px] rounded-full bg-emerald-500/4 blur-[120px]" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-          {/* Left Column: Text & CTAs (7 cols) */}
-          <div className="lg:col-span-6 space-y-6 text-left">
-            {/* Profile Picture & Status Pill */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-              <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 rounded-full p-1 bg-gradient-to-tr from-cyber-cyan to-cyber-green">
-                <img 
-                  src="/profile-pic.png" 
-                  alt="Syed Sheraz Amjad - DevOps Engineer"
-                  className="w-full h-full object-cover rounded-full border-2 border-[#050811]"
-                />
-              </div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-              {/* Status Pill */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyber-card/90 border border-cyber-cyan/30 backdrop-blur-md shadow-lg shadow-cyber-cyan/5 h-fit">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber-green opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyber-green" />
-                </span>
-                <span className="text-xs font-mono text-slate-200">
-                  Available for DevOps & Mobile Projects
-                </span>
-              </div>
+          {/* Left Column */}
+          <div data-scroll="slide-left" className="space-y-6">
+            {/* Status Badge */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#0f1628]/90 border border-[#f59e0b]/30 font-mono text-xs text-slate-300">
+              <span className="relative flex w-2.5 h-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full w-2.5 h-2.5 bg-emerald-400" />
+              </span>
+              Available for DevOps &amp; Mobile Projects
             </div>
 
-            {/* Name and Titles */}
-            <div className="space-y-3">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight text-white leading-none">
-                Syed Sheraz <br />
-                <span className="cyber-gradient-text">Amjad</span>
-              </h1>
+            {/* Main Title */}
+            <h1 className="font-display font-extrabold text-white leading-none" style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)', letterSpacing: '-0.02em' }}>
+              SYED SHERAZ<br />
+              <span className="text-[#f59e0b]">AMJAD</span>
+            </h1>
 
-              {/* Dynamic Role Switcher */}
-              <div className="h-10 flex items-center">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-cyber-surface/90 border border-cyber-cyan/40 text-cyber-cyan font-mono text-sm sm:text-base font-semibold shadow-[0_0_15px_rgba(0,240,255,0.2)]">
-                  <Terminal size={16} className="text-cyber-green animate-pulse" />
-                  <span className="transition-all duration-300">
-                    {ROLES[roleIndex]}
-                  </span>
-                </div>
-              </div>
+            {/* Role Switcher */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#f59e0b]/10 border border-[#f59e0b]/35 font-mono text-sm text-[#f59e0b] font-semibold">
+              <Terminal size={15} className="animate-pulse" />
+              <span className="transition-all duration-300">{ROLES[roleIndex]}</span>
             </div>
 
-            {/* Tagline */}
-            <p className="text-base sm:text-lg text-slate-300 font-sans max-w-xl leading-relaxed">
-              {profile.tagline}. Specialized in AWS cloud automation, Docker multi-stage pipelines, Flutter mobile experiences, and hardened Linux infrastructure.
+            {/* Subtext */}
+            <p className="text-base sm:text-lg text-slate-400 max-w-xl leading-relaxed">
+              {profile.tagline}. Specialized in AWS cloud automation, Docker CI/CD pipelines,
+              Flutter mobile experiences, and hardened Linux infrastructure.
             </p>
 
-            {/* CTA Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button
-                onClick={() => onNavigate('projects')}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyber-cyan via-teal-400 to-cyber-green text-black font-bold text-sm hover:opacity-95 shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all hover:scale-105 active:scale-95"
-              >
-                <span>Explore Projects</span>
-                <ArrowRight size={16} />
-              </button>
-
-              <button
-                onClick={() => onNavigate('contact')}
-                className="flex items-center gap-2 px-5 py-3 rounded-xl glass-card border border-cyber-border text-slate-200 hover:border-cyber-cyan/50 hover:text-cyber-cyan text-sm font-semibold transition-all hover:scale-105"
-              >
-                <Send size={15} />
-                <span>Contact Me</span>
-              </button>
-
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-3 pt-1">
               <a
                 href="/resume.pdf"
                 download="Syed_Sheraz_Amjad_Resume.pdf"
-                className="flex items-center gap-2 px-4 py-3 rounded-xl glass-card border border-cyber-border text-slate-300 hover:text-white hover:border-slate-500 text-sm font-mono transition-all hover:scale-105"
-                title="Download / View Resume"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#f59e0b] text-[#0a0e1a] font-bold text-sm hover:bg-[#fbbf24] shadow-[0_0_25px_rgba(245,158,11,0.4)] transition-all hover:-translate-y-0.5"
               >
-                <FileDown size={15} className="text-cyber-cyan" />
-                <span>CV</span>
+                <FileDown size={17} />
+                Download Resume
+              </a>
+              <a
+                href="https://www.linkedin.com/in/syed-sheraz-amjad"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-slate-200 hover:border-[#f59e0b]/50 hover:text-[#f59e0b] font-semibold text-sm transition-all hover:-translate-y-0.5"
+              >
+                <Linkedin size={16} />
+                LinkedIn
               </a>
             </div>
 
-            {/* Quick Metrics / Key Strengths Row */}
-            <div className="pt-6 border-t border-cyber-border/80 grid grid-cols-3 gap-3">
-              <div className="p-3 rounded-xl bg-cyber-card/60 border border-cyber-border/60">
-                <div className="text-xl sm:text-2xl font-bold font-mono text-cyber-cyan">~3 min</div>
-                <div className="text-[11px] text-slate-400 font-sans leading-tight mt-0.5">CI/CD Build Speedup (Ebryx)</div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-cyber-card/60 border border-cyber-border/60">
-                <div className="text-xl sm:text-2xl font-bold font-mono text-cyber-green">100%</div>
-                <div className="text-[11px] text-slate-400 font-sans leading-tight mt-0.5">Server Migration Success (Zemotify)</div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-cyber-card/60 border border-cyber-border/60">
-                <div className="text-xl sm:text-2xl font-bold font-mono text-cyber-purple">AZ-400</div>
-                <div className="text-[11px] text-slate-400 font-sans leading-tight mt-0.5">Microsoft DevOps Expert Certified</div>
-              </div>
+            {/* Metrics */}
+            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/8">
+              {[
+                { value: '~3 min', label: 'CI/CD Build Speedup' },
+                { value: '100%', label: 'Server Migration Success' },
+                { value: 'AZ-400', label: 'MS DevOps Expert Cert' },
+              ].map((m) => (
+                <div key={m.value} className="p-3.5 rounded-xl bg-white/4 border border-white/8">
+                  <div className="font-mono font-bold text-xl text-[#f59e0b]">{m.value}</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5 leading-tight">{m.label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Right Column: Stylized Terminal View (6 cols) */}
-          <div className="lg:col-span-6 relative w-full mt-10 lg:mt-0">
-            <div className="rounded-2xl terminal-window border border-cyber-border overflow-hidden transform rotate-2 hover:rotate-0 transition-transform duration-500 shadow-2xl shadow-cyber-cyan/10">
-              {/* Terminal Header */}
-              <div className="flex items-center justify-between px-4 py-2.5 bg-[#050811] border-b border-cyber-border text-xs font-mono text-slate-400">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
-                  <span className="ml-2 text-slate-300 font-mono">deploy.yml — GitHub Actions</span>
+          {/* Right Column: Hero Portrait Card (matching reference site) */}
+          <div data-scroll="slide-right" className="relative flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-[380px] aspect-[4/5] rounded-[28px] overflow-hidden border border-white/15 bg-[#14151e] shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_30px_rgba(245,158,11,0.08)] hover:border-[#f59e0b] hover:shadow-[0_25px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(245,158,11,0.2)] hover:-translate-y-1 transition-all duration-500 group">
+              <img
+                src="/profile.jpg"
+                alt={`${profile.name} - DevOps Engineer & Mobile Developer`}
+                className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"
+                loading="eager"
+              />
+              {/* Subtle bottom gradient overlay */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: 'linear-gradient(180deg, transparent 65%, rgba(10, 11, 14, 0.85) 100%)' }}
+              />
+
+              {/* Floating tech badge at bottom */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3 rounded-2xl bg-[#0e111a]/85 backdrop-blur-md border border-white/10 shadow-lg">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse" />
+                  <div>
+                    <div className="text-xs font-bold text-white font-sans leading-tight">{profile.name}</div>
+                    <div className="text-[11px] font-mono text-[#f59e0b] leading-tight">DevOps &amp; Mobile Engineer</div>
+                  </div>
                 </div>
-                <span className="text-[10px] text-cyber-cyan">Running</span>
-              </div>
-              
-              {/* Terminal Body */}
-              <div className="p-4 sm:p-5 font-mono text-xs sm:text-sm text-slate-300 bg-[#080d1a] leading-relaxed">
-                <div className="text-slate-400">name: <span className="text-cyber-green">Production Deploy Pipeline</span></div>
-                <div className="text-slate-400">on:</div>
-                <div className="text-slate-400 pl-4">push:</div>
-                <div className="text-slate-400 pl-8">branches: <span className="text-cyber-cyan">["main"]</span></div>
-                <br/>
-                <div className="text-slate-400">jobs:</div>
-                <div className="text-slate-400 pl-4">build-and-deploy:</div>
-                <div className="text-slate-400 pl-8">runs-on: <span className="text-cyber-cyan">ubuntu-latest</span></div>
-                <div className="text-slate-400 pl-8">steps:</div>
-                <div className="pl-12 flex items-center gap-2">
-                  <span className="text-slate-400">- name: Checkout code</span>
-                  <CheckCircle2 size={12} className="text-cyber-green" />
-                </div>
-                <div className="pl-12 flex items-center gap-2">
-                  <span className="text-slate-400">- name: Build Docker image</span>
-                  <CheckCircle2 size={12} className="text-cyber-green" />
-                </div>
-                <div className="pl-12 flex items-center gap-2">
-                  <span className="text-slate-400">- name: Push to ECR</span>
-                  <CheckCircle2 size={12} className="text-cyber-green" />
-                </div>
-                <div className="pl-12 flex items-center gap-2 animate-pulse">
-                  <span className="text-cyber-cyan">- name: Deploy to Kubernetes...</span>
+                <div className="px-2.5 py-1 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/30 text-[10px] font-mono font-semibold text-[#f59e0b]">
+                  AZ-400
                 </div>
               </div>
+            </div>
+
+            {/* Floating uptime pill */}
+            <div className="absolute -bottom-3 -left-3 sm:-left-6 px-4 py-2 rounded-xl bg-[#0f1628]/95 border border-[#f59e0b]/30 font-mono text-xs text-emerald-400 shadow-2xl backdrop-blur-md hidden sm:flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-flex" />
+              <span>✓ 99.9% Uptime Maintained</span>
             </div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="flex justify-center mt-12">
+        {/* Scroll down */}
+        <div className="flex justify-center mt-14">
           <button
             onClick={() => onNavigate('about')}
-            className="flex flex-col items-center gap-1.5 text-xs font-mono text-slate-400 hover:text-cyber-cyan transition-colors group"
+            className="flex flex-col items-center gap-1.5 text-xs font-mono text-slate-500 hover:text-[#f59e0b] transition-colors group"
           >
             <span>SCROLL TO EXPLORE</span>
-            <ChevronDown size={18} className="animate-bounce text-cyber-cyan" />
+            <ChevronDown size={18} className="animate-bounce text-[#f59e0b]" />
           </button>
         </div>
       </div>

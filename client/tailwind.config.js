@@ -9,13 +9,13 @@ export default {
     extend: {
       colors: {
         cyber: {
-          bg: '#050811',
-          card: '#0a101f',
-          cardHover: '#0f172a',
-          surface: '#11192e',
-          border: '#1e293b',
-          borderGlow: '#00f0ff33',
-          cyan: '#00f0ff',
+          bg: '#0a0e1a',
+          card: '#0f1628',
+          cardHover: '#131c35',
+          surface: '#161f3a',
+          border: '#1e2a45',
+          borderGlow: '#f59e0b33',
+          cyan: '#f59e0b',
           green: '#10b981',
           emerald: '#34d399',
           purple: '#a855f7',
@@ -25,7 +25,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
         display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
@@ -34,15 +34,20 @@ export default {
         'glow-pulse': 'glowPulse 3s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
         'spin-slow': 'spin 20s linear infinite',
+        'fadeIn': 'fadeIn 0.3s ease',
       },
       keyframes: {
         glowPulse: {
-          '0%, 100%': { opacity: '0.4', filter: 'drop-shadow(0 0 15px rgba(0, 240, 255, 0.4))' },
-          '50%': { opacity: '0.8', filter: 'drop-shadow(0 0 25px rgba(0, 240, 255, 0.8))' },
+          '0%, 100%': { opacity: '0.4', filter: 'drop-shadow(0 0 15px rgba(245, 158, 11, 0.4))' },
+          '50%': { opacity: '0.8', filter: 'drop-shadow(0 0 25px rgba(245, 158, 11, 0.8))' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-12px)' },
+        },
+        fadeIn: {
+          from: { opacity: '0', transform: 'translateY(8px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
         }
       },
       backgroundImage: {

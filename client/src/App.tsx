@@ -39,7 +39,7 @@ export function App() {
   const [certifications, setCertifications] = useState<CertificationItem[]>(fallbackCertifications);
   const [toasts, setToasts] = useState<ToastState[]>([]);
 
-  // Fetch from API (falls back gracefully to pre-seeded static data if offline)
+  // Fetch from API
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,104 +50,77 @@ export function App() {
           api.getSkills(),
           api.getCertifications(),
         ]);
-
         if (profData) setProfile(profData);
         if (expData && expData.length > 0) setExperiences(expData);
         if (projData && projData.length > 0) setProjects(projData);
         if (skillData && skillData.length > 0) setSkills(skillData);
         if (certData && certData.length > 0) setCertifications(certData);
       } catch (err) {
-        console.warn('Connected to fallback offline data store.');
+        console.warn('Using fallback data store.');
       }
     };
-
     fetchData();
   }, []);
 
   const showToast = (message: string, type: 'success' | 'error' = 'success') => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 4500);
+    setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 4500);
   };
 
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) {
-      const topOffset = 80;
-      const elementPosition = el.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - topOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      const offsetPosition = el.getBoundingClientRect().top + window.pageYOffset - 90;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   };
 
   return (
-    <div className="relative min-h-screen bg-cyber-bg text-slate-100 font-sans selection:bg-cyber-cyan selection:text-black">
-      {/* Fixed Ambient Background Grid */}
-      <div className="fixed inset-0 bg-grid-pattern opacity-25 pointer-events-none z-0" />
-      <div className="fixed inset-0 bg-radial-glow opacity-40 pointer-events-none z-0" />
+    <div className="relative min-h-screen text-slate-100 font-sans" style={{ background: '#0a0e1a' }}>
+      {/* Fixed grid overlay */}
+      <div className="fixed inset-0 bg-grid-pattern opacity-20 pointer-events-none z-0" />
+      <div className="fixed inset-0 bg-radial-glow opacity-30 pointer-events-none z-0" />
 
-      {/* Global Navigation */}
-      <Navbar
-        onNavigate={scrollToSection}
-      />
+      {/* Navigation */}
+      <Navbar onNavigate={scrollToSection} />
 
-      {/* Main Content Sections */}
+      {/* Content */}
       <main className="relative z-10">
-        <Hero
-          profile={profile}
-          onNavigate={scrollToSection}
-        />
-
+        <Hero profile={profile} onNavigate={scrollToSection} />
         <About profile={profile} />
-
-        <Experience experiences={experiences} />
-
-        <Projects projects={projects} />
-
         <Skills skills={skills} />
-
+        <Experience experiences={experiences} />
+        <Projects projects={projects} />
         <Certifications certifications={certifications} />
-
-        <Contact
-          profile={profile}
-          onShowToast={showToast}
-        />
+        <Contact profile={profile} onShowToast={showToast} />
       </main>
 
-      {/* Global Footer */}
-      <Footer
-        profile={profile}
-        onNavigate={scrollToSection}
-      />
+      <Footer profile={profile} onNavigate={scrollToSection} />
 
-      {/* Toast Notification Container */}
+      {/* Toast Container */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none">
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border backdrop-blur-md shadow-2xl transition-all animate-fadeIn ${
+            className={`pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border backdrop-blur-md shadow-2xl animate-fadeIn ${
               toast.type === 'success'
-                ? 'bg-cyber-card/95 border-cyber-green text-slate-100 shadow-cyber-green/20'
-                : 'bg-cyber-card/95 border-red-500 text-slate-100 shadow-red-500/20'
+                ? 'border-emerald-500 text-slate-100 shadow-emerald-500/20'
+                : 'border-red-500 text-slate-100 shadow-red-500/20'
             }`}
+            style={{ background: 'rgba(15,20,40,0.96)' }}
           >
             {toast.type === 'success' ? (
-              <CheckCircle2 size={18} className="text-cyber-green flex-shrink-0" />
+              <CheckCircle2 size={17} className="text-emerald-400 flex-shrink-0" />
             ) : (
-              <AlertCircle size={18} className="text-red-400 flex-shrink-0" />
+              <AlertCircle size={17} className="text-red-400 flex-shrink-0" />
             )}
             <span className="text-xs font-mono">{toast.message}</span>
             <button
               onClick={() => setToasts((prev) => prev.filter((t) => t.id !== toast.id))}
               className="p-1 rounded text-slate-400 hover:text-white"
             >
-              <X size={14} />
+              <X size={13} />
             </button>
           </div>
         ))}

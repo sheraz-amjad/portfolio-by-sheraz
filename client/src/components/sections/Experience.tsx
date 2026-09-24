@@ -1,16 +1,4 @@
-import React, { useState } from 'react';
-import {
-  Briefcase,
-  Calendar,
-  MapPin,
-  CheckCircle2,
-  Terminal,
-  Shield,
-  Container,
-  Smartphone,
-  ChevronRight,
-  Layers
-} from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
 import { ExperienceItem } from '../../types';
 
 interface ExperienceProps {
@@ -18,192 +6,160 @@ interface ExperienceProps {
 }
 
 export const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
-  const [selectedRole, setSelectedRole] = useState<number>(0);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const getRoleIcon = (roleType: string) => {
-    switch (roleType) {
-      case 'DevOps':
-        return Shield;
-      case 'Full Stack':
-        return Container;
-      case 'Mobile':
-        return Smartphone;
-      default:
-        return Briefcase;
-    }
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const targets = el.querySelectorAll('[data-scroll]');
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+      { threshold: 0.08 }
+    );
+    targets.forEach((t) => observer.observe(t));
+    return () => observer.disconnect();
+  }, []);
+
+  const dotColor: Record<string, string> = {
+    DevOps: '#f59e0b',
+    Mobile: '#10b981',
+    Intern: '#38bdf8',
   };
 
-  const getRoleColor = (roleType: string) => {
-    switch (roleType) {
-      case 'DevOps':
-        return '#00f0ff';
-      case 'Full Stack':
-        return '#10b981';
-      case 'Mobile':
-        return '#38bdf8';
-      default:
-        return '#a855f7';
-    }
-  };
+  const getDotColor = (roleType: string) => dotColor[roleType] || '#f59e0b';
 
   return (
-    <section id="experience" className="py-24 relative overflow-hidden bg-cyber-bg/50">
-      {/* Background decoration */}
-      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[140px] pointer-events-none" />
+    <section id="experience" ref={sectionRef} className="py-28 relative overflow-hidden">
+      {/* Bg glow */}
+      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full bg-emerald-500/4 blur-[140px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyber-card border border-cyber-cyan/30 text-xs font-mono text-cyber-cyan">
-            <Briefcase size={13} />
-            <span>CAREER TIMELINE // EXPERIENCE</span>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-16 items-start">
+
+          {/* Left: Huge Title */}
+          <div data-scroll="slide-left" className="lg:sticky lg:top-32">
+            <h2
+              className="font-display font-extrabold text-white leading-tight"
+              style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', letterSpacing: '-0.03em', writingMode: 'horizontal-tb' }}
+            >
+              EXPERIENCE
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-display font-black text-white">
-            Professional Track Record & <br />
-            <span className="cyber-gradient-text">Engineering Impact</span>
-          </h2>
-          <p className="text-sm sm:text-base text-slate-400 font-sans">
-            Hands-on expertise spanning server hardening, automated CI/CD containerization, and production Flutter mobile releases.
-          </p>
-        </div>
 
-        {/* Desktop / Tablet Timeline Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left: Interactive Company Selector (4 cols) */}
-          <div className="lg:col-span-4 space-y-3">
+          {/* Right: Timeline */}
+          <div className="flex flex-col gap-5">
+
+            {/* Work Experiences */}
             {experiences.map((exp, idx) => {
-              const isSelected = selectedRole === idx;
-              const Icon = getRoleIcon(exp.roleType);
-              const color = getRoleColor(exp.roleType);
-
+              const dotC = getDotColor(exp.roleType);
               return (
-                <div
-                  key={idx}
-                  onClick={() => setSelectedRole(idx)}
-                  className={`p-4 rounded-2xl border cursor-pointer transition-all duration-300 text-left ${
-                    isSelected
-                      ? 'glass-card border-cyber-cyan shadow-[0_0_20px_rgba(0,240,255,0.2)] scale-[1.02]'
-                      : 'glass-card border-cyber-border opacity-70 hover:opacity-100 hover:border-slate-600'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center border"
-                        style={{
-                          backgroundColor: `${color}15`,
-                          borderColor: `${color}40`,
-                          color: color
-                        }}
-                      >
-                        <Icon size={18} />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-white text-sm">{exp.company}</h4>
-                        <p className="text-xs font-mono text-slate-400">{exp.title}</p>
-                      </div>
-                    </div>
-                    <ChevronRight
-                      size={18}
-                      className={`transition-transform duration-300 ${
-                        isSelected ? 'text-cyber-cyan translate-x-1' : 'text-slate-600'
-                      }`}
+                <div key={idx} className="flex gap-5" data-scroll="slide-right" data-delay={`${(idx + 1) * 100}` as any}>
+                  {/* Timeline dot + line */}
+                  <div className="flex flex-col items-center pt-1 flex-shrink-0">
+                    <span
+                      className="w-3.5 h-3.5 rounded-full flex-shrink-0"
+                      style={{ background: dotC, boxShadow: `0 0 10px ${dotC}` }}
                     />
+                    {idx < experiences.length - 1 && (
+                      <div
+                        className="w-0.5 flex-1 mt-2 min-h-[30px]"
+                        style={{ background: `linear-gradient(to bottom, ${dotC}50, transparent)` }}
+                      />
+                    )}
                   </div>
 
-                  <div className="mt-3 pt-3 border-t border-cyber-border/60 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                    <span className="flex items-center gap-1">
-                      <Calendar size={12} className="text-slate-500" />
-                      {exp.period}
-                    </span>
-                    <span className="px-2 py-0.5 rounded bg-cyber-bg border border-cyber-border text-[10px] text-cyber-cyan">
-                      {exp.roleType}
-                    </span>
+                  {/* Card */}
+                  <div
+                    className="flex-1 p-6 rounded-2xl border border-white/8 mb-2 transition-all hover:border-[#f59e0b]/30"
+                    style={{ background: 'rgba(15,20,40,0.65)' }}
+                  >
+                    {/* Header */}
+                    <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+                      <div>
+                        <h3 className="font-display font-bold text-white text-lg">
+                          {exp.title}{' '}
+                          <span style={{ color: dotC }}>@ {exp.company}</span>
+                        </h3>
+                        <p className="text-xs text-slate-500 mt-0.5">{exp.location}</p>
+                      </div>
+                      <span className="font-mono text-[0.68rem] text-slate-500 bg-white/4 border border-white/8 px-2.5 py-1.5 rounded-lg whitespace-nowrap">
+                        {exp.period}
+                      </span>
+                    </div>
+
+                    {/* Achievements */}
+                    <h4 className="font-mono text-[0.65rem] font-semibold tracking-[0.08em] text-[#f59e0b] uppercase mb-2.5">Key achievements:</h4>
+                    <ul className="space-y-2">
+                      {exp.description.slice(0, 4).map((item, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-[0.875rem] text-slate-400 leading-relaxed">
+                          <span className="text-[#f59e0b] flex-shrink-0 mt-0.5 text-xs">▸</span>
+                          <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-200">$1</strong>') }} />
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Tech Tags */}
+                    <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-white/6">
+                      {exp.technologies.map((t) => (
+                        <span
+                          key={t}
+                          className="font-mono text-[0.65rem] text-slate-500 bg-white/4 border border-white/7 rounded-md px-2 py-0.5"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               );
             })}
-          </div>
 
-          {/* Right: Detailed Experience Deep Dive Card (8 cols) */}
-          <div className="lg:col-span-8">
-            {(() => {
-              const activeExp = experiences[selectedRole] || experiences[0];
-              const Icon = getRoleIcon(activeExp.roleType);
-              const color = getRoleColor(activeExp.roleType);
+            {/* Education Card */}
+            <div className="flex gap-5" data-scroll="slide-right" data-delay="300">
+              <div className="flex flex-col items-center pt-1 flex-shrink-0">
+                <span className="w-3.5 h-3.5 rounded-full flex-shrink-0 bg-[#38bdf8]" style={{ boxShadow: '0 0 10px #38bdf8' }} />
+              </div>
 
-              return (
-                <div className="glass-card rounded-2xl border border-cyber-cyan/30 p-6 sm:p-8 space-y-6 shadow-2xl relative">
-                  {/* Glowing header bar */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-cyber-border">
+              <div
+                className="flex-1 p-6 rounded-2xl border border-white/8 transition-all hover:border-[#38bdf8]/30"
+                style={{ background: 'rgba(15,20,40,0.65)' }}
+              >
+                <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+                  <div>
+                    <h3 className="font-display font-bold text-white text-lg">Bachelor of Science in Computer Science</h3>
+                    <p className="text-[0.85rem] text-slate-400 mt-0.5">National University of Modern Languages (NUML), Lahore</p>
+                  </div>
+                  <span className="font-mono text-[0.68rem] text-slate-500 bg-white/4 border border-white/8 px-2.5 py-1.5 rounded-lg whitespace-nowrap">
+                    Oct 2021 – Sep 2025
+                  </span>
+                </div>
+
+                <div className="flex gap-2 flex-wrap mt-3">
+                  <span className="font-mono text-[0.7rem] text-[#38bdf8] bg-[#38bdf8]/10 border border-[#38bdf8]/20 rounded-lg px-2.5 py-1">
+                    Intermediate (F.Sc Pre-Engineering) · Punjab College, Lahore (2021)
+                  </span>
+                </div>
+
+                {/* Awards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/4 border border-white/7">
+                    <span className="text-2xl">🥈</span>
                     <div>
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="px-2.5 py-1 rounded-md text-xs font-mono font-semibold border"
-                          style={{
-                            backgroundColor: `${color}15`,
-                            borderColor: `${color}50`,
-                            color: color
-                          }}
-                        >
-                          {activeExp.roleType}
-                        </span>
-                        <span className="text-xs font-mono text-slate-400 flex items-center gap-1">
-                          <MapPin size={12} className="text-cyber-cyan" />
-                          {activeExp.location}
-                        </span>
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mt-2">
-                        {activeExp.title}{' '}
-                        <span className="text-cyber-cyan">@ {activeExp.company}</span>
-                      </h3>
-                    </div>
-
-                    <div className="px-3.5 py-1.5 rounded-xl bg-cyber-bg border border-cyber-border text-xs font-mono text-slate-300 flex items-center gap-2 self-start sm:self-auto">
-                      <Calendar size={14} className="text-cyber-green" />
-                      <span>{activeExp.period}</span>
+                      <strong className="text-sm text-slate-200">2nd Position</strong>
+                      <p className="text-xs text-slate-500">Web Designing Competition, University</p>
                     </div>
                   </div>
-
-                  {/* Bullet points */}
-                  <div className="space-y-3.5">
-                    <h5 className="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                      <Terminal size={13} className="text-cyber-green" />
-                      <span>Key Responsibilities & Deliverables</span>
-                    </h5>
-                    <div className="space-y-3">
-                      {activeExp.description.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-3 group">
-                          <span className="mt-1 flex-shrink-0 w-4 h-4 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/40 flex items-center justify-center">
-                            <CheckCircle2 size={11} className="text-cyber-cyan" />
-                          </span>
-                          <p className="text-sm text-slate-300 leading-relaxed font-sans group-hover:text-white transition-colors">
-                            {item}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Technologies Stack Tags */}
-                  <div className="pt-4 border-t border-cyber-border">
-                    <h5 className="text-xs font-mono text-slate-400 mb-2.5">
-                      Environment & Technologies Applied:
-                    </h5>
-                    <div className="flex flex-wrap gap-2">
-                      {activeExp.technologies.map((tech, tIdx) => (
-                        <span
-                          key={tIdx}
-                          className="px-2.5 py-1 rounded-lg bg-cyber-card border border-cyber-border text-xs font-mono text-slate-200 hover:border-cyber-cyan/40 hover:text-cyber-cyan transition-all"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/4 border border-white/7">
+                    <span className="text-2xl">🏆</span>
+                    <div>
+                      <strong className="text-sm text-slate-200">BSCS Graduate</strong>
+                      <p className="text-xs text-slate-500">Computer Science · NUML University</p>
                     </div>
                   </div>
                 </div>
-              );
-            })()}
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

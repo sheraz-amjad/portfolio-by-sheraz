@@ -1,16 +1,4 @@
-import React from 'react';
-import {
-  Terminal,
-  ShieldCheck,
-  Cloud,
-  Smartphone,
-  Cpu,
-  Database,
-  Workflow,
-  MapPin,
-  CheckCircle2,
-  GraduationCap
-} from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
 import { PersonalInfo } from '../../types';
 
 interface AboutProps {
@@ -18,143 +6,117 @@ interface AboutProps {
 }
 
 export const About: React.FC<AboutProps> = ({ profile }) => {
-  const pillars = [
-    {
-      title: 'DevOps & Cloud Infrastructure',
-      icon: Cloud,
-      color: '#00f0ff',
-      description: 'Architecting AWS EC2 & S3 environments, crafting multi-stage Docker builds, orchestrating zero-downtime GitHub Actions CI/CD pipelines, and managing production Nginx reverse proxies.'
-    },
+  const sectionRef = useRef<HTMLElement>(null);
 
-    {
-      title: 'Flutter Mobile Engineering',
-      icon: Smartphone,
-      color: '#38bdf8',
-      description: 'Building production iOS and Android apps with Flutter & Dart, implementing clean MVVM architectures, and integrating Firebase Auth, Firestore real-time sync, and FCM push notifications.'
-    },
-    {
-      title: 'Security Audits & Shell Automation',
-      icon: ShieldCheck,
-      color: '#ef4444',
-      description: 'Writing custom Bash/Shell scripts for recursive malware scanning, sanitizing databases post-incident, Linux server hardening (UFW/SSH), and low-downtime DNS cutovers.'
-    }
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const targets = el.querySelectorAll('[data-scroll]');
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+      { threshold: 0.1 }
+    );
+    targets.forEach((t) => observer.observe(t));
+    return () => observer.disconnect();
+  }, []);
+
+  const expertiseTags = [
+    'AWS', 'AZURE', 'DOCKER', 'KUBERNETES',
+    'CI/CD AUTOMATION', 'TERRAFORM (IaC)',
+    'FLUTTER', 'FIREBASE', 'LINUX ADMIN', 'SHELL SCRIPTING',
   ];
 
   return (
-    <section id="about" className="py-24 relative overflow-hidden">
-      {/* Background radial glow */}
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none" />
+    <section id="about" ref={sectionRef} className="py-28 relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full bg-[#f59e0b]/4 blur-[150px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyber-card border border-cyber-cyan/30 text-xs font-mono text-cyber-cyan">
-            <Terminal size={13} />
-            <span>SYSTEM_PROFILE // ABOUT</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-display font-black text-white">
-            Engineering Scalable, Secure & <br />
-            <span className="cyber-gradient-text">Containerized Solutions</span>
-          </h2>
-          <p className="text-sm sm:text-base text-slate-400 font-sans leading-relaxed">
-            BSCS graduate combining deep DevOps automation with Flutter mobile application engineering.
-          </p>
-        </div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Bio & Terminal View (6 cols) */}
-          <div className="lg:col-span-6 space-y-6">
-            {/* Main Bio Card */}
-            <div className="glass-card p-6 sm:p-8 rounded-2xl border border-cyber-border space-y-4">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <span>Professional Background</span>
-              </h3>
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                {profile.shortBio}
-              </p>
-              <div className="pt-2 flex flex-wrap gap-4 text-xs font-mono text-slate-400 border-t border-cyber-border">
-                <span className="flex items-center gap-1.5">
-                  <MapPin size={14} className="text-cyber-cyan" />
-                  <span>Based in Lahore, Pakistan</span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <GraduationCap size={14} className="text-cyber-green" />
-                  <span>BSCS Graduate (NUML)</span>
-                </span>
-              </div>
-            </div>
+          {/* Left: Huge Display Title */}
+          <div data-scroll="slide-left" className="space-y-6">
+            <div className="w-12 h-1.5 bg-[#f59e0b] rounded-full" />
+            <h2
+              className="font-display font-extrabold text-white leading-tight relative"
+              style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', letterSpacing: '-0.03em' }}
+              data-text="DEVOPS & MOBILE."
+            >
+              DEVOPS<br />&amp; MOBILE.
+            </h2>
+            <p className="text-slate-300 font-mono text-xs uppercase tracking-widest">
+              // BSCS Graduate · Microsoft Certified
+            </p>
 
-            {/* Interactive Terminal Window */}
-            <div className="rounded-2xl terminal-window border border-cyber-border overflow-hidden">
-              {/* Terminal Header */}
-              <div className="flex items-center justify-between px-4 py-2.5 bg-[#050811] border-b border-cyber-border text-xs font-mono text-slate-400">
+            {/* CI/CD Terminal Visual */}
+            <div className="rounded-xl overflow-hidden border border-[#1e2a45] shadow-xl shadow-black/40 mt-6 bg-[#080d1a]">
+              <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#050811] border-b border-white/8 font-mono text-[11px] text-slate-400">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
-                  <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
-                  <span className="ml-2 text-slate-300 font-mono">sheraz@devops-node:~$</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                  <span className="ml-2 text-slate-300">pipeline.yml — GitHub Actions</span>
                 </div>
-                <span className="text-[10px] text-cyber-cyan">bash v5.2</span>
+                <span className="text-[10px] text-[#f59e0b]">CI/CD Automated</span>
               </div>
-
-              {/* Terminal Body */}
-              <div className="p-4 sm:p-5 font-mono text-xs text-slate-300 space-y-2.5 bg-[#080d1a]">
-                <div className="flex items-center gap-2 text-cyber-cyan">
-                  <span>$</span>
-                  <span className="text-white">cat /etc/sheraz-skills.spec</span>
+              <div className="p-4 font-mono text-[11px] text-slate-300 space-y-1.5">
+                <div className="text-slate-500"># Automated multi-tier pipeline</div>
+                <div className="flex items-center justify-between">
+                  <span><span className="text-[#f59e0b]">build-and-test</span>:</span>
+                  <span className="text-emerald-400 font-semibold">passed ✓</span>
                 </div>
-                <div className="pl-4 text-slate-400 space-y-1">
-                  <div><span className="text-cyber-green">INFRA:</span> AWS EC2, S3, IAM, VPC, Nginx Reverse Proxy</div>
-                  <div><span className="text-cyber-cyan">CONTAINERS:</span> Docker, Docker Compose, Multi-stage builds</div>
-                  <div><span className="text-cyber-purple">PIPELINES:</span> GitHub Actions CI/CD (10m -&gt; 3m cut)</div>
-                  <div><span className="text-cyber-blue">MOBILE:</span> Flutter, Dart, MVVM, Firebase Auth &amp; Firestore</div>
-                  <div><span className="text-cyber-emerald">SECURITY:</span> Malware Shell Scanners, Linux Hardening, UFW</div>
+                <div className="flex items-center justify-between">
+                  <span><span className="text-[#f59e0b]">docker-containerize</span>:</span>
+                  <span className="text-emerald-400 font-semibold">built &amp; pushed ✓</span>
                 </div>
-
-                <div className="flex items-center gap-2 text-cyber-cyan pt-2">
-                  <span>$</span>
-                  <span className="text-white">docker run -d --name devops-portfolio -p 80:80</span>
+                <div className="flex items-center justify-between">
+                  <span><span className="text-[#f59e0b]">k8s-cluster-deploy</span>:</span>
+                  <span className="text-emerald-400 font-semibold">live on AWS ✓</span>
                 </div>
-                <div className="pl-4 text-cyber-green text-[11px]">
-                  [✓] Status: Container running · Health: healthy · Port: 80 -&gt; 5000 proxy
+                <div className="flex items-center justify-between">
+                  <span><span className="text-[#f59e0b]">flutter-mobile-build</span>:</span>
+                  <span className="text-emerald-400 font-semibold">synced ✓</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: 4 Pillars Cards (6 cols) */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {pillars.map((pillar, idx) => {
-              const Icon = pillar.icon;
-              return (
-                <div
-                  key={idx}
-                  className="glass-card glass-card-hover p-5 rounded-2xl border border-cyber-border flex flex-col justify-between"
-                >
-                  <div>
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center mb-3.5 border"
-                      style={{
-                        backgroundColor: `${pillar.color}15`,
-                        borderColor: `${pillar.color}40`,
-                        color: pillar.color,
-                        boxShadow: `0 0 15px ${pillar.color}20`
-                      }}
-                    >
-                      <Icon size={20} />
-                    </div>
-                    <h4 className="font-bold text-white text-base mb-2 font-display">
-                      {pillar.title}
-                    </h4>
-                    <p className="text-xs text-slate-400 leading-relaxed font-sans">
-                      {pillar.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Right: Bio + Tags */}
+          <div data-scroll="slide-right" className="space-y-6">
+            <p className="text-[1.05rem] text-slate-200 leading-[1.8] font-medium">
+              Passionate about DevOps and Mobile development — building CI/CD pipelines that automatically
+              handle builds, tests, and deployments, and crafting Flutter apps that run flawlessly across platforms.
+              A natural problem-solver committed to continuous improvement.
+            </p>
+            <p className="text-[0.9rem] text-slate-400 leading-[1.85]">
+              {profile.shortBio}
+            </p>
+
+            {/* Core Expertise Tags */}
+            <div className="space-y-3">
+              <span className="font-mono text-[0.68rem] font-semibold tracking-[0.12em] text-[#f59e0b] uppercase">
+                Core Expertise
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {expertiseTags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1.5 rounded-lg bg-[#f59e0b]/10 border border-[#f59e0b]/25 font-mono text-[0.72rem] font-semibold text-[#f59e0b] tracking-wide hover:bg-[#f59e0b]/18 hover:border-[#f59e0b]/50 transition-all cursor-default"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Info Row */}
+            <div className="flex flex-wrap gap-4 pt-2 text-xs font-mono text-slate-500 border-t border-white/8 pt-4">
+              <span>📍 Lahore, Pakistan</span>
+              <span>🎓 NUML University · BSCS</span>
+              <span>🏆 AZ-400 Certified</span>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
