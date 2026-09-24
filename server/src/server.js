@@ -62,9 +62,9 @@ app.use((err, req, res, next) => {
 
 // Start Server & Initialize DB
 const startServer = async () => {
-  // Connect to DB and auto-seed if possible
+  // Connect to DB and synchronize portfolio content
   await connectDB();
-  await seedDatabase(false);
+  await seedDatabase(true);
 
   const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`\n====================================================`);

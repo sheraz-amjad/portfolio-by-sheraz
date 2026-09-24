@@ -38,7 +38,7 @@ export const experiencesData = [
       'Tracked sprints and tasks in Jira and participated in Agile ceremonies and code reviews.',
       'Recognized by management as sincere, hardworking, technically sound, and result-oriented.'
     ],
-    technologies: ['Docker', 'GitHub Actions', 'CI/CD', 'Linux', 'Docker Hub', 'Jira', 'Agile']
+    technologies: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Docker', 'GitHub Actions', 'Jira']
   },
   {
     title: 'Flutter Intern',

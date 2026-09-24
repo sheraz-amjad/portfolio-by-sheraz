@@ -13,33 +13,32 @@ import { connectDB, sequelize, isDBReady } from '../config/db.js';
 
 dotenv.config();
 
-export const seedDatabase = async (force = false) => {
+export const seedDatabase = async (force = true) => {
   if (!isDBReady()) {
     console.log('ℹ️ SQL is not connected. Skipping database seeding.');
     return;
   }
 
   try {
-    const expCount = await Experience.count();
-    const projCount = await Project.count();
-    const skillCount = await Skill.count();
-    const certCount = await Certification.count();
+    if (!force) {
+      const expCount = await Experience.count();
+      const projCount = await Project.count();
+      const skillCount = await Skill.count();
+      const certCount = await Certification.count();
+      const isEmpty = expCount === 0 && projCount === 0 && skillCount === 0 && certCount === 0;
 
-    const isEmpty = expCount === 0 && projCount === 0 && skillCount === 0 && certCount === 0;
-
-    if (!isEmpty && !force) {
-      console.log('ℹ️ Database already contains data. Skipping auto-seeding.');
-      return;
+      if (!isEmpty) {
+        console.log('ℹ️ Database already contains data. Skipping auto-seeding.');
+        return;
+      }
     }
 
-    console.log('🌱 Seeding database with Syed Sheraz Amjad CV data...');
+    console.log('🌱 Synchronizing database with latest Syed Sheraz Amjad CV data...');
 
-    if (force || isEmpty) {
-      await Experience.destroy({ where: {} });
-      await Project.destroy({ where: {} });
-      await Skill.destroy({ where: {} });
-      await Certification.destroy({ where: {} });
-    }
+    await Experience.destroy({ where: {} });
+    await Project.destroy({ where: {} });
+    await Skill.destroy({ where: {} });
+    await Certification.destroy({ where: {} });
 
     await Experience.bulkCreate(experiencesData);
     await Project.bulkCreate(projectsData);
