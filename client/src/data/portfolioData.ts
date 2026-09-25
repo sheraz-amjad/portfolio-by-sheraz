@@ -184,42 +184,43 @@ export const portfolioCertifications: CertificationItem[] = [
   {
     title: 'Microsoft Certified: DevOps Engineer Expert (AZ-400)',
     issuer: 'Microsoft',
-    period: 'Mar 2026',
+    period: 'Sep 2026',
     type: 'Certification',
     order: 1,
     description: 'Expert-level certification validating deep expertise in designing and implementing DevOps practices for version control, compliance, infrastructure as code, build, release, and testing.',
-    topics: ['CI/CD Pipelines', 'Infrastructure as Code', 'Dependency Management', 'Continuous Feedback', 'Security & Compliance'],
-    credentialUrl: 'https://learn.microsoft.com/en-us/users/syedsherazamjad',
-    downloadUrl: '/az400-certificate.pdf'
+    topics: ['CI/CD Pipelines', 'Infrastructure as Code', 'Azure DevOps', 'Continuous Feedback', 'Security & Compliance'],
+    credentialUrl: 'https://learn.microsoft.com/en-us/users/syedsherazamjad-7601/credentials/certification/devops-engineer?tab=credentials-tab',
+    downloadUrl: '/AZ-400_DevOps_Engineer_Expert.pdf'
+  },
+  {
+    title: 'Microsoft Certified: Azure Administrator Associate (AZ-104)',
+    issuer: 'Microsoft',
+    period: 'Sep 2026',
+    type: 'Certification',
+    order: 2,
+    description: 'Associate-level certification validating expertise in implementing, managing, and monitoring identity, governance, storage, compute, and virtual networks in cloud environments.',
+    topics: ['Azure Cloud', 'Virtual Networks', 'Identity & Governance', 'Storage & Compute'],
+    credentialUrl: 'https://learn.microsoft.com/en-us/users/syedsherazamjad-7601/credentials/certification/azure-administrator?tab=credentials-tab',
+    downloadUrl: '/AZ-104_Azure_Administrator_Associate.pdf'
+  },
+  {
+    title: 'Experience Letter',
+    issuer: 'DevOps & Software Engineering',
+    period: '2026',
+    type: 'Training',
+    order: 3,
+    description: 'Official Experience Letter validating hands-on accomplishments in DevOps engineering, server infrastructure migration, CI/CD automation, and cloud deployments.',
+    topics: ['DevOps', 'Docker', 'GitHub Actions', 'Server Migration', 'Linux Administration'],
+    downloadUrl: '/syed_sheraz_experience_letter.pdf'
   },
   {
     title: 'Bachelor of Science in Computer Science (BSCS)',
     issuer: 'National University of Modern Languages (NUML)',
     period: 'Oct 2021 – Sep 2025',
     type: 'Education',
-    order: 2,
+    order: 4,
     description: 'Graduated with core foundations in Data Structures, Algorithms, Distributed Systems, Software Engineering, Database Systems, Computer Networks, and Mobile Application Development.',
     topics: ['Algorithms & Data Structures', 'Software Engineering', 'Database Management Systems', 'Networking & OS']
-  },
-  {
-    title: 'DevOps Internship Letter',
-    issuer: 'Ebryx (Pvt.) Ltd',
-    period: 'Apr 2026 – Jul 2026',
-    type: 'Training',
-    order: 3,
-    description: 'Experience letter confirming DevOps internship completion covering Docker containerization, GitHub Actions CI/CD pipelines, and infrastructure management.',
-    topics: ['DevOps', 'Docker', 'GitHub Actions', 'CI/CD'],
-    downloadUrl: '/ebryx-letter.pdf'
-  },
-  {
-    title: 'Flutter Internship Certificate',
-    issuer: 'Semicolons Tech',
-    period: 'Sep 2025 – Feb 2026',
-    type: 'Training',
-    order: 4,
-    description: 'Successfully completed 6-month internship in Flutter mobile application development, implementing real-time booking flows and event feeds with Firebase.',
-    topics: ['Flutter', 'Dart', 'Mobile Dev', 'Firebase'],
-    downloadUrl: '/semicolons-cert.pdf'
   }
 ];
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Download } from 'lucide-react';
 import { ExperienceItem } from '../../types';
 
 interface ExperienceProps {
@@ -98,16 +99,26 @@ export const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
                       ))}
                     </ul>
 
-                    {/* Tech Tags */}
-                    <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-white/6">
-                      {exp.technologies.map((t) => (
-                        <span
-                          key={t}
-                          className="font-mono text-[0.65rem] text-slate-500 bg-white/4 border border-white/7 rounded-md px-2 py-0.5"
-                        >
-                          {t}
-                        </span>
-                      ))}
+                    {/* Tech Tags & Download */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 mt-4 pt-4 border-t border-white/6">
+                      <div className="flex flex-wrap gap-1.5">
+                        {exp.technologies.map((t) => (
+                          <span
+                            key={t}
+                            className="font-mono text-[0.65rem] text-slate-500 bg-white/4 border border-white/7 rounded-md px-2 py-0.5"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                      <a
+                        href="/syed_sheraz_experience_letter.pdf"
+                        download="Syed_Sheraz_Amjad_Experience_Letter.pdf"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs text-amber-400 hover:text-amber-300 bg-amber-400/10 border border-amber-400/20 hover:border-amber-400/40 px-3 py-1.5 rounded-lg transition-colors"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        Experience Letter
+                      </a>
                     </div>
                   </div>
                 </div>
