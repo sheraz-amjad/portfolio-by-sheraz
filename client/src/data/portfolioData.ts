@@ -59,7 +59,8 @@ export const portfolioExperiences: ExperienceItem[] = [
       'Tracked sprints and tasks in Jira and participated in Agile ceremonies and code reviews.',
       'Recognized by management as sincere, hardworking, technically sound, and result-oriented.'
     ],
-    technologies: ['AWS EC2', 'AWS S3', 'AWS Lambda', 'Docker', 'Azure', 'GitHub Actions', 'Jira']
+    technologies: ['AWS EC2', 'AWS S3', 'AWS Lambda', 'Docker', 'Azure', 'GitHub Actions', 'Jira'],
+    downloadUrl: '/syed_sheraz_experience_letter.pdf'
   },
   {
     title: 'Flutter Intern',
@@ -75,7 +76,8 @@ export const portfolioExperiences: ExperienceItem[] = [
       'Worked with Flutter, Dart, Firebase, Git/GitHub, and Android Studio throughout the development lifecycle.',
       'Involved in UI development, state management, API integration, bug fixing, and testing; recognized for enthusiasm, dedication, and willingness to learn.'
     ],
-    technologies: ['Flutter', 'Dart', 'Firebase', 'Git', 'Android Studio', 'API Integration']
+    technologies: ['Flutter', 'Dart', 'Firebase', 'Git', 'Android Studio', 'API Integration'],
+    downloadUrl: '/semicolons_flutter_internship_certificate.pdf'
   }
 ];
 
@@ -204,7 +206,7 @@ export const portfolioCertifications: CertificationItem[] = [
     downloadUrl: '/AZ-104_Azure_Administrator_Associate.pdf'
   },
   {
-    title: 'Experience Letter',
+    title: 'DevOps Experience Letter',
     issuer: 'DevOps & Software Engineering',
     period: '2026',
     type: 'Training',
@@ -214,11 +216,21 @@ export const portfolioCertifications: CertificationItem[] = [
     downloadUrl: '/syed_sheraz_experience_letter.pdf'
   },
   {
+    title: 'Flutter Mobile Developer Internship Certificate',
+    issuer: 'Semicolons Tech',
+    period: 'Sep 2025 – Feb 2026',
+    type: 'Training',
+    order: 4,
+    description: 'Official Certificate of Internship Completion for Flutter Mobile Application Development, validating UI development, state management, API integration, and app performance optimization.',
+    topics: ['Flutter', 'Dart', 'Mobile Dev', 'Firebase', 'State Management', 'API Integration'],
+    downloadUrl: '/semicolons_flutter_internship_certificate.pdf'
+  },
+  {
     title: 'Bachelor of Science in Computer Science (BSCS)',
     issuer: 'National University of Modern Languages (NUML)',
     period: 'Oct 2021 – Sep 2025',
     type: 'Education',
-    order: 4,
+    order: 5,
     description: 'Graduated with core foundations in Data Structures, Algorithms, Distributed Systems, Software Engineering, Database Systems, Computer Networks, and Mobile Application Development.',
     topics: ['Algorithms & Data Structures', 'Software Engineering', 'Database Management Systems', 'Networking & OS']
   }

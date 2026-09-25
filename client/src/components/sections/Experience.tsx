@@ -111,14 +111,16 @@ export const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
                           </span>
                         ))}
                       </div>
-                      <a
-                        href="/syed_sheraz_experience_letter.pdf"
-                        download="Syed_Sheraz_Amjad_Experience_Letter.pdf"
-                        className="inline-flex items-center gap-1.5 font-mono text-xs text-amber-400 hover:text-amber-300 bg-amber-400/10 border border-amber-400/20 hover:border-amber-400/40 px-3 py-1.5 rounded-lg transition-colors"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        Experience Letter
-                      </a>
+                      {exp.downloadUrl && (
+                        <a
+                          href={exp.downloadUrl}
+                          download
+                          className="inline-flex items-center gap-1.5 font-mono text-xs text-amber-400 hover:text-amber-300 bg-amber-400/10 border border-amber-400/20 hover:border-amber-400/40 px-3 py-1.5 rounded-lg transition-colors"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          {exp.roleType === 'Mobile' ? 'Internship Certificate' : 'Experience Letter'}
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -24,6 +24,7 @@ export interface ExperienceItem {
   description: string[];
   technologies: string[];
   order: number;
+  downloadUrl?: string;
 }
 
 export interface ProjectItem {
