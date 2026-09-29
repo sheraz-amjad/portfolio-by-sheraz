@@ -27,7 +27,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
   }, []);
 
   return (
-    <section id="hero" ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16">
+    <section id="hero" ref={sectionRef} className="relative flex items-center overflow-hidden pt-24 sm:pt-28 pb-4 sm:pb-6">
       {/* Background glows */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full bg-[#f59e0b]/6 blur-[140px]" />
@@ -121,67 +121,66 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
             </div>
           </div>
 
-          {/* Right Column: Hero Portrait Card with Modern Responsive WebP */}
-          <div className="relative flex justify-center lg:justify-end my-2 lg:my-0">
-            <div className="relative w-full max-w-[240px] sm:max-w-[270px] lg:max-w-[300px] aspect-[4/5] rounded-2xl sm:rounded-[22px] overflow-hidden border border-white/15 bg-[#14151e] shadow-[0_15px_40px_rgba(0,0,0,0.7),0_0_25px_rgba(245,158,11,0.08)] hover:border-[#f59e0b] hover:shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_35px_rgba(245,158,11,0.2)] hover:-translate-y-1 transition-all duration-500 group">
-              <picture>
-                <source srcSet="/profile.webp" type="image/webp" media="(min-width: 640px)" />
-                <source srcSet="/profile-sm.webp" type="image/webp" media="(max-width: 639px)" />
-                <img
-                  src="/profile.jpg"
-                  alt={`${profile.name} - Microsoft Certified DevOps Engineer Expert (AZ-400)`}
-                  width={300}
-                  height={375}
-                  className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"
-                  loading="eager"
-                  fetchPriority="high"
-                />
-              </picture>
+          {/* Right Column: Hero Portrait Circular Avatar with Modern DevOps Styling */}
+          <div className="relative flex justify-center lg:justify-end my-4 lg:my-0">
+            <div className="relative group">
+              {/* Outer Glowing Cyber Ring */}
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#f59e0b] via-amber-500/20 to-cyan-400/30 blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              {/* Subtle bottom gradient overlay */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{ background: 'linear-gradient(180deg, transparent 65%, rgba(10, 11, 14, 0.9) 100%)' }}
-              />
+              {/* Circular Avatar Container */}
+              <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full p-1 bg-gradient-to-tr from-[#f59e0b] via-amber-500/40 to-cyan-400/40 shadow-[0_0_35px_rgba(245,158,11,0.25)]">
+                <div className="w-full h-full rounded-full overflow-hidden bg-[#14151e] border-2 border-[#0a0e1a] relative">
+                  <picture>
+                    <source srcSet="/profile.webp" type="image/webp" media="(min-width: 640px)" />
+                    <source srcSet="/profile-sm.webp" type="image/webp" media="(max-width: 639px)" />
+                    <img
+                      src="/profile.jpg"
+                      alt={`${profile.name} - Microsoft Certified DevOps Engineer Expert (AZ-400)`}
+                      width={256}
+                      height={256}
+                      className="w-full h-full object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-500"
+                      loading="eager"
+                      fetchPriority="high"
+                    />
+                  </picture>
 
-              {/* Floating tech badge at bottom */}
-              <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between p-2 rounded-xl bg-[#0e111a]/92 backdrop-blur-md border border-white/15 shadow-lg">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10b981] animate-pulse" />
-                  <div>
-                    <div className="text-[11px] sm:text-xs font-bold text-white font-sans leading-tight">{profile.name}</div>
-                    <div className="text-[9px] sm:text-[10px] font-mono text-[#f59e0b] leading-tight">DevOps Engineer Expert</div>
-                  </div>
+                  {/* Subtle inner overlay */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-b from-transparent via-transparent to-black/40 pointer-events-none" />
                 </div>
+              </div>
+
+              {/* Floating AZ-400 Credential Pill at bottom-right */}
+              <div className="absolute -bottom-2 -right-1 sm:right-1 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0e111a]/95 backdrop-blur-md border border-[#f59e0b]/40 shadow-xl z-20">
+                <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10b981] animate-pulse" />
                 <a
                   href="https://learn.microsoft.com/en-us/users/syedsherazamjad-7601/credentials/certification/devops-engineer?tab=credentials-tab"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-2 py-0.5 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[9px] font-mono font-semibold text-[#f59e0b] hover:bg-[#f59e0b] hover:text-[#0a0e1a] transition-colors whitespace-nowrap"
+                  className="text-[10px] sm:text-[11px] font-mono font-bold text-[#f59e0b] hover:text-white transition-colors whitespace-nowrap"
                   title="View Microsoft AZ-400 Credential"
                 >
-                  AZ-400 ↗
+                  AZ-400 Expert ↗
                 </a>
               </div>
-            </div>
 
-            {/* Floating uptime pill */}
-            <div className="absolute -bottom-2 -left-2 sm:-left-4 px-3 py-1.5 rounded-lg bg-[#0f1628]/95 border border-[#f59e0b]/30 font-mono text-[11px] text-emerald-400 shadow-2xl backdrop-blur-md hidden sm:flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-flex" />
-              <span>✓ 99.9% Production SLA</span>
+              {/* Floating Uptime Badge at top-left */}
+              <div className="absolute -top-2 -left-2 sm:left-0 px-2.5 py-1 rounded-full bg-[#0e111a]/95 backdrop-blur-md border border-emerald-500/40 text-[10px] font-mono text-emerald-400 shadow-xl hidden sm:flex items-center gap-1.5 z-20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span>99.9% SLA</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Scroll down */}
-        <div className="flex justify-center mt-14">
+        <div className="flex justify-center mt-6 sm:mt-8">
           <button
             onClick={() => onNavigate('about')}
-            className="flex flex-col items-center gap-1.5 text-xs font-mono text-slate-400 hover:text-[#f59e0b] transition-colors group"
+            className="flex flex-col items-center gap-1 text-xs font-mono text-slate-400 hover:text-[#f59e0b] transition-colors group"
             aria-label="Scroll to About section"
           >
-            <span className="tracking-wider">SCROLL TO EXPLORE</span>
-            <ChevronDown size={18} className="animate-bounce text-[#f59e0b]" />
+            <span className="tracking-wider text-[11px]">EXPLORE</span>
+            <ChevronDown size={16} className="animate-bounce text-[#f59e0b]" />
           </button>
         </div>
       </div>

@@ -29,7 +29,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 sm:py-28 relative overflow-hidden">
+    <section id="about" ref={sectionRef} className="pt-4 sm:pt-8 pb-20 sm:pb-24 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full bg-[#f59e0b]/4 blur-[150px] pointer-events-none" />
 
