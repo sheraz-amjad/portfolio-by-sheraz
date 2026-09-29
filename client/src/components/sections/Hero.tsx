@@ -122,16 +122,16 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
           </div>
 
           {/* Right Column: Hero Portrait Card with Modern Responsive WebP */}
-          <div className="relative flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[380px] aspect-[4/5] rounded-[28px] overflow-hidden border border-white/15 bg-[#14151e] shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_30px_rgba(245,158,11,0.08)] hover:border-[#f59e0b] hover:shadow-[0_25px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(245,158,11,0.2)] hover:-translate-y-1 transition-all duration-500 group">
+          <div className="relative flex justify-center lg:justify-end my-2 lg:my-0">
+            <div className="relative w-full max-w-[240px] sm:max-w-[270px] lg:max-w-[300px] aspect-[4/5] rounded-2xl sm:rounded-[22px] overflow-hidden border border-white/15 bg-[#14151e] shadow-[0_15px_40px_rgba(0,0,0,0.7),0_0_25px_rgba(245,158,11,0.08)] hover:border-[#f59e0b] hover:shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_35px_rgba(245,158,11,0.2)] hover:-translate-y-1 transition-all duration-500 group">
               <picture>
                 <source srcSet="/profile.webp" type="image/webp" media="(min-width: 640px)" />
                 <source srcSet="/profile-sm.webp" type="image/webp" media="(max-width: 639px)" />
                 <img
                   src="/profile.jpg"
                   alt={`${profile.name} - Microsoft Certified DevOps Engineer Expert (AZ-400)`}
-                  width={380}
-                  height={475}
+                  width={300}
+                  height={375}
                   className="w-full h-full object-cover object-[center_20%] group-hover:scale-[1.03] transition-transform duration-700"
                   loading="eager"
                   fetchPriority="high"
@@ -145,19 +145,19 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
               />
 
               {/* Floating tech badge at bottom */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3 rounded-2xl bg-[#0e111a]/90 backdrop-blur-md border border-white/15 shadow-lg">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse" />
+              <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between p-2 rounded-xl bg-[#0e111a]/92 backdrop-blur-md border border-white/15 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10b981] animate-pulse" />
                   <div>
-                    <div className="text-xs font-bold text-white font-sans leading-tight">{profile.name}</div>
-                    <div className="text-[11px] font-mono text-[#f59e0b] leading-tight">DevOps Engineer Expert</div>
+                    <div className="text-[11px] sm:text-xs font-bold text-white font-sans leading-tight">{profile.name}</div>
+                    <div className="text-[9px] sm:text-[10px] font-mono text-[#f59e0b] leading-tight">DevOps Engineer Expert</div>
                   </div>
                 </div>
                 <a
                   href="https://learn.microsoft.com/en-us/users/syedsherazamjad-7601/credentials/certification/devops-engineer?tab=credentials-tab"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-2.5 py-1 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[10px] font-mono font-semibold text-[#f59e0b] hover:bg-[#f59e0b] hover:text-[#0a0e1a] transition-colors"
+                  className="px-2 py-0.5 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/40 text-[9px] font-mono font-semibold text-[#f59e0b] hover:bg-[#f59e0b] hover:text-[#0a0e1a] transition-colors whitespace-nowrap"
                   title="View Microsoft AZ-400 Credential"
                 >
                   AZ-400 ↗
@@ -166,8 +166,8 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
             </div>
 
             {/* Floating uptime pill */}
-            <div className="absolute -bottom-3 -left-3 sm:-left-6 px-4 py-2 rounded-xl bg-[#0f1628]/95 border border-[#f59e0b]/30 font-mono text-xs text-emerald-400 shadow-2xl backdrop-blur-md hidden sm:flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-flex" />
+            <div className="absolute -bottom-2 -left-2 sm:-left-4 px-3 py-1.5 rounded-lg bg-[#0f1628]/95 border border-[#f59e0b]/30 font-mono text-[11px] text-emerald-400 shadow-2xl backdrop-blur-md hidden sm:flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-flex" />
               <span>✓ 99.9% Production SLA</span>
             </div>
           </div>
