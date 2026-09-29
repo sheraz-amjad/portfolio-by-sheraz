@@ -128,7 +128,21 @@
   </head>
   <body class="bg-[#0a0e1a] text-slate-100 font-sans antialiased selection:bg-[#f59e0b] selection:text-black min-h-screen overflow-x-hidden">
     <div id="root">
-      <!-- Semantic Static Pre-rendered HTML for Search Engine Crawlers -->
+      <!-- High-Performance Sleek Preloader matching #0a0e1a theme -->
+      <div style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #0a0e1a; color: #cbd5e1; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; text-align: center; padding: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+          <div style="width: 12px; height: 12px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981;"></div>
+          <span style="font-size: 15px; font-weight: 700; color: #f59e0b; letter-spacing: 0.08em; font-family: monospace;">SYED SHERAZ AMJAD</span>
+        </div>
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 9999px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); font-size: 11px; font-family: monospace; color: #f59e0b;">
+          Senior DevOps Engineer · AZ-400 Expert
+        </div>
+        <p style="margin-top: 14px; font-size: 12px; color: #64748b; font-family: monospace;">Initializing Cloud Services...</p>
+      </div>
+    </div>
+
+    <!-- Semantic Static HTML for Search Engine Crawlers & Non-JS Clients -->
+    <noscript>
       <header>
         <nav>
           <a href="#about">About</a>
@@ -137,135 +151,46 @@
           <a href="#projects">Projects</a>
           <a href="#certifications">Certifications</a>
           <a href="#contact">Contact</a>
-          <a href="/resume.pdf" download="Syed_Sheraz_Amjad_Resume.pdf">Download Resume</a>
+          <a href="/Sheraz_Amjad_Resume.pdf" download="Syed_Sheraz_Amjad_Resume.pdf">Download Resume</a>
         </nav>
       </header>
 
       <main>
         <!-- Hero & Intro -->
-        <section id="hero">
+        <section id="hero-fallback">
           <h1>Syed Sheraz Amjad</h1>
-          <h2>DevOps Engineer &amp; Flutter Mobile Developer</h2>
-          <p>Microsoft Certified DevOps Engineer Expert (AZ-400) specializing in AWS, Microsoft Azure, Docker, Kubernetes, CI/CD automation with GitHub Actions, Terraform Infrastructure as Code, Linux administration, and cross-platform Flutter mobile development based in Lahore, Pakistan.</p>
+          <h2>Senior DevOps Engineer &amp; Cloud Specialist (AZ-400 Expert)</h2>
+          <p>Microsoft Certified DevOps Engineer Expert (AZ-400) specializing in AWS, Microsoft Azure, Docker, Kubernetes, CI/CD automation with GitHub Actions, Terraform Infrastructure as Code, Linux administration, and high-availability cloud architecture based in Lahore, Pakistan.</p>
           <p>Email: <a href="mailto:sherazamjad933@gmail.com">sherazamjad933@gmail.com</a> | Phone: +92 306 9275494</p>
           <p>GitHub: <a href="https://github.com/sheraz-amjad" target="_blank" rel="noopener">github.com/sheraz-amjad</a> | LinkedIn: <a href="https://www.linkedin.com/in/syed-sheraz-amjad/" target="_blank" rel="noopener">linkedin.com/in/syed-sheraz-amjad</a></p>
         </section>
 
         <!-- About Section -->
-        <section id="about">
+        <section id="about-fallback">
           <h2>About Me</h2>
-          <p>Results-driven BSCS graduate and Microsoft Certified DevOps Engineer Expert with hands-on experience across AWS (EC2, S3, Lambda, CLI), Microsoft Azure, Docker, Kubernetes, CI/CD automation (GitHub Actions/Workflows), Terraform (IaC), Linux administration, networking, monitoring tools, and shell scripting.</p>
-          <p>Currently working as a DevOps Engineer at Zemotify, leading server migrations, security remediations, and cloud infrastructure setup. Also experienced as a Flutter Intern at Semicolons Tech, building cross-platform mobile apps integrated with Firebase.</p>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience">
-          <h2>Professional Experience</h2>
-          
-          <article>
-            <h3>DevOps Engineer @ Zemotify</h3>
-            <p><strong>Period:</strong> Jul 2026 – Present | <strong>Location:</strong> Lahore, Pakistan</p>
-            <ul>
-              <li>Led full server migration of core applications to production Linux servers with zero downtime.</li>
-              <li>Performed comprehensive security remediation, including SSH hardening, UFW firewall configurations, fail2ban, and audit logging.</li>
-              <li>Configured Nginx reverse proxies with SSL/TLS encryption via Certbot, Gzip compression, and rate limiting.</li>
-              <li>Automated server deployments using GitHub Actions CI/CD workflows and custom bash shell scripts.</li>
-              <li>Managed Dockerized microservices, volumes, health checks, and log rotation.</li>
-            </ul>
-            <p><a href="/syed_sheraz_experience_letter.pdf" download="Syed_Sheraz_Amjad_Experience_Letter.pdf">Download Experience Letter (PDF)</a></p>
-          </article>
-
-          <article>
-            <h3>DevOps Intern @ Ebryx (Pvt.) Ltd</h3>
-            <p><strong>Period:</strong> Apr 2026 – Jul 2026 | <strong>Location:</strong> Lahore, Pakistan</p>
-            <ul>
-              <li>Containerized multi-tier applications using Docker and optimized multi-stage builds.</li>
-              <li>Built and optimized CI/CD pipelines with GitHub Actions, reducing deployment times from 10 minutes to ~30 seconds.</li>
-              <li>Managed AWS EC2, S3, Lambda, and Docker Hub image repositories.</li>
-            </ul>
-            <p><a href="/syed_sheraz_experience_letter.pdf" download="Syed_Sheraz_Amjad_Experience_Letter.pdf">Download DevOps Internship Letter (PDF)</a></p>
-          </article>
-
-          <article>
-            <h3>Flutter Intern @ Semicolons Tech</h3>
-            <p><strong>Period:</strong> Sep 2025 – Feb 2026 | <strong>Location:</strong> Lahore, Pakistan</p>
-            <ul>
-              <li>Developed and maintained Joya Hotel App and Festival Rumours App using Flutter and Dart.</li>
-              <li>Implemented Firebase Authentication, Firestore realtime database, and Cloud Messaging (FCM).</li>
-              <li>Handled UI design, state management, REST API integration, bug fixing, and app store readiness.</li>
-            </ul>
-            <p><a href="/semicolons_flutter_internship_certificate.pdf" download="Syed_Sheraz_Amjad_Flutter_Certificate.pdf">Download Flutter Internship Certificate (PDF)</a></p>
-          </article>
+          <p>Results-driven BSCS graduate and Microsoft Certified DevOps Engineer Expert with hands-on experience across AWS, Microsoft Azure, Docker, Kubernetes, CI/CD automation (GitHub Actions/Workflows), Terraform (IaC), Linux security hardening, networking, monitoring tools, and shell scripting.</p>
         </section>
 
         <!-- Technical Skills -->
-        <section id="skills">
+        <section id="skills-fallback">
           <h2>Technical Skills</h2>
           <ul>
             <li><strong>Cloud &amp; DevOps:</strong> AWS (EC2, S3, Lambda, IAM, CLI), Microsoft Azure, Docker, Kubernetes, Terraform (IaC), GitHub Actions CI/CD</li>
             <li><strong>Systems &amp; Security:</strong> Linux Administration, Bash Shell Scripting, Nginx Reverse Proxy, SSH Hardening, UFW, Fail2ban, SSL/TLS</li>
-            <li><strong>Mobile Development:</strong> Flutter, Dart, Android Studio, Cross-Platform Mobile Apps</li>
-            <li><strong>Backend &amp; Database:</strong> Firebase Auth, Cloud Firestore, Cloud Messaging (FCM), REST APIs, Node.js, Express, MongoDB</li>
-            <li><strong>Tools &amp; Version Control:</strong> Git, GitHub, Jira, Agile/Scrum</li>
+            <li><strong>Observability:</strong> Prometheus, Grafana, CloudWatch, Node Exporter, Incident Alerting</li>
           </ul>
-        </section>
-
-        <!-- Projects -->
-        <section id="projects">
-          <h2>Key Projects</h2>
-          
-          <article>
-            <h3>Automated Media Streaming Pipeline (Netflix Clone)</h3>
-            <p>Full-stack MERN streaming platform containerized with Docker and automatically deployed to AWS EC2 via GitHub Actions CI/CD pipelines.</p>
-          </article>
-
-          <article>
-            <h3>Joya Hotel App (Flutter &amp; Firebase)</h3>
-            <p>Cross-platform hospitality booking app with real-time room availability, user authentication, and booking management built with Flutter &amp; Firebase.</p>
-          </article>
-
-          <article>
-            <h3>Festival Rumours App</h3>
-            <p>Event management mobile application featuring live event feeds, schedule tracking, and user interaction modules.</p>
-          </article>
         </section>
 
         <!-- Certifications -->
-        <section id="certifications">
-          <h2>Certifications &amp; Education</h2>
+        <section id="certifications-fallback">
+          <h2>Certifications</h2>
           <ul>
-            <li>
-              <strong>Microsoft Certified: DevOps Engineer Expert (AZ-400)</strong> — Microsoft (Earned Sep 2026)
-              <br /><a href="https://learn.microsoft.com/en-us/users/syedsherazamjad-7601/credentials/certification/devops-engineer?tab=credentials-tab" target="_blank" rel="noopener">View Online Credential</a> | <a href="/AZ-400_DevOps_Engineer_Expert.pdf" download>Download PDF Certificate</a>
-            </li>
-            <li>
-              <strong>Microsoft Certified: Azure Administrator Associate (AZ-104)</strong> — Microsoft (Earned Sep 2026)
-              <br /><a href="https://learn.microsoft.com/en-us/users/syedsherazamjad-7601/credentials/certification/azure-administrator?tab=credentials-tab" target="_blank" rel="noopener">View Online Credential</a> | <a href="/AZ-104_Azure_Administrator_Associate.pdf" download>Download PDF Certificate</a>
-            </li>
-            <li>
-              <strong>Flutter Mobile Developer Internship Certificate</strong> — Semicolons Tech
-              <br /><a href="/semicolons_flutter_internship_certificate.pdf" download>Download Certificate (PDF)</a>
-            </li>
-            <li>
-              <strong>BS in Computer Science (BSCS)</strong> — National University of Modern Languages (NUML), Lahore (2021 – 2025)
-            </li>
+            <li>Microsoft Certified: DevOps Engineer Expert (AZ-400)</li>
+            <li>Microsoft Certified: Azure Administrator Associate (AZ-104)</li>
           </ul>
         </section>
-
-        <!-- Contact Section -->
-        <section id="contact">
-          <h2>Contact</h2>
-          <p>Email: <a href="mailto:sherazamjad933@gmail.com">sherazamjad933@gmail.com</a></p>
-          <p>Phone: +92 306 9275494</p>
-          <p>Location: Lahore, Pakistan</p>
-          <p><a href="/resume.pdf" download="Syed_Sheraz_Amjad_Resume.pdf">Download Resume (PDF)</a></p>
-        </section>
       </main>
-
-      <footer>
-        <p>&copy; 2026 Syed Sheraz Amjad. All rights reserved.</p>
-      </footer>
-    </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
