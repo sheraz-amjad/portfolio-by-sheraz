@@ -26,19 +26,6 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll reveal for hero
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const targets = el.querySelectorAll('[data-scroll]');
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
-      { threshold: 0.1 }
-    );
-    targets.forEach((t) => observer.observe(t));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="hero" ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16">
       {/* Background glows */}
@@ -52,7 +39,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* Left Column */}
-          <div data-scroll="slide-left" className="space-y-6">
+          <div className="space-y-6">
             {/* Status Badge */}
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#0f1628]/95 border border-[#f59e0b]/40 font-mono text-xs text-slate-200 shadow-md">
               <span className="relative flex w-2.5 h-2.5">
@@ -135,7 +122,7 @@ export const Hero: React.FC<HeroProps> = ({ profile, onNavigate }) => {
           </div>
 
           {/* Right Column: Hero Portrait Card with Modern Responsive WebP */}
-          <div data-scroll="slide-right" className="relative flex justify-center lg:justify-end">
+          <div className="relative flex justify-center lg:justify-end">
             <div className="relative w-full max-w-[380px] aspect-[4/5] rounded-[28px] overflow-hidden border border-white/15 bg-[#14151e] shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_30px_rgba(245,158,11,0.08)] hover:border-[#f59e0b] hover:shadow-[0_25px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(245,158,11,0.2)] hover:-translate-y-1 transition-all duration-500 group">
               <picture>
                 <source srcSet="/profile.webp" type="image/webp" media="(min-width: 640px)" />
