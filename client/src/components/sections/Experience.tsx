@@ -89,23 +89,23 @@ export const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
                     </div>
 
                     {/* Achievements */}
-                    <h4 className="font-mono text-[0.65rem] font-semibold tracking-[0.08em] text-[#f59e0b] uppercase mb-2.5">Key achievements:</h4>
-                    <ul className="space-y-2">
-                      {exp.description.slice(0, 4).map((item, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-[0.875rem] text-slate-400 leading-relaxed">
-                          <span className="text-[#f59e0b] flex-shrink-0 mt-0.5 text-xs">▸</span>
-                          <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-200">$1</strong>') }} />
+                    <h4 className="font-mono text-[0.7rem] font-semibold tracking-[0.08em] text-[#f59e0b] uppercase mb-2.5">Key achievements &amp; responsibilities:</h4>
+                    <ul className="space-y-2.5">
+                      {exp.description.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-[0.875rem] text-slate-300 leading-relaxed">
+                          <span className="text-[#f59e0b] flex-shrink-0 mt-0.5 text-xs font-mono">▸</span>
+                          <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>') }} />
                         </li>
                       ))}
                     </ul>
 
                     {/* Tech Tags & Download */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 mt-4 pt-4 border-t border-white/6">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mt-5 pt-4 border-t border-white/8">
                       <div className="flex flex-wrap gap-1.5">
                         {exp.technologies.map((t) => (
                           <span
                             key={t}
-                            className="font-mono text-[0.65rem] text-slate-500 bg-white/4 border border-white/7 rounded-md px-2 py-0.5"
+                            className="font-mono text-xs text-slate-300 bg-white/5 border border-white/10 rounded-md px-2.5 py-1"
                           >
                             {t}
                           </span>
@@ -115,10 +115,10 @@ export const Experience: React.FC<ExperienceProps> = ({ experiences }) => {
                         <a
                           href={exp.downloadUrl}
                           download
-                          className="inline-flex items-center gap-1.5 font-mono text-xs text-amber-400 hover:text-amber-300 bg-amber-400/10 border border-amber-400/20 hover:border-amber-400/40 px-3 py-1.5 rounded-lg transition-colors"
+                          className="inline-flex items-center gap-1.5 font-mono text-xs text-amber-400 hover:text-amber-300 bg-amber-400/10 border border-amber-400/30 hover:border-amber-400/60 px-3.5 py-2 rounded-xl transition-colors"
                         >
                           <Download className="w-3.5 h-3.5" />
-                          {exp.roleType === 'Mobile' ? 'Internship Certificate' : 'Experience Letter'}
+                          {exp.roleType === 'Mobile' ? 'Internship Certificate (PDF)' : 'Experience Letter (PDF)'}
                         </a>
                       )}
                     </div>

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { PersonalInfo } from '../../types';
+import { PipelineFlow } from '../ui/PipelineFlow';
+import { ShieldCheck, Cpu, GitMerge, Server } from 'lucide-react';
 
 interface AboutProps {
   profile: PersonalInfo;
@@ -21,87 +23,73 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
   }, []);
 
   const expertiseTags = [
-    'AWS', 'AZURE', 'DOCKER', 'KUBERNETES',
-    'CI/CD AUTOMATION', 'TERRAFORM (IaC)',
-    'FLUTTER', 'FIREBASE', 'LINUX ADMIN', 'SHELL SCRIPTING',
+    'CI/CD AUTOMATION', 'AZURE DEVOPS', 'DOCKER MULTI-STAGE', 'KUBERNETES',
+    'TERRAFORM (IaC)', 'AWS (EC2, S3, LAMBDA)', 'MICROSOFT AZURE',
+    'LINUX HARDENING (UFW/SSH)', 'BASH AUTOMATION', 'CRON BACKUPS', 'NGINX REVERSE PROXY'
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="py-28 relative overflow-hidden">
+    <section id="about" ref={sectionRef} className="py-24 sm:py-28 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full bg-[#f59e0b]/4 blur-[150px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-16">
 
-          {/* Left: Huge Display Title */}
+          {/* Left: Display Title & DevOps Pillars */}
           <div data-scroll="slide-left" className="space-y-6">
             <div className="w-12 h-1.5 bg-[#f59e0b] rounded-full" />
             <h2
-              className="font-display font-extrabold text-white leading-tight relative"
-              style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', letterSpacing: '-0.03em' }}
-              data-text="DEVOPS & MOBILE."
+              className="font-display font-extrabold text-white leading-tight"
+              style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', letterSpacing: '-0.03em' }}
             >
-              DEVOPS<br />&amp; MOBILE.
+              DEVOPS &amp;<br />
+              <span className="text-[#f59e0b]">CLOUD ARCHITECTURE</span>
             </h2>
             <p className="text-slate-300 font-mono text-xs uppercase tracking-widest">
-              // BSCS Graduate · Microsoft Certified
+              // BSCS Graduate · Microsoft Certified DevOps Engineer Expert (AZ-400)
             </p>
 
-            {/* CI/CD Terminal Visual */}
-            <div className="rounded-xl overflow-hidden border border-[#1e2a45] shadow-xl shadow-black/40 mt-6 bg-[#080d1a]">
-              <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#050811] border-b border-white/8 font-mono text-[11px] text-slate-400">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                  <span className="ml-2 text-slate-300">pipeline.yml — GitHub Actions</span>
-                </div>
-                <span className="text-[10px] text-[#f59e0b]">CI/CD Automated</span>
-              </div>
-              <div className="p-4 font-mono text-[11px] text-slate-300 space-y-1.5">
-                <div className="text-slate-500"># Automated multi-tier pipeline</div>
-                <div className="flex items-center justify-between">
-                  <span><span className="text-[#f59e0b]">build-and-test</span>:</span>
-                  <span className="text-emerald-400 font-semibold">passed ✓</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span><span className="text-[#f59e0b]">docker-containerize</span>:</span>
-                  <span className="text-emerald-400 font-semibold">built &amp; pushed ✓</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span><span className="text-[#f59e0b]">k8s-cluster-deploy</span>:</span>
-                  <span className="text-emerald-400 font-semibold">live on AWS ✓</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span><span className="text-[#f59e0b]">flutter-mobile-build</span>:</span>
-                  <span className="text-emerald-400 font-semibold">synced ✓</span>
-                </div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              {[
+                { icon: GitMerge, title: 'Continuous Integration', desc: 'Automated test gates & fast multi-stage container builds' },
+                { icon: Server, title: 'Zero-Downtime Rollouts', desc: 'Predictable releases on AWS, Azure, & Linux clusters' },
+                { icon: ShieldCheck, title: 'Infrastructure Security', desc: 'Hardened SSH, UFW firewalls, Fail2ban, and SSL/TLS' },
+                { icon: Cpu, title: 'Infrastructure as Code', desc: 'Declarative Terraform blueprints and reproducible states' },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.title} className="p-3.5 rounded-xl bg-white/[0.03] border border-white/8 hover:border-[#f59e0b]/30 transition-colors">
+                    <div className="flex items-center gap-2 mb-1.5 text-[#f59e0b]">
+                      <Icon size={16} />
+                      <span className="text-xs font-bold text-white font-sans">{item.title}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-snug">{item.desc}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Right: Bio + Tags */}
+          {/* Right: Bio + Core Expertise */}
           <div data-scroll="slide-right" className="space-y-6">
             <p className="text-[1.05rem] text-slate-200 leading-[1.8] font-medium">
-              Passionate about DevOps and Mobile development — building CI/CD pipelines that automatically
-              handle builds, tests, and deployments, and crafting Flutter apps that run flawlessly across platforms.
-              A natural problem-solver committed to continuous improvement.
+              Specialized in engineering robust delivery pipelines, automating cloud infrastructure, and securing production environments. Passionate about eliminating release friction and replacing manual operations with declarative code.
             </p>
-            <p className="text-[0.9rem] text-slate-400 leading-[1.85]">
+            <p className="text-[0.9rem] text-slate-300 leading-[1.85]">
               {profile.shortBio}
             </p>
 
             {/* Core Expertise Tags */}
             <div className="space-y-3">
-              <span className="font-mono text-[0.68rem] font-semibold tracking-[0.12em] text-[#f59e0b] uppercase">
-                Core Expertise
+              <span className="font-mono text-xs font-semibold tracking-[0.12em] text-[#f59e0b] uppercase">
+                Core DevOps Competencies
               </span>
               <div className="flex flex-wrap gap-2">
                 {expertiseTags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1.5 rounded-lg bg-[#f59e0b]/10 border border-[#f59e0b]/25 font-mono text-[0.72rem] font-semibold text-[#f59e0b] tracking-wide hover:bg-[#f59e0b]/18 hover:border-[#f59e0b]/50 transition-all cursor-default"
+                    className="px-3 py-1.5 rounded-lg bg-[#f59e0b]/10 border border-[#f59e0b]/30 font-mono text-[0.72rem] font-semibold text-[#f59e0b] tracking-wide hover:bg-[#f59e0b]/20 hover:border-[#f59e0b]/60 transition-all cursor-default"
                   >
                     {tag}
                   </span>
@@ -110,15 +98,21 @@ export const About: React.FC<AboutProps> = ({ profile }) => {
             </div>
 
             {/* Info Row */}
-            <div className="flex flex-wrap gap-4 pt-2 text-xs font-mono text-slate-500 border-t border-white/8 pt-4">
+            <div className="flex flex-wrap gap-4 text-xs font-mono text-slate-400 border-t border-white/10 pt-4">
               <span>📍 Lahore, Pakistan</span>
               <span>🎓 NUML University · BSCS</span>
-              <span>🏆 AZ-400 Certified</span>
+              <span>🏆 AZ-400 &amp; AZ-104 Certified</span>
             </div>
           </div>
 
+        </div>
+
+        {/* Visual: Pipeline Flow Component */}
+        <div data-scroll="slide-up" className="mt-8">
+          <PipelineFlow />
         </div>
       </div>
     </section>
   );
 };
+

@@ -83,20 +83,20 @@ export const Certifications: React.FC<CertificationsProps> = ({ certifications }
                   {cert.title}
                 </h3>
 
-                <p className="font-mono text-[0.72rem] text-slate-500 mb-1">{cert.issuer}</p>
-                <p className="font-mono text-[0.7rem] text-slate-600 mb-3">{cert.period}</p>
+                <p className="font-mono text-xs text-slate-300 mb-1">{cert.issuer}</p>
+                <p className="font-mono text-[11px] text-slate-400 mb-3">{cert.period}</p>
 
                 {cert.description && (
-                  <p className="text-[0.78rem] text-slate-500 leading-relaxed mb-3 flex-1">{cert.description}</p>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-3 flex-1">{cert.description}</p>
                 )}
 
                 {/* Topics */}
                 <div className="flex flex-wrap gap-1.5 mb-3">
-                  {cert.topics.slice(0, 3).map((t) => (
+                  {cert.topics.slice(0, 4).map((t) => (
                     <span
                       key={t}
-                      className="font-mono text-[0.62rem] text-slate-600 rounded-md px-1.5 py-0.5"
-                      style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
+                      className="font-mono text-[10px] text-slate-300 rounded px-2 py-0.5"
+                      style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
                     >
                       {t}
                     </span>
