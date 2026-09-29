@@ -27,14 +27,23 @@ export interface ExperienceItem {
   downloadUrl?: string;
 }
 
+export interface ProjectCaseStudy {
+  problem: string;
+  solution: string;
+  tools: string[];
+  result: string;
+  metrics?: { label: string; value: string }[];
+}
+
 export interface ProjectItem {
   _id?: string;
   title: string;
   tagline: string;
   description: string;
-  category: 'DevOps & Cloud' | 'Mobile (Flutter)' | 'Security & Automation';
+  category: 'CI/CD & Cloud Infrastructure' | 'DevOps & Cloud' | 'Mobile (Flutter)' | 'Security & Automation' | string;
   technologies: string[];
   highlights: string[];
+  caseStudy?: ProjectCaseStudy;
   githubUrl: string;
   liveUrl?: string;
   featured: boolean;
