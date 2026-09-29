@@ -53,7 +53,7 @@ export function App() {
   };
 
   return (
-    <div className="relative min-h-screen text-slate-100 font-sans" style={{ background: '#0a0e1a' }}>
+    <div className="relative min-h-screen text-slate-100 font-sans w-full max-w-full overflow-x-hidden" style={{ background: '#0a0e1a' }}>
       {/* Fixed grid overlay */}
       <div className="fixed inset-0 bg-grid-pattern opacity-20 pointer-events-none z-0" />
       <div className="fixed inset-0 bg-radial-glow opacity-30 pointer-events-none z-0" />
@@ -62,7 +62,7 @@ export function App() {
       <Navbar onNavigate={scrollToSection} />
 
       {/* Content */}
-      <main className="relative z-10">
+      <main className="relative z-10 w-full max-w-full overflow-x-hidden">
         <Hero profile={profile} onNavigate={scrollToSection} />
         <About profile={profile} />
         <Skills skills={skills} />
