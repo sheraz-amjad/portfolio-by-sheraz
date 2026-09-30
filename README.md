@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# 🚀 Syed Sheraz Amjad — 3D-Interactive MERN Portfolio
+# 🚀 Syed Sheraz Amjad — DevOps & Full-Stack Engineer Portfolio
 
 A modern, high-performance, 3D-interactive full-stack portfolio website for **Syed Sheraz Amjad** — DevOps Engineer & Flutter Mobile Developer — built with the complete **MERN stack** (MongoDB, Express.js, React + Vite + TypeScript, Node.js), Three.js / React Three Fiber interactive 3D pipelines, Tailwind CSS, PM2, and Nginx.
 
@@ -163,6 +162,3 @@ http://<YOUR_EC2_PUBLIC_IP>/
 
 ## 🛡️ License
 MIT License © Syed Sheraz Amjad.
-=======
-# portfolio-by-sheraz
->>>>>>> 7ae04899e537898e8052cd74ecea5757bdae67ce
