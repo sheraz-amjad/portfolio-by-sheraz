@@ -7,6 +7,7 @@
     "dev": "npm --prefix client run dev",
     "build": "npm --prefix client run build",
     "preview": "npm --prefix client run preview",
+    "postinstall": "npm --prefix client ci --include=dev",
     "install:all": "npm --prefix client install"
   },
   "keywords": [
